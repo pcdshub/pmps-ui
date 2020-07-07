@@ -970,7 +970,7 @@
              <string/>
             </property>
             <property name="channel" stdset="0">
-             <string>calc://{&quot;name&quot;:&quot;evResidual&quot;, &quot;channels&quot;:{&quot;evCurrent&quot;:&quot;ca://${line_arbiter_prefix}CurrentBP:PhotonEnergyRanges_RBV&quot;,&quot;evRequested&quot;:&quot;ca://${line_arbiter_prefix}RequestedBP:PhotonEnergyRanges_RBV&quot;},&quot;expr&quot;:&quot;(evRequested ^ evCurrent) &amp; evCurrent&quot;}</string>
+             <string>ca://${line_arbiter_prefix}PhotonEnergyWatcher:ResidualPhotonEnergies_RBV</string>
             </property>
             <property name="onColor" stdset="0">
              <color>
