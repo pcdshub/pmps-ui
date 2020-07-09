@@ -177,7 +177,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Attenuation</string>
+            <string>Transmission</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

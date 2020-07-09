@@ -44,7 +44,7 @@
    <item>
     <widget class="PyDMLabel" name="PyDMLabel_6">
      <property name="enabled">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -78,7 +78,7 @@
    <item>
     <widget class="PyDMLabel" name="PyDMLabel_7">
      <property name="enabled">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -112,7 +112,7 @@
    <item>
     <widget class="PyDMLabel" name="PyDMLabel_8">
      <property name="enabled">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -139,14 +139,14 @@
       <bool>true</bool>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:Attenuation_RBV</string>
+      <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:Transmission_RBV</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="PyDMByteIndicator" name="PyDMByteIndicator_4">
      <property name="enabled">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -199,7 +199,7 @@
    <item>
     <widget class="PyDMLabel" name="PyDMLabel_9">
      <property name="enabled">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -252,7 +252,7 @@
    <item>
     <widget class="PyDMLabel" name="PyDMLabel_10">
      <property name="enabled">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -299,7 +299,7 @@
    <item>
     <widget class="PyDMByteIndicator" name="PyDMByteIndicator_3">
      <property name="enabled">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">

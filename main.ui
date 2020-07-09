@@ -135,7 +135,7 @@
              <bool>true</bool>
             </property>
             <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}CurrentBP:Attenuation_RBV</string>
+             <string>ca://${line_arbiter_prefix}CurrentBP:Transmission_RBV</string>
             </property>
            </widget>
           </item>
@@ -361,7 +361,7 @@
              <bool>true</bool>
             </property>
             <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}RequestedBP:Attenuation_RBV</string>
+             <string>ca://${line_arbiter_prefix}RequestedBP:Transmission_RBV</string>
             </property>
            </widget>
           </item>
@@ -1008,7 +1008,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Attenuation</string>
+             <string>Transmission</string>
             </property>
            </widget>
           </item>
@@ -1176,7 +1176,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Attenuation:</string>
+            <string>Transmission:</string>
            </property>
           </widget>
          </item>
@@ -1204,7 +1204,7 @@
             <bool>true</bool>
            </property>
            <property name="channel" stdset="0">
-            <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Attenuation</string>
+            <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission</string>
            </property>
           </widget>
          </item>
