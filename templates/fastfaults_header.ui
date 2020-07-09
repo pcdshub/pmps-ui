@@ -282,7 +282,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Elapsed Time</string>
+        <string>Estimated Conclusion</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>

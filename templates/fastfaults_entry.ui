@@ -355,6 +355,9 @@
      <property name="toolTip">
       <string/>
      </property>
+     <property name="channel" stdset="0">
+      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Duration</string>
+     </property>
     </widget>
    </item>
    <item>
