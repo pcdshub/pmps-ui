@@ -1,8 +1,7 @@
 line_arbiter_prefix: "PMPS:KFE:"
 undulator_kicker_rate_pv: "IOC:BSY0:MP01:BYKIKS_RATE"
 
-dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PQBzCnmMz/l-pmps-events?viewPanel=2&orgId=1&refresh=10s&kiosk"
-
+dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PQBzCnmMz/PRr2cuGGz/k-pmps-events?orgId=1&refresh=10s"
 
 fastfaults:
   - prefix: "PMPS:KFE:"
