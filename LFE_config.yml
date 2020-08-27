@@ -40,3 +40,23 @@ preemptive_requests:
     arbiter_instance: "Arbiter:01"
     assertion_pool_start: 0
     assertion_pool_end: 20
+
+  - prefix: "PLC:LFE:MOTION:"
+    arbiter_instance: "ARB"
+    assertion_pool_start: 0
+    assertion_pool_end: 20
+
+  - prefix: "EM1L0:GEM:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 0
+    assertion_pool_end: 20
+
+  - prefix: "EM1L0:GEM:"
+    arbiter_instance: "ARB:02"
+    assertion_pool_start: 0
+    assertion_pool_end: 20
+
+  - prefix: "EM1L0:GEM:"
+    arbiter_instance: "ARB:03"
+    assertion_pool_start: 0
+    assertion_pool_end: 20
