@@ -78,6 +78,7 @@ class PMPS(Display):
         self.setup_fastfaults()
         self.setup_preemptive_requests()
         self.setup_arbiter_outputs()
+        self.setup_ev_calculation()
 
         # We are done... re-enable painting
         self.setUpdatesEnabled(True)
@@ -102,6 +103,12 @@ class PMPS(Display):
         tab = self.ui.tb_arbiter_outputs
         ao_widget = ArbiterOutputs(macros=self.config)
         tab.layout().addWidget(ao_widget)
+
+    def setup_ev_calculation(self):
+        from ev_calculation import EVCalculation
+        tab = self.ui.tb_ev_calculation
+        ev_widget = EVCalculation(macros=self.config)
+        tab.layout().addWidget(ev_widget)
 
     def handle_open_browser(self):
         url = self.ui.webbrowser.url().toString()
