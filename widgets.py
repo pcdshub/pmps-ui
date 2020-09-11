@@ -291,12 +291,22 @@ class UndulatorListWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
     def channels(self):
         return [ch for ch in self._channels.values()]
 
+    def clear(self):
+        """
+        Remove all inner widgets from the layout
+        """
+        layout = self.widget.layout()
+        while not layout.isEmpty():
+            w = layout.takeAt(0)
+            w.deleteLater()
+
     def _setup_widgets(self):
         if (not self.connected() or not self._first_segment or
                 not self._last_segment):
             return
         if self._first_segment > self._last_segment:
             return
+        self.clear()
         segments = range(self._first_segment, self._last_segment + 1)
         for seg in segments:
             self.widget.layout().addLayout(self._create_entry(seg))
