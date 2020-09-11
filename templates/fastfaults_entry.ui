@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1510</width>
+    <width>1540</width>
     <height>60</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1510</width>
+    <width>1540</width>
     <height>60</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1510</width>
+    <width>1540</width>
     <height>70</height>
    </size>
   </property>
@@ -415,18 +415,21 @@
     <widget class="PyDMDateTimeLabel" name="PyDMDateTimeLabel">
      <property name="minimumSize">
       <size>
-       <width>80</width>
+       <width>100</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>80</width>
+       <width>100</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="toolTip">
       <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -435,7 +438,7 @@
       <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:RemainingTime_RBV</string>
      </property>
      <property name="textFormat" stdset="0">
-      <string>yyyy/MM/dd hh:mm:ss</string>
+      <string>yyyy/MM/dd hh:mm:ss.zzz</string>
      </property>
     </widget>
    </item>
