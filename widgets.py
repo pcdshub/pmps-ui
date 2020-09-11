@@ -146,6 +146,26 @@ class UndulatorWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
 
         return _texture
 
+    def _draw_limits(self, painter, upper_k, lower_k):
+        painter.save()
+        painter.setPen(self.BASE_PEN)
+        w, h = self.width(), self.height()
+        font_metric = QtGui.QFontMetricsF(painter.font())
+        font_h = font_metric.height()
+        start_h = (h-font_h)/2.0
+
+        upper_str = "{:.3f}".format(upper_k)
+        lower_str = "{:.3f}".format(lower_k)
+
+        lower_str_w = font_metric.horizontalAdvance(lower_str)
+        lower_rect = QtCore.QRectF(1, start_h, lower_str_w, font_h)
+        painter.drawText(lower_rect, lower_str)
+
+        upper_str_w = font_metric.horizontalAdvance(upper_str)
+        upper_rect = QtCore.QRectF(w-lower_str_w-1, start_h, upper_str_w, font_h)
+        painter.drawText(upper_rect, upper_str)
+        painter.restore()
+
     def paintEvent(self, event):
         painter = QtGui.QPainter(self)
         opt = QtWidgets.QStyleOption()
@@ -173,9 +193,11 @@ class UndulatorWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
         curr_k = self._values['curr_k']
         target_k = self._values['target_k']
         severity = self._values['severity']
+
         if severity == -1:
             painter.setBrush(self.BROKEN_BRUSH)
             painter.drawRect(0, 0, w, h)
+            self._draw_limits(painter, upper_k, lower_k)
             return
         curr_k = 0 if curr_k is None else curr_k
         target_k = 0 if target_k is None else target_k
@@ -184,6 +206,7 @@ class UndulatorWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
             d_w = self._k_to_width(curr_k, upper_k, lower_k)
             painter.setBrush(self.INACTIVE_BRUSH)
             painter.drawRect(QtCore.QRectF(0.0, 0.0, d_w, h))
+            self._draw_limits(painter, upper_k, lower_k)
             return
 
         # Here we are active...
@@ -202,6 +225,7 @@ class UndulatorWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
             rem_w = target_w - curr_w
             painter.setBrush(rem_brush)
             painter.drawRect(QtCore.QRectF(curr_w, 0.0, rem_w, h))
+        self._draw_limits(painter, upper_k, lower_k)
         painter.end()
 
     def _k_to_width(self, k, upper, lower):
@@ -338,6 +362,7 @@ class UndulatorListWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
         layout.addWidget(segment_label)
         layout.addWidget(und_widget)
         layout.addLayout(k_values_layout)
+        layout.addStretch(1)
         layout.setStretch(0, 0)
         layout.setStretch(1, 1)
         layout.setStretch(2, 0)
