@@ -10,8 +10,8 @@ from pydm.widgets.label import PyDMLabel
 class UndulatorWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
     CHANNELS = dict(
         seed_number='ca://{prefix}PE:UND:SeedUndulatorNumber_RBV',
-        upper_k='ca://{prefix}PE:UND:HiK_RBV',
-        lower_k='ca://{prefix}PE:UND:LowK_RBV',
+        # upper_k='ca://{prefix}PE:UND:HiK_RBV', # Commented out. Requested to move to hardcoded value
+        # lower_k='ca://{prefix}PE:UND:LowK_RBV', # Commented out. Requested to move to hardcoded value
         active='ca://{prefix}PE:UND:{segment}:Active_RBV',
         curr_k='ca://{prefix}PE:UND:{segment}:KAct_RBV',
         target_k='ca://{prefix}PE:UND:{segment}:KDes_RBV',
@@ -166,8 +166,10 @@ class UndulatorWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
         painter.setPen(QtGui.QPen(QtCore.Qt.NoPen))
 
         active = self._values['active']
-        upper_k = self._values['upper_k']
-        lower_k = self._values['lower_k']
+        # upper_k = self._values['upper_k']
+        # lower_k = self._values['lower_k']
+        upper_k = 6.0
+        lower_k = 0.0
         curr_k = self._values['curr_k']
         target_k = self._values['target_k']
         severity = self._values['severity']
