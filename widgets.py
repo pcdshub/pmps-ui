@@ -168,7 +168,7 @@ class UndulatorWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
         active = self._values['active']
         # upper_k = self._values['upper_k']
         # lower_k = self._values['lower_k']
-        upper_k = 10.0
+        upper_k = 6.0
         lower_k = 0.0
         curr_k = self._values['curr_k']
         target_k = self._values['target_k']
