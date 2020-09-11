@@ -434,6 +434,9 @@
      <property name="channel" stdset="0">
       <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:RemainingTime_RBV</string>
      </property>
+     <property name="textFormat" stdset="0">
+      <string>yyyy/MM/dd hh:mm:ss</string>
+     </property>
     </widget>
    </item>
    <item>
