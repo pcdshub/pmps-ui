@@ -61,7 +61,7 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0">
      <item>
       <widget class="QFrame" name="frame">
        <property name="enabled">
@@ -889,109 +889,6 @@
           </item>
          </layout>
         </item>
-        <item>
-         <spacer name="verticalSpacer_2">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <widget class="QFrame" name="frame_2">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>500</height>
-        </size>
-       </property>
-       <property name="autoFillBackground">
-        <bool>true</bool>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::Panel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <property name="lineWidth">
-        <number>3</number>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Grafana Log Display</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btn_open_browser">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(214, 214, 214);</string>
-            </property>
-            <property name="text">
-             <string>Open in a new Window...</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QWebEngineView" name="webbrowser">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>400</height>
-           </size>
-          </property>
-          <property name="url">
-           <url>
-            <string>about:blank</string>
-           </url>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
      </item>
@@ -1246,6 +1143,54 @@
            </property>
            <property name="pressValue" stdset="0">
             <string>1</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tb_grafana_log_display">
+      <attribute name="title">
+       <string>Grafana Log Display</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_10">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_9" stretch="0,1">
+         <item>
+          <widget class="QPushButton" name="btn_open_browser">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(214, 214, 214);</string>
+           </property>
+           <property name="text">
+            <string>Open in a new Window...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QWebEngineView" name="webbrowser">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>400</height>
+            </size>
+           </property>
+           <property name="url">
+            <url>
+             <string>about:blank</string>
+            </url>
            </property>
           </widget>
          </item>
