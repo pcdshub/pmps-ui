@@ -1194,9 +1194,22 @@
       <attribute name="title">
        <string>Grafana Log Display</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_10">
+      <layout class="QVBoxLayout" name="verticalLayout_9" stretch="0,1">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout_9" stretch="0,1">
+        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0">
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
          <item>
           <widget class="QPushButton" name="btn_open_browser">
            <property name="enabled">
@@ -1216,25 +1229,25 @@
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QWebEngineView" name="webbrowser">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>400</height>
-            </size>
-           </property>
-           <property name="url">
-            <url>
-             <string>about:blank</string>
-            </url>
-           </property>
-          </widget>
-         </item>
         </layout>
+       </item>
+       <item>
+        <widget class="QWebEngineView" name="webbrowser">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>400</height>
+          </size>
+         </property>
+         <property name="url">
+          <url>
+           <string>about:blank</string>
+          </url>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
