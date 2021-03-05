@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>PMPS - Diagnostics</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,1">
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -129,7 +129,7 @@
           <item row="4" column="1">
            <widget class="PyDMLabel" name="PyDMLabel_3">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="toolTip">
              <string/>
@@ -187,7 +187,7 @@
           <item row="3" column="1">
            <widget class="PyDMLabel" name="PyDMLabel_2">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="toolTip">
              <string/>
@@ -203,7 +203,7 @@
           <item row="7" column="1" colspan="2">
            <widget class="PyDMByteIndicator" name="PyDMByteIndicator_2">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -244,7 +244,7 @@
           <item row="2" column="1">
            <widget class="PyDMLabel" name="PyDMLabel">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="toolTip">
              <string/>
@@ -260,7 +260,7 @@
           <item row="8" column="1" colspan="2">
            <widget class="PyDMByteIndicator" name="PyDMByteIndicator_3">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -339,7 +339,7 @@
           <item row="3" column="2">
            <widget class="PyDMLabel" name="PyDMLabel_5">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="toolTip">
              <string/>
@@ -355,7 +355,7 @@
           <item row="4" column="2">
            <widget class="PyDMLabel" name="PyDMLabel_6">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="toolTip">
              <string/>
@@ -390,7 +390,7 @@
           <item row="2" column="2">
            <widget class="PyDMLabel" name="PyDMLabel_4">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="toolTip">
              <string/>
@@ -833,7 +833,7 @@
           <item row="9" column="1" colspan="2">
            <widget class="PyDMByteIndicator" name="PyDMByteIndicator_4">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -1038,6 +1038,12 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_8"/>
      </widget>
+     <widget class="QWidget" name="tb_plc_ioc_status">
+      <attribute name="title">
+       <string>PLC IOC Status</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_10"/>
+     </widget>
      <widget class="QWidget" name="tb_line_beam_param_ctrl">
       <attribute name="title">
        <string>Line Beam Parameters Control</string>
@@ -1064,7 +1070,7 @@
          <item row="0" column="1">
           <widget class="PyDMLineEdit" name="PyDMLineEdit">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="minimumSize">
             <size>
@@ -1105,7 +1111,7 @@
          <item row="1" column="1">
           <widget class="PyDMLineEdit" name="PyDMLineEdit_2">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="minimumSize">
             <size>
@@ -1146,7 +1152,7 @@
          <item row="2" column="1">
           <widget class="PyDMLineEdit" name="PyDMLineEdit_3">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="minimumSize">
             <size>
@@ -1187,7 +1193,7 @@
          <item row="3" column="1">
           <widget class="PyDMLineEdit" name="PyDMLineEdit_4">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="minimumSize">
             <size>
@@ -1215,7 +1221,7 @@
          <item row="4" column="1">
           <widget class="PyDMPushButton" name="PyDMPushButton">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="minimumSize">
             <size>
