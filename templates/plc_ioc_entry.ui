@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
+ <class>plc_ioc_entry</class>
+ <widget class="QWidget" name="plc_ioc_entry">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -21,7 +21,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,1,1">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,1,1,1,1,1">
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
@@ -30,12 +30,23 @@
       </widget>
      </item>
      <item>
-      <widget class="PyDMLabel" name="PyDMLabel_2">
-       <property name="toolTip">
-        <string/>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;${O}&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
-       <property name="displayFormat" stdset="0">
-        <enum>PyDMLabel::Default</enum>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>${IN}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>${A}</string>
        </property>
       </widget>
      </item>
