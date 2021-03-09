@@ -111,7 +111,7 @@
         <string>PLC Status</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
