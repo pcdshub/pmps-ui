@@ -41,7 +41,7 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,1,1,1,1,1,1">
+     <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="1,1,1,1,1,0,1">
       <item>
        <spacer name="horizontalSpacer_2">
         <property name="orientation">
@@ -57,8 +57,17 @@
       </item>
       <item>
        <widget class="QGroupBox" name="groupBox_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>Sort by Rate:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0">
          <property name="spacing">
@@ -78,11 +87,17 @@
          </property>
          <item>
           <widget class="QPushButton" name="sort_rate_button">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="cursor">
             <cursorShape>ArrowCursor</cursorShape>
            </property>
            <property name="text">
-            <string>Sort By Rate</string>
+            <string/>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -103,8 +118,17 @@
       </item>
       <item>
        <widget class="QGroupBox" name="groupBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="title">
          <string>Sort by Transmission:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
         <property name="checkable">
          <bool>false</bool>
@@ -130,8 +154,14 @@
          </property>
          <item>
           <widget class="QPushButton" name="sort_transm_button">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
-            <string>Sort By Transmission</string>
+            <string/>
            </property>
            <property name="checkable">
             <bool>true</bool>
@@ -156,6 +186,9 @@
       </item>
       <item>
        <widget class="QGroupBox" name="ff_filter_gb_bitmask">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="title">
          <string>Filter By: Photon Energy Ranges</string>
         </property>
