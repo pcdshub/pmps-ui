@@ -58,6 +58,7 @@ class PreemptiveRequests(Display):
         self.setup_ui()
 
     def setup_ui(self):
+        self.ui.ff_filter_gb_bitmask.toggled.connect(self.enable_bits)
         self.ui.btn_apply_filters.clicked.connect(self.update_filters)
         self.setup_requests()
         self.setup_sort_buttons()
@@ -157,6 +158,17 @@ class PreemptiveRequests(Display):
             self.ui.reqs_table_widget.sortItems(column,
                                                 QtCore.Qt.DescendingOrder)
 
+    def enable_bits(self, toggle):
+        # enable the bits when the combo box is checked
+        if toggle is True:
+            for key, item in self._bits.items():
+                cb = self.findChild(QtWidgets.QCheckBox, f"filter_cb_{key}")
+                cb.setEnabled(True)
+        else:
+            for key, item in self._bits.items():
+                cb = self.findChild(QtWidgets.QCheckBox, f"filter_cb_{key}")
+                cb.setEnabled(False)
+
     def calc_bitmask(self):
         for key, item in self._bits.items():
             cb = self.findChild(QtWidgets.QCheckBox, f"filter_cb_{key}")
@@ -182,8 +194,10 @@ class PreemptiveRequests(Display):
         for opt in default_options:
             filters.append(opt)
         for opt in options:
-            opt['condition'] = self.calc_bitmask()
-            filters.append(opt)
+            gb = self.findChild(QtWidgets.QGroupBox, f"ff_filter_gb_{opt['name']}")
+            if gb.isChecked():
+                opt['condition'] = self.calc_bitmask()
+                filters.append(opt)
         self.filters_changed.emit(filters)
 
     def ui_filename(self):

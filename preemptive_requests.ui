@@ -206,7 +206,7 @@
          <string>Filter By: Photon Energy Ranges</string>
         </property>
         <property name="checkable">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="checked">
          <bool>false</bool>
@@ -230,12 +230,16 @@
          <item>
           <widget class="QCheckBox" name="filter_cb_bit15">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator:checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -254,12 +258,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit14">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -278,12 +286,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit13">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -302,12 +314,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit12">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -326,12 +342,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit11">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -350,12 +370,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit10">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -374,12 +398,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit9">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -398,12 +426,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit8">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -422,12 +454,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit7">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -446,12 +482,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit6">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -470,12 +510,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit5">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -494,12 +538,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit4">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -518,12 +566,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit3">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -542,12 +594,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit2">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -566,12 +622,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit1">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
@@ -590,12 +650,16 @@ QCheckBox::indicator::checked {background-color: green;}</string>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit0">
            <property name="enabled">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
 
-QCheckBox::indicator::checked {background-color: green;}</string>
+QCheckBox::indicator::checked {background-color: green;}
+
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
            </property>
            <property name="text">
             <string/>
