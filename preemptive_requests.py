@@ -3,7 +3,6 @@ from string import Template
 
 from qtpy import QtCore, QtWidgets
 from pydm import Display
-from pydm.widgets import PyDMEmbeddedDisplay
 from PyQt5.QtGui import QTableWidgetItem, QIcon, QPixmap
 from fast_faults import VisibilityEmbedded
 
@@ -47,6 +46,11 @@ class CustomTableWidgetItem(QTableWidgetItem):
 class PreemptiveRequests(Display):
     filters_changed = QtCore.Signal(list)
 
+    _bits = {'bit15': False, 'bit14': False, 'bit13': False, 'bit12': False,
+             'bit11': False, 'bit10': False, 'bit9': False, 'bit8': False,
+             'bit7': False, 'bit6': False, 'bit5': False, 'bit4': False,
+             'bit3': False, 'bit2': False, 'bit1': False, 'bit0': False}
+
     def __init__(self, parent=None, args=None, macros=None):
         super(PreemptiveRequests, self).__init__(parent=parent,
                                                  args=args, macros=macros)
@@ -54,8 +58,8 @@ class PreemptiveRequests(Display):
         self.setup_ui()
 
     def setup_ui(self):
-        self.setup_requests()
         self.ui.btn_apply_filters.clicked.connect(self.update_filters)
+        self.setup_requests()
         self.setup_sort_buttons()
 
     def setup_sort_buttons(self):
@@ -63,9 +67,13 @@ class PreemptiveRequests(Display):
         self.ui.sort_transm_button.clicked.connect(
             self.sort_transmission_items)
 
-        sort_icon = QPixmap("templates/sort_icon.png")
-        self.ui.sort_rate_button.setIcon(QIcon(sort_icon))
-        self.ui.sort_transm_button.setIcon(QIcon(sort_icon))
+        sort_asc = QPixmap("templates/sort_asc.png")
+        sort_desc = QPixmap("templates/sort_desc.png")
+        icon = QIcon()
+        icon.addPixmap(sort_desc, QIcon.Normal, QIcon.On)
+        icon.addPixmap(sort_asc, QIcon.Normal, QIcon.Off)
+        self.ui.sort_rate_button.setIcon(icon)
+        self.ui.sort_transm_button.setIcon(icon)
         self.ui.sort_rate_button.setIconSize(self.ui.sort_rate_button.size())
         self.ui.sort_transm_button.setIconSize(self.ui.sort_rate_button.size())
 
@@ -75,7 +83,6 @@ class PreemptiveRequests(Display):
         reqs = self.config.get('preemptive_requests')
         if not reqs:
             return
-        # reqs_container = self.ui.reqs_content
         reqs_table = self.ui.reqs_table_widget
         # setup table
         reqs_table.setColumnCount(2)
@@ -132,34 +139,30 @@ class PreemptiveRequests(Display):
         print(f'Added {count} preemptive requests')
 
     def sort_rate_items(self, value):
+
         column = 0
         if value is True:
             self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.DescendingOrder)
+                                                QtCore.Qt.AscendingOrder)
         else:
             self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.AscendingOrder)
+                                                QtCore.Qt.DescendingOrder)
 
     def sort_transmission_items(self, value):
         column = 1
         if value is True:
             self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.DescendingOrder)
+                                                QtCore.Qt.AscendingOrder)
         else:
             self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.AscendingOrder)
+                                                QtCore.Qt.DescendingOrder)
 
     def calc_bitmask(self):
-        bits = {'bit15': False, 'bit14': False, 'bit13': False, 'bit12': False,
-                'bit11': False, 'bit10': False, 'bit9': False, 'bit8': False,
-                'bit7': False, 'bit6': False, 'bit5': False, 'bit4': False,
-                'bit3': False, 'bit2': False, 'bit1': False, 'bit0': False}
-
-        for key, item in bits.items():
+        for key, item in self._bits.items():
             cb = self.findChild(QtWidgets.QCheckBox, f"filter_cb_{key}")
-            bits[key] = cb.isChecked()
+            self._bits[key] = cb.isChecked()
 
-        bit_map = list(map(int, [item for key, item in bits.items()]))
+        bit_map = list(map(int, [item for key, item in self._bits.items()]))
         out = 0
         for bit in bit_map:
             out = (out << 1) | bit
