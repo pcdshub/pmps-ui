@@ -76,7 +76,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMLabel" name="PyDMLabel_7">
+    <widget class="PyDMLabel" name="rate_label">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -110,7 +110,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMLabel" name="PyDMLabel_8">
+    <widget class="PyDMLabel" name="transmission_label">
      <property name="enabled">
       <bool>true</bool>
      </property>
