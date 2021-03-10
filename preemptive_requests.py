@@ -38,7 +38,9 @@ class CustomTableWidgetItem(QTableWidgetItem):
             widget = self.tableWidget().cellWidget(self.row(), column)
             label = widget.embedded_widget.ui.findChild(
                 self._obj_type, str(self._obj_name))
-            return float(other_label.text()) < float(label.text())
+            other_value = ''.join(filter(str.isdigit, other_label.text()))
+            value = ''.join(filter(str.isdigit, label.text()))
+            return float(other_value) < float(value)
         except Exception:
             return QTableWidgetItem.__lt__(self, other)
 
