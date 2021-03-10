@@ -102,18 +102,18 @@ class PreemptiveRequests(Display):
             template = 'templates/preemptive_requests_entry.ui'
             for pool_id in range(pool_start, pool_end+1):
                 pool = str(pool_id).zfill(pool_zfill)
-                macros = dict(index=count, P=prefix, ARBITER=arbiter,
-                              POOL=pool)
-                channel = Template(f'ca://{prefix}{arbiter}:AP:Entry:{pool}:Live_RBV').safe_substitute(**macros)
-                widget = VisibilityEmbedded(parent=reqs_table, channel=channel)
+                macros = dict(index=count, P=prefix, ARBITER=arbiter, POOL=pool)
+                # channel = Template(f'ca://{prefix}{arbiter}:AP:Entry:{pool}:Live_RBV').safe_substitute(**macros)
+                ch = Template('ca://${P}${ARBITER}:AP:Entry:${POOL}:Live_RBV').safe_substitute(**macros)
+                widget = VisibilityEmbedded(parent=reqs_table, channel=ch)
                 widget.prefixes = macros
                 self.filters_changed[list].connect(widget.update_filter)
 
                 widget.macros = json.dumps(macros)
 
                 widget.filename = template
-                widget.disconnectWhenHidden = False
                 widget.loadWhenShown = False
+                widget.disconnectWhenHidden = False
 
                 # insert items in the table
                 row_position = reqs_table.rowCount()
@@ -183,7 +183,7 @@ class PreemptiveRequests(Display):
     def update_filters(self):
         default_options = [
             {'name': 'live',
-             'channel': 'ca://{prefix}{arbiter}:AP:Entry:{pool}:Live_RBV',
+             'channel': 'ca://${P}${ARBITER}:AP:Entry:${POOL}:Live_RBV',
              'condition': 1
              }]
         options = [
