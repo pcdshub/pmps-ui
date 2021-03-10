@@ -96,6 +96,9 @@
            <property name="cursor">
             <cursorShape>ArrowCursor</cursorShape>
            </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -166,6 +169,9 @@
            <property name="checkable">
             <bool>true</bool>
            </property>
+           <property name="autoDefault">
+            <bool>false</bool>
+           </property>
           </widget>
          </item>
         </layout>
@@ -200,7 +206,7 @@
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <property name="spacing">
-          <number>2</number>
+          <number>0</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -217,160 +223,208 @@
          <item>
           <widget class="QCheckBox" name="filter_cb_bit15">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit14">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit13">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit12">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit11">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit10">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit9">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit8">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit7">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit6">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit5">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit4">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit3">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit2">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit1">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QCheckBox" name="filter_cb_bit0">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
             <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -396,7 +450,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QPushButton" name="btn_apply_range_filters">
+         <widget class="QPushButton" name="btn_apply_filters">
           <property name="styleSheet">
            <string notr="true">background-color: rgb(141, 255, 168);</string>
           </property>

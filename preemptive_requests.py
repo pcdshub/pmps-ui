@@ -1,8 +1,11 @@
 import json
+from string import Template
+
 from qtpy import QtCore, QtWidgets
 from pydm import Display
 from pydm.widgets import PyDMEmbeddedDisplay
-from PyQt5.QtGui import QTableWidgetItem
+from PyQt5.QtGui import QTableWidgetItem, QIcon, QPixmap
+from fast_faults import VisibilityEmbedded
 
 
 class CustomTableWidgetItem(QTableWidgetItem):
@@ -42,6 +45,8 @@ class CustomTableWidgetItem(QTableWidgetItem):
 
 
 class PreemptiveRequests(Display):
+    filters_changed = QtCore.Signal(list)
+
     def __init__(self, parent=None, args=None, macros=None):
         super(PreemptiveRequests, self).__init__(parent=parent,
                                                  args=args, macros=macros)
@@ -50,9 +55,19 @@ class PreemptiveRequests(Display):
 
     def setup_ui(self):
         self.setup_requests()
+        self.ui.btn_apply_filters.clicked.connect(self.update_filters)
+        self.setup_sort_buttons()
+
+    def setup_sort_buttons(self):
         self.ui.sort_rate_button.clicked.connect(self.sort_rate_items)
         self.ui.sort_transm_button.clicked.connect(
             self.sort_transmission_items)
+
+        sort_icon = QPixmap("templates/sort_icon.png")
+        self.ui.sort_rate_button.setIcon(QIcon(sort_icon))
+        self.ui.sort_transm_button.setIcon(QIcon(sort_icon))
+        self.ui.sort_rate_button.setIconSize(self.ui.sort_rate_button.size())
+        self.ui.sort_transm_button.setIconSize(self.ui.sort_rate_button.size())
 
     def setup_requests(self):
         if not self.config:
@@ -81,16 +96,13 @@ class PreemptiveRequests(Display):
                 pool = str(pool_id).zfill(pool_zfill)
                 macros = dict(index=count, P=prefix, ARBITER=arbiter,
                               POOL=pool)
-                widget = PyDMEmbeddedDisplay(parent=reqs_table)
+                channel = Template(f'ca://{prefix}{arbiter}:AP:Entry:{pool}:Live_RBV').safe_substitute(**macros)
+                widget = VisibilityEmbedded(parent=reqs_table, channel=channel)
+                widget.prefixes = macros
+                self.filters_changed[list].connect(widget.update_filter)
+
                 widget.macros = json.dumps(macros)
-                channel = f'ca://{prefix}{arbiter}:AP:Entry:{pool}:Live_RBV'
-                rule = {
-                    "name": "PR_Visibility",
-                    "property": "Visible",
-                    "channels": [dict(channel=channel, trigger=True)],
-                    "expression": "ch[0] == 1"
-                }
-                widget.rules = json.dumps([rule])
+
                 widget.filename = template
                 widget.disconnectWhenHidden = False
                 widget.loadWhenShown = False
@@ -116,6 +128,7 @@ class PreemptiveRequests(Display):
 
                 count += 1
         reqs_table.resizeRowsToContents()
+        self.update_filters()
         print(f'Added {count} preemptive requests')
 
     def sort_rate_items(self, value):
@@ -135,6 +148,40 @@ class PreemptiveRequests(Display):
         else:
             self.ui.reqs_table_widget.sortItems(column,
                                                 QtCore.Qt.AscendingOrder)
+
+    def calc_bitmask(self):
+        bits = {'bit15': False, 'bit14': False, 'bit13': False, 'bit12': False,
+                'bit11': False, 'bit10': False, 'bit9': False, 'bit8': False,
+                'bit7': False, 'bit6': False, 'bit5': False, 'bit4': False,
+                'bit3': False, 'bit2': False, 'bit1': False, 'bit0': False}
+
+        for key, item in bits.items():
+            cb = self.findChild(QtWidgets.QCheckBox, f"filter_cb_{key}")
+            bits[key] = cb.isChecked()
+
+        bit_map = list(map(int, [item for key, item in bits.items()]))
+        out = 0
+        for bit in bit_map:
+            out = (out << 1) | bit
+        return out
+
+    def update_filters(self):
+        default_options = [
+            {'name': 'live',
+             'channel': 'ca://{prefix}{arbiter}:AP:Entry:{pool}:Live_RBV',
+             'condition': 1
+             }]
+        options = [
+            {'name': 'bitmask',
+             'channel': 'ca://${P}${ARBITER}:AP:Entry:${POOL}:PhotonEnergyRanges_RBV'
+             }]
+        filters = []
+        for opt in default_options:
+            filters.append(opt)
+        for opt in options:
+            opt['condition'] = self.calc_bitmask()
+            filters.append(opt)
+        self.filters_changed.emit(filters)
 
     def ui_filename(self):
         return 'preemptive_requests.ui'
