@@ -1,5 +1,6 @@
 import json
 from string import Template
+import sys
 
 from qtpy import QtCore, QtWidgets
 from pydm import Display
@@ -38,8 +39,21 @@ class CustomTableWidgetItem(QTableWidgetItem):
             widget = self.tableWidget().cellWidget(self.row(), column)
             label = widget.embedded_widget.ui.findChild(
                 self._obj_type, str(self._obj_name))
+
+            # values in the labels will have their units displayed,
+            # so we want to eliminate those
             other_value = ''.join(filter(str.isdigit, other_label.text()))
             value = ''.join(filter(str.isdigit, label.text()))
+
+            # if we cannot get the values because PVs are disconnected
+            # or we don't have numerical values for some reason, pretend
+            # they are maxsize so they go at the end of table if sorting
+            # in ascending order
+            if other_value == '':
+                other_value = sys.maxsize
+            if value == '':
+                value = sys.maxsize
+
             return float(other_value) < float(value)
         except Exception:
             return QTableWidgetItem.__lt__(self, other)
@@ -105,7 +119,6 @@ class PreemptiveRequests(Display):
             for pool_id in range(pool_start, pool_end+1):
                 pool = str(pool_id).zfill(pool_zfill)
                 macros = dict(index=count, P=prefix, ARBITER=arbiter, POOL=pool)
-                # channel = Template(f'ca://{prefix}{arbiter}:AP:Entry:{pool}:Live_RBV').safe_substitute(**macros)
                 ch = Template('ca://${P}${ARBITER}:AP:Entry:${POOL}:Live_RBV').safe_substitute(**macros)
                 widget = VisibilityEmbedded(parent=reqs_table, channel=ch)
                 widget.prefixes = macros
@@ -146,19 +159,19 @@ class PreemptiveRequests(Display):
         column = 0
         if value is True:
             self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.AscendingOrder)
+                                                QtCore.Qt.DescendingOrder)
         else:
             self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.DescendingOrder)
+                                                QtCore.Qt.AscendingOrder)
 
     def sort_transmission_items(self, value):
         column = 1
         if value is True:
             self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.AscendingOrder)
+                                                QtCore.Qt.DescendingOrder)
         else:
             self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.DescendingOrder)
+                                                QtCore.Qt.AscendingOrder)
 
     def enable_bits(self, toggle):
         # enable the bits when the combo box is checked
