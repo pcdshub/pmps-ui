@@ -1,12 +1,11 @@
 import json
-from string import Template
 import sys
+from string import Template
 
-from qtpy import QtCore, QtWidgets
-from pydm import Display
-from PyQt5.QtGui import QTableWidgetItem, QIcon, QPixmap
 from fast_faults import VisibilityEmbedded
-
+from pydm import Display
+from PyQt5.QtGui import QIcon, QPixmap, QTableWidgetItem
+from qtpy import QtCore, QtWidgets
 
 class CustomTableWidgetItem(QTableWidgetItem):
     """
@@ -103,6 +102,9 @@ class PreemptiveRequests(Display):
         reqs_table = self.ui.reqs_table_widget
         # setup table
         reqs_table.setColumnCount(2)
+        # we only need a second column to be able to sort based on another
+        # element other than the one in the first column - since the widgets
+        # are placed in the first column we should hide the second one.
         reqs_table.hideColumn(1)
         if reqs_table is None:
             return
@@ -135,13 +137,13 @@ class PreemptiveRequests(Display):
                 reqs_table.insertRow(row_position)
                 reqs_table.setCellWidget(row_position, 0, widget)
 
-                # insert a fake QTableWidgetItem to customize sorting
+                # insert a fake customized QTableWidgetItem to allow sorting
                 # based on Rate - column position 0
                 rate_item = CustomTableWidgetItem(widget_type=QtWidgets.QLabel,
                                                   widget_name='rate_label')
                 rate_item.setSizeHint(widget.size())
                 reqs_table.setItem(row_position, 0, rate_item)
-                # insert a fake QTableWidgetItem to customize sorting
+                # insert a fake customized QTableWidgetItem to allow sorting
                 # based on Transmission - column position 1
                 trans_item = CustomTableWidgetItem(
                     widget_type=QtWidgets.QLabel,
@@ -155,7 +157,12 @@ class PreemptiveRequests(Display):
         print(f'Added {count} preemptive requests')
 
     def sort_rate_items(self, value):
-
+        """
+        Sort the items in the table based on the Rate values from the embedded
+        widget. sortItems will call CustomTableWidgetItem's __ld__ method where
+        the values from the rate label (CustomTabWidgetItem column 0) will be
+        compared and sorted.
+        """
         column = 0
         if value is True:
             self.ui.reqs_table_widget.sortItems(column,
@@ -165,6 +172,12 @@ class PreemptiveRequests(Display):
                                                 QtCore.Qt.AscendingOrder)
 
     def sort_transmission_items(self, value):
+        """
+        Sort the items in the table based on the Transmission values from the
+        embedded widget. sortItems will call CustomTableWidgetItem's __ld__
+        method, where the values from the transmission label
+        (CustomTabWidgetItem column 1) will be compared and sorted.
+        """
         column = 1
         if value is True:
             self.ui.reqs_table_widget.sortItems(column,
@@ -174,7 +187,9 @@ class PreemptiveRequests(Display):
                                                 QtCore.Qt.AscendingOrder)
 
     def enable_bits(self, toggle):
-        # enable the bits when the combo box is checked
+        """
+        Enable the bits when the combo box is checked.
+        """
         if toggle is True:
             for key, item in self._bits.items():
                 cb = self.findChild(QtWidgets.QCheckBox, f"filter_cb_{key}")
@@ -185,6 +200,12 @@ class PreemptiveRequests(Display):
                 cb.setEnabled(False)
 
     def calc_bitmask(self):
+        """
+        Calculate a decimal number based on the checked/unchecked bits
+        from the filter (Photon Energy Range).
+        These bits are represented by check boxes where checked = True and
+        unchecked = False.
+        """
         for key, item in self._bits.items():
             cb = self.findChild(QtWidgets.QCheckBox, f"filter_cb_{key}")
             self._bits[key] = cb.isChecked()
