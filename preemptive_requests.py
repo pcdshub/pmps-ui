@@ -7,6 +7,7 @@ from pydm import Display
 from PyQt5.QtGui import QIcon, QPixmap, QTableWidgetItem
 from qtpy import QtCore, QtWidgets
 
+
 class CustomTableWidgetItem(QTableWidgetItem):
     """
     Custom QTableWidgetItem to allow sorting items in a QTableWidget
@@ -18,6 +19,11 @@ class CustomTableWidgetItem(QTableWidgetItem):
         Type of widget, eg. `QtWidgets.QLabel`
     widget_name : str
         The name of the widget (object name).
+
+    Note
+    ----
+    For now this class handles sorting for the widgets that have text()
+    property to get the value from that widget with.
     """
     def __init__(self, widget_type, widget_name, parent=None):
         QTableWidgetItem.__init__(self, parent)
@@ -120,7 +126,8 @@ class PreemptiveRequests(Display):
             template = 'templates/preemptive_requests_entry.ui'
             for pool_id in range(pool_start, pool_end+1):
                 pool = str(pool_id).zfill(pool_zfill)
-                macros = dict(index=count, P=prefix, ARBITER=arbiter, POOL=pool)
+                macros = dict(index=count, P=prefix,
+                              ARBITER=arbiter, POOL=pool)
                 ch = Template('ca://${P}${ARBITER}:AP:Entry:${POOL}:Live_RBV').safe_substitute(**macros)
                 widget = VisibilityEmbedded(parent=reqs_table, channel=ch)
                 widget.prefixes = macros
