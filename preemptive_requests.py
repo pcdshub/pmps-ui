@@ -1,4 +1,6 @@
 import json
+import functools
+import itertools
 import sys
 from string import Template
 
@@ -66,6 +68,14 @@ class CustomTableWidgetItem(QTableWidgetItem):
 
 class PreemptiveRequests(Display):
     filters_changed = QtCore.Signal(list)
+    _toggle_rate_pb = itertools.cycle([True, False]).__next__
+    _toggle_transmission_pb = itertools.cycle([True, False]).__next__
+
+    # elements for the sorting buttons
+    sort_desc_pix = QPixmap("templates/sort_desc.png")
+    sort_asc_pix = QPixmap("templates/sort_asc.png")
+    sort_desc_icon = QIcon()
+    sort_asc_icon = QIcon()
 
     _bits = {'bit15': False, 'bit14': False, 'bit13': False, 'bit12': False,
              'bit11': False, 'bit10': False, 'bit9': False, 'bit8': False,
@@ -85,19 +95,26 @@ class PreemptiveRequests(Display):
         self.setup_sort_buttons()
 
     def setup_sort_buttons(self):
-        self.ui.sort_rate_button.clicked.connect(self.sort_rate_items)
+        self.ui.sort_rate_button.clicked.connect(
+            functools.partial(self.sort_rate_items, self.ui.sort_rate_button))
         self.ui.sort_transm_button.clicked.connect(
-            self.sort_transmission_items)
+            functools.partial(self.sort_transmission_items,
+                              self.ui.sort_transm_button))
 
-        sort_asc = QPixmap("templates/sort_asc.png")
-        sort_desc = QPixmap("templates/sort_desc.png")
-        icon = QIcon()
-        icon.addPixmap(sort_desc, QIcon.Normal, QIcon.On)
-        icon.addPixmap(sort_asc, QIcon.Normal, QIcon.Off)
-        self.ui.sort_rate_button.setIcon(icon)
-        self.ui.sort_transm_button.setIcon(icon)
+        self.sort_desc_icon.addPixmap(self.sort_desc_pix, QIcon.Normal, QIcon.Off)
+        self.sort_asc_icon.addPixmap(self.sort_asc_pix, QIcon.Normal, QIcon.Off)
+
+        self.ui.sort_rate_button.setIcon(self.sort_asc_icon)
         self.ui.sort_rate_button.setIconSize(self.ui.sort_rate_button.size())
-        self.ui.sort_transm_button.setIconSize(self.ui.sort_rate_button.size())
+
+        self.ui.sort_transm_button.setIcon(self.sort_asc_icon)
+        self.ui.sort_transm_button.setIconSize(self.ui.sort_transm_button.size())
+
+    def change_button_state_icon(self, state, btn):
+        if state is True:
+            btn.setIcon(self.sort_desc_icon)
+        else:
+            btn.setIcon(self.sort_asc_icon)
 
     def setup_requests(self):
         if not self.config:
@@ -163,7 +180,7 @@ class PreemptiveRequests(Display):
         self.update_filters()
         print(f'Added {count} preemptive requests')
 
-    def sort_rate_items(self, value):
+    def sort_rate_items(self, btn):
         """
         Sort the items in the table based on the Rate values from the embedded
         widget. sortItems will call CustomTableWidgetItem's __ld__ method where
@@ -171,14 +188,16 @@ class PreemptiveRequests(Display):
         compared and sorted.
         """
         column = 0
-        if value is True:
+        state = self._toggle_rate_pb()
+        if state is True:
             self.ui.reqs_table_widget.sortItems(column,
                                                 QtCore.Qt.DescendingOrder)
         else:
             self.ui.reqs_table_widget.sortItems(column,
                                                 QtCore.Qt.AscendingOrder)
+        self.change_button_state_icon(state, btn)
 
-    def sort_transmission_items(self, value):
+    def sort_transmission_items(self, btn):
         """
         Sort the items in the table based on the Transmission values from the
         embedded widget. sortItems will call CustomTableWidgetItem's __ld__
@@ -186,12 +205,14 @@ class PreemptiveRequests(Display):
         (CustomTabWidgetItem column 1) will be compared and sorted.
         """
         column = 1
-        if value is True:
+        state = self._toggle_transmission_pb()
+        if state is True:
             self.ui.reqs_table_widget.sortItems(column,
                                                 QtCore.Qt.DescendingOrder)
         else:
             self.ui.reqs_table_widget.sortItems(column,
                                                 QtCore.Qt.AscendingOrder)
+        self.change_button_state_icon(state, btn)
 
     def enable_bits(self, toggle):
         """
