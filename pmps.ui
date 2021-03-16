@@ -329,7 +329,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Requested Beam Parameters</string>
+             <string>Beam Parameter Status</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
