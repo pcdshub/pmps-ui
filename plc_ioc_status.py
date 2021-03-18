@@ -55,9 +55,8 @@ class PLCIOCStatus(Display):
             ico_heart_ch = Template(
                 'ca://${P}HEARTBEAT').safe_substitute(**plc_macros)
             # the get PLC process cycle count
-            plc_cycle_count = 'ca://csewell:calcExample1'
-            # plc_cycle_count = Template(
-            #    'ca://${P}TaskInfo:1:CycleCount').safe_substitute(**plc_macros)
+            plc_cycle_count = Template(
+               'ca://${P}TaskInfo:1:CycleCount').safe_substitute(**plc_macros)
 
             label_name = QtWidgets.QLabel(str(plc_name))
             label_online = QtWidgets.QLabel()
