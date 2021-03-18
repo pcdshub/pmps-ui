@@ -8,11 +8,13 @@ from pydm.widgets.byte import PyDMBitIndicator
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtWidgets
 from qtpy.QtGui import QColor
+from fast_faults import clear_channel
 
 
 class PLCIOCStatus(Display):
     _on_color = QColor(0, 255, 0)
     _off_color = QColor(100, 100, 100)
+    plc_status_ch = None
 
     def __init__(self, parent=None, args=None, macros=None):
         super(PLCIOCStatus, self).__init__(
@@ -21,6 +23,7 @@ class PLCIOCStatus(Display):
         self.ffs_count_map = {}
         self.ffs_label_map = {}
         self.setup_ui()
+        self.destroyed.connect(functools.partial(clear_channel, self.plc_status_ch))
 
     def setup_ui(self):
         self.setup_plc_ioc_status()
@@ -48,28 +51,35 @@ class PLCIOCStatus(Display):
 
             plc_name = prefix.strip(':')
             plc_macros = dict(P=prefix)
-            # get the heartbeat of the PLC to
-            heart_ch = Template(
+            # get the heartbeat of the IOC to
+            ico_heart_ch = Template(
                 'ca://${P}HEARTBEAT').safe_substitute(**plc_macros)
+            # the get PLC process cycle count
+            plc_cycle_count = 'ca://csewell:calcExample1'
+            # plc_cycle_count = Template(
+            #    'ca://${P}TaskInfo:1:CycleCount').safe_substitute(**plc_macros)
 
             label_name = QtWidgets.QLabel(str(plc_name))
             label_online = QtWidgets.QLabel()
             label_in_use = QtWidgets.QLabel()
             label_alarmed = QtWidgets.QLabel()
-            label_heartbeat = PyDMLabel(init_channel=heart_ch)
+            label_heartbeat = PyDMLabel(init_channel=ico_heart_ch)
+            label_plc_cycle = PyDMLabel(init_channel=plc_cycle_count)
 
-            # if alarm of label_hearbeat == INVALID == plc down
-            # if cannot connect to label_heartbeat = ioc down
-            status_channel = PyDMChannel(
-                    heart_ch,
+            # if alarm of plc_cycle_count == INVALID => plc down
+            # if the count does not update and alarm == NO_ALARM =>
+            # plc online but stopped
+            self.plc_status_ch = PyDMChannel(
+                    plc_cycle_count,
                     severity_slot=functools.partial(
-                        self.heartbeat_severity_changed, plc_name))
-            status_channel.connect()
+                        self.plc_cycle_count_severity_changed, plc_name))
+            self.plc_status_ch.connect()
 
-            # if we can get the heartbeat the IOC should be ON, if not OFF
-            # if we get the heartbeat and the .SERV is invalid, the PLC is OFF
+            # if we can get the plc_cycle_count the PLC should be ON, if not OFF
+            # if we get the plc_cycle_count and the .SERV is INVALID, the PLC is OFF
             plc_status_indicator = PyDMBitIndicator(circle=True)
             plc_status_indicator.setColor(self._off_color)
+            # TODO - maybe add the case where PLC On but stopped
 
             # total initial number of ffs to initialize the dictionaries with
             # num_ffo * num_ff
@@ -108,23 +118,51 @@ class PLCIOCStatus(Display):
             widget = QtWidgets.QWidget()
             widget_layout = QtWidgets.QHBoxLayout()
 
+            # this is the same width as the labels in the plc_ioc_header
+            width = 150
+            widget_list = [label_name, label_online, label_in_use, label_alarmed,
+                           label_heartbeat, label_plc_cycle, plc_status_indicator]
             widget.setLayout(widget_layout)
+            self.setup_widget_size(width=width, widget_list=widget_list)
             widget.layout().addWidget(label_name)
             widget.layout().addWidget(label_online)
             widget.layout().addWidget(label_in_use)
             widget.layout().addWidget(label_alarmed)
             widget.layout().addWidget(label_heartbeat)
+            widget.layout().addWidget(label_plc_cycle)
             widget.layout().addWidget(plc_status_indicator)
 
             self.plc_ioc_container.layout().addWidget(widget)
-        vertical_spacer = (
-            QtWidgets.QSpacerItem(20, 40,
-                                  QtWidgets.QSizePolicy.Preferred,
-                                  QtWidgets.QSizePolicy.MinimumExpanding))
-        self.plc_ioc_container.layout().addItem(vertical_spacer)
+            vertical_spacer = (
+                QtWidgets.QSpacerItem(20, 20,
+                                      QtWidgets.QSizePolicy.Preferred,
+                                      QtWidgets.QSizePolicy.MinimumExpanding))
+            self.plc_ioc_container.layout().addItem(vertical_spacer)
+        self.plc_ioc_container.setSizePolicy(QtWidgets.QSizePolicy.Maximum,
+                                             QtWidgets.QSizePolicy.Preferred)
 
-    def heartbeat_severity_changed(self, key, alarm):
-        # 0 = NO_ALARM, 1 = MINOR, 2 = MAJOR, 3 = INVALID, # 4 = DISCONNECTED
+    def setup_widget_size(self, width, widget_list):
+        for widget in widget_list:
+            widget.setMinimumWidth(width)
+            widget.setMaximumWidth(width)
+
+    def plc_cycle_count_severity_changed(self, key, alarm):
+        """
+        Process PLC Cycle Count PV severity change.
+
+        Parameters
+        ----------
+        key : str
+            Prefix of PLC
+        alarm : int
+            New alarm.
+
+        Note
+        ----
+        alarm == 0 => NO_ALARM, if NO_ALARM and counter does not change,
+        PLC is till online but stopped
+        alarm == 3 => INVALID - PLC is Offline
+        """
         plc = self.ffs_count_map.get(key)
         if alarm == 3:
             plc['plc_status'] = False
@@ -146,9 +184,8 @@ class PLCIOCStatus(Display):
         self.update_plc_labels(key)
 
     def ffo_severity_changed(self, key, idx, alarm):
-        # 0 = NO_ALARM, 1 = MINOR, 2 = MAJOR, 3 = INVALID, 4 = DISCONNECTED
+        # 0 = NO_ALARM, 1 = MINOR, 2 = MAJOR, 3 = INVALID
         plc = self.ffs_count_map.get(key)
-        # TODO: probably don't need severity at all, but if we do
         if alarm != 0:
             plc['alarmed'][idx] = True
         else:
@@ -176,7 +213,7 @@ class PLCIOCStatus(Display):
         if plc_status is True:
             labels['plc_status'].setColor(self._on_color)
         else:
-            labels['plc_status'].setColor(self._on_color)
+            labels['plc_status'].setColor(self._off_color)
 
     def ui_filename(self):
         return 'plc_ioc_status.ui'
