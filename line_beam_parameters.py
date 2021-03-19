@@ -23,9 +23,10 @@ class LineBeamParametersControl(Display):
     # signal to emit when energy range is changed
     energy_range_signal = QtCore.Signal(int)
 
-    # use this to help differentiate between changing
-    # the bits internally vs. externally
-    _bits_are_set = False
+    # this is a gate to break an infinite loop of
+    # - Update from channel value
+    # - Write back to channel
+    _setting_bits = False
     energy_channel = None
 
     def __init__(self, parent=None, args=None, macros=None):
@@ -84,16 +85,13 @@ class LineBeamParametersControl(Display):
         """
         status = state == 2
         self._bits[key] = status
-        bit_map = list(map(int, [item for key, item in self._bits.items()]))
-        decimal_value = 0
-        for bit in bit_map:
-            # Shift left by pushing zeros in
-            # from the right and let the leftmost bits fall off
-            # Sets each bit to 1 if one of two bits is 1
-            decimal_value = (decimal_value << 1) | bit
-        # Emitting the signal below would set the value of this PV:
-        # 'ca://${PREFIX}BeamParamCntl:ReqBP:PhotonEnergyRanges' to out
-        if not self._bits_are_set:
+        decimal_value = functools.reduce(
+            (lambda x, y: (x << 1) | y),
+            map(int, [item for key, item in self._bits.items()])
+        )
+
+        if not self._setting_bits:
+            # emit the decimal value to the PhotonEnergyRange
             self.energy_range_signal.emit(decimal_value)
 
     def setup_energy_range_channel(self):
@@ -124,15 +122,15 @@ class LineBeamParametersControl(Display):
             return
         binary_range = list(bin(energy_range).replace("0b", ""))
         binary_list = list(map(int, binary_range))
-        self._bits_are_set = True
+        self._setting_bits = True
         for key, status in zip(self._bits.keys(), binary_list):
             self._bits[key] = bool(status)
             cb = self.findChild(QtWidgets.QCheckBox, f"{key}")
             state = 2 if status == 1 else 0
             cb.setCheckState(state)
-        # set this value back to false so we don't create a continuous
+        # set this value back to false so we don't create a infinite
         # loop between this slot and the energy_range_signal signal.
-        self._bits_are_set = False
+        self._setting_bits = False
 
     def ui_filename(self):
         return 'line_beam_parameters.ui'
