@@ -151,12 +151,12 @@ class PLCIOCStatus(Display):
             vertical_spacer = (
                 QtWidgets.QSpacerItem(20, 20,
                                       QtWidgets.QSizePolicy.Preferred,
-                                      QtWidgets.QSizePolicy.MinimumExpanding))
+                                      QtWidgets.QSizePolicy.Maximum))
             self.plc_ioc_container.layout().addItem(vertical_spacer)
         b_vertical_spacer = (
             QtWidgets.QSpacerItem(20, 20,
-                                  QtWidgets.QSizePolicy.Expanding,
-                                  QtWidgets.QSizePolicy.Preferred))
+                                  QtWidgets.QSizePolicy.Preferred,
+                                  QtWidgets.QSizePolicy.Expanding))
         self.plc_ioc_container.layout().addItem(b_vertical_spacer)
         self.plc_ioc_container.setSizePolicy(QtWidgets.QSizePolicy.Maximum,
                                              QtWidgets.QSizePolicy.Preferred)
