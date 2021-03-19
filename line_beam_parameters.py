@@ -50,7 +50,7 @@ class LineBeamParametersControl(Display):
         calculate the range upon changing a bit state.
         """
         for key, item in self._bits.items():
-            cb = self.findChild(QtWidgets.QCheckBox, f"{key}")
+            cb = self.findChild(QtWidgets.QCheckBox, key)
             cb.stateChanged.connect(functools.partial(
                 self.calc_energy_range, key))
 
@@ -82,7 +82,7 @@ class LineBeamParametersControl(Display):
         The checkboxes can be tri-states - here we use the states 0 and 2
         for unchecked and checked respectively.
         """
-        status = True if state == 2 else False
+        status = state == 2
         self._bits[key] = status
         bit_map = list(map(int, [item for key, item in self._bits.items()]))
         decimal_value = 0
