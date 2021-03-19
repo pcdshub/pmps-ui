@@ -126,7 +126,7 @@ class PLCIOCStatus(Display):
 
             # this is the same width as the labels in the plc_ioc_header
             max_width = 150
-            min_width = 120
+            min_width = 130
             widget_list = [label_name, label_online, label_in_use,
                            label_alarmed, label_heartbeat,
                            label_plc_task_info_1, label_plc_task_info_2,
@@ -151,13 +151,13 @@ class PLCIOCStatus(Display):
             vertical_spacer = (
                 QtWidgets.QSpacerItem(20, 20,
                                       QtWidgets.QSizePolicy.Preferred,
-                                      QtWidgets.QSizePolicy.Minimum))
+                                      QtWidgets.QSizePolicy.MinimumExpanding))
             self.plc_ioc_container.layout().addItem(vertical_spacer)
-        # b_vertical_spacer = (
-        #     QtWidgets.QSpacerItem(20, 20,
-        #                           QtWidgets.QSizePolicy.Maximum,
-        #                           QtWidgets.QSizePolicy.Maximum))
-        # self.plc_ioc_container.layout().addItem(b_vertical_spacer)
+        b_vertical_spacer = (
+            QtWidgets.QSpacerItem(20, 20,
+                                  QtWidgets.QSizePolicy.Expanding,
+                                  QtWidgets.QSizePolicy.Preferred))
+        self.plc_ioc_container.layout().addItem(b_vertical_spacer)
         self.plc_ioc_container.setSizePolicy(QtWidgets.QSizePolicy.Maximum,
                                              QtWidgets.QSizePolicy.Preferred)
 
