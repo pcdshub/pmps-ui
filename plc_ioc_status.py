@@ -14,7 +14,7 @@ from fast_faults import clear_channel
 class PLCIOCStatus(Display):
     _on_color = QColor(0, 255, 0)
     _off_color = QColor(100, 100, 100)
-    task_info_ccount = []
+    plc_status_ch = None
 
     def __init__(self, parent=None, args=None, macros=None):
         super(PLCIOCStatus, self).__init__(
@@ -23,8 +23,8 @@ class PLCIOCStatus(Display):
         self.ffs_count_map = {}
         self.ffs_label_map = {}
         self.setup_ui()
-        for ch in self.task_info_ccount:
-            self.destroyed.connect(functools.partial(clear_channel, ch))
+        if self.plc_status_ch:
+            self.destroyed.connect(functools.partial(clear_channel, self.plc_status_ch))
 
     def setup_ui(self):
         self.setup_plc_ioc_status()
@@ -71,9 +71,6 @@ class PLCIOCStatus(Display):
             label_plc_task_info_1 = PyDMLabel(init_channel=plc_task_info_1)
             label_plc_task_info_2 = PyDMLabel(init_channel=plc_task_info_2)
             label_plc_task_info_3 = PyDMLabel(init_channel=plc_task_info_3)
-            self.task_info_ccount.extend([label_plc_task_info_1,
-                                          label_plc_task_info_2,
-                                          label_plc_task_info_3])
 
             # if alarm of plc_task_info_1 == INVALID => plc down
             # if the count does not update and alarm == NO_ALARM =>
