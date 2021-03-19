@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1066</width>
+    <width>1106</width>
     <height>55</height>
    </rect>
   </property>
@@ -21,12 +21,12 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,0,0,0,0">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,0,0,0,0,0,0">
      <item>
       <widget class="QLabel" name="label_3">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>120</width>
          <height>0</height>
         </size>
        </property>
@@ -54,7 +54,7 @@
       <widget class="QLabel" name="label_6">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>120</width>
          <height>0</height>
         </size>
        </property>
@@ -82,7 +82,7 @@
       <widget class="QLabel" name="label_5">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>120</width>
          <height>0</height>
         </size>
        </property>
@@ -110,7 +110,7 @@
       <widget class="QLabel" name="label_2">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>120</width>
          <height>0</height>
         </size>
        </property>
@@ -138,7 +138,7 @@
       <widget class="QLabel" name="label">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>120</width>
          <height>0</height>
         </size>
        </property>
@@ -166,7 +166,7 @@
       <widget class="QLabel" name="label_7">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>120</width>
          <height>0</height>
         </size>
        </property>
@@ -183,7 +183,57 @@
         </font>
        </property>
        <property name="text">
-        <string>PLC Cycle Count</string>
+        <string>Taks 1 Count</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_8">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Taks 3 Count</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_9">
+       <property name="minimumSize">
+        <size>
+         <width>120</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Taks 3 Count</string>
        </property>
       </widget>
      </item>
@@ -191,7 +241,7 @@
       <widget class="QLabel" name="label_4">
        <property name="minimumSize">
         <size>
-         <width>150</width>
+         <width>120</width>
          <height>0</height>
         </size>
        </property>

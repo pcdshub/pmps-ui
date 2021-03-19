@@ -14,7 +14,7 @@ from fast_faults import clear_channel
 class PLCIOCStatus(Display):
     _on_color = QColor(0, 255, 0)
     _off_color = QColor(100, 100, 100)
-    plc_status_ch = None
+    task_info_ccount = []
 
     def __init__(self, parent=None, args=None, macros=None):
         super(PLCIOCStatus, self).__init__(
@@ -23,7 +23,8 @@ class PLCIOCStatus(Display):
         self.ffs_count_map = {}
         self.ffs_label_map = {}
         self.setup_ui()
-        self.destroyed.connect(functools.partial(clear_channel, self.plc_status_ch))
+        for ch in self.task_info_ccount:
+            self.destroyed.connect(functools.partial(clear_channel, ch))
 
     def setup_ui(self):
         self.setup_plc_ioc_status()
@@ -55,21 +56,30 @@ class PLCIOCStatus(Display):
             ico_heart_ch = Template(
                 'ca://${P}HEARTBEAT').safe_substitute(**plc_macros)
             # the get PLC process cycle count
-            plc_cycle_count = Template(
+            plc_task_info_1 = Template(
                'ca://${P}TaskInfo:1:CycleCount').safe_substitute(**plc_macros)
+            plc_task_info_2 = Template(
+               'ca://${P}TaskInfo:2:CycleCount').safe_substitute(**plc_macros)
+            plc_task_info_3 = Template(
+                'ca://${P}TaskInfo:3:CycleCount').safe_substitute(**plc_macros)
 
             label_name = QtWidgets.QLabel(str(plc_name))
             label_online = QtWidgets.QLabel()
             label_in_use = QtWidgets.QLabel()
             label_alarmed = QtWidgets.QLabel()
             label_heartbeat = PyDMLabel(init_channel=ico_heart_ch)
-            label_plc_cycle = PyDMLabel(init_channel=plc_cycle_count)
+            label_plc_task_info_1 = PyDMLabel(init_channel=plc_task_info_1)
+            label_plc_task_info_2 = PyDMLabel(init_channel=plc_task_info_2)
+            label_plc_task_info_3 = PyDMLabel(init_channel=plc_task_info_3)
+            self.task_info_ccount.extend([label_plc_task_info_1,
+                                          label_plc_task_info_2,
+                                          label_plc_task_info_3])
 
-            # if alarm of plc_cycle_count == INVALID => plc down
+            # if alarm of plc_task_info_1 == INVALID => plc down
             # if the count does not update and alarm == NO_ALARM =>
             # plc online but stopped
             self.plc_status_ch = PyDMChannel(
-                    plc_cycle_count,
+                    plc_task_info_1,
                     severity_slot=functools.partial(
                         self.plc_cycle_count_severity_changed, plc_name))
             self.plc_status_ch.connect()
@@ -118,32 +128,46 @@ class PLCIOCStatus(Display):
             widget_layout = QtWidgets.QHBoxLayout()
 
             # this is the same width as the labels in the plc_ioc_header
-            width = 150
-            widget_list = [label_name, label_online, label_in_use, label_alarmed,
-                           label_heartbeat, label_plc_cycle, plc_status_indicator]
+            max_width = 150
+            min_width = 120
+            widget_list = [label_name, label_online, label_in_use,
+                           label_alarmed, label_heartbeat,
+                           label_plc_task_info_1, label_plc_task_info_2,
+                           label_plc_task_info_3, plc_status_indicator]
             widget.setLayout(widget_layout)
-            self.setup_widget_size(width=width, widget_list=widget_list)
+
+            # set minimum height of the widget
+            widget.setMinimumHeight(40)
+            self.setup_widget_size(max_width=max_width, min_width=min_width,
+                                   widget_list=widget_list)
             widget.layout().addWidget(label_name)
             widget.layout().addWidget(label_online)
             widget.layout().addWidget(label_in_use)
             widget.layout().addWidget(label_alarmed)
             widget.layout().addWidget(label_heartbeat)
-            widget.layout().addWidget(label_plc_cycle)
+            widget.layout().addWidget(label_plc_task_info_1)
+            widget.layout().addWidget(label_plc_task_info_2)
+            widget.layout().addWidget(label_plc_task_info_3)
             widget.layout().addWidget(plc_status_indicator)
 
             self.plc_ioc_container.layout().addWidget(widget)
             vertical_spacer = (
                 QtWidgets.QSpacerItem(20, 20,
                                       QtWidgets.QSizePolicy.Preferred,
-                                      QtWidgets.QSizePolicy.MinimumExpanding))
+                                      QtWidgets.QSizePolicy.Minimum))
             self.plc_ioc_container.layout().addItem(vertical_spacer)
+        # b_vertical_spacer = (
+        #     QtWidgets.QSpacerItem(20, 20,
+        #                           QtWidgets.QSizePolicy.Maximum,
+        #                           QtWidgets.QSizePolicy.Maximum))
+        # self.plc_ioc_container.layout().addItem(b_vertical_spacer)
         self.plc_ioc_container.setSizePolicy(QtWidgets.QSizePolicy.Maximum,
                                              QtWidgets.QSizePolicy.Preferred)
 
-    def setup_widget_size(self, width, widget_list):
+    def setup_widget_size(self, max_width, min_width, widget_list):
         for widget in widget_list:
-            widget.setMinimumWidth(width)
-            widget.setMaximumWidth(width)
+            widget.setMinimumWidth(min_width)
+            widget.setMaximumWidth(max_width)
 
     def plc_cycle_count_severity_changed(self, key, alarm):
         """
