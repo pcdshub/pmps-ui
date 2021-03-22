@@ -238,11 +238,11 @@ class PreemptiveRequests(Display):
             cb = self.findChild(QtWidgets.QCheckBox, f"filter_cb_{key}")
             self._bits[key] = cb.isChecked()
 
-        bit_map = list(map(int, [item for key, item in self._bits.items()]))
-        out = 0
-        for bit in bit_map:
-            out = (out << 1) | bit
-        return out
+        decimal_value = functools.reduce(
+            (lambda x, y: (x << 1) | y),
+            map(int, [item for key, item in self._bits.items()])
+        )
+        return decimal_value
 
     def update_filters(self):
         default_options = [
