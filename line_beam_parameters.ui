@@ -14,6 +14,460 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="6" column="1">
+    <widget class="PyDMPushButton" name="PyDMPushButton">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(148, 255, 85);</string>
+     </property>
+     <property name="text">
+      <string>Apply</string>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Apply</string>
+     </property>
+     <property name="showConfirmDialog" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="pressValue" stdset="0">
+      <string>1</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QFrame" name="energy_range_frame">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>6</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="bit15">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit14">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit13">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit12">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit11">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit10">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit9">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit8">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit7">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit6">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit5">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit4">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit3">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit1">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit0">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_13">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Photon Energy Ranges:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_15">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Rate:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_11">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Transmission:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="PyDMLineEdit" name="PyDMLineEdit_4">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="showUnits" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Rate</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="1">
+    <widget class="PyDMLineEdit" name="PyDMLineEdit">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="showUnits" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission</string>
+     </property>
+    </widget>
+   </item>
    <item row="3" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <property name="spacing">
@@ -482,453 +936,18 @@
      </property>
     </spacer>
    </item>
-   <item row="5" column="1">
-    <widget class="PyDMLineEdit" name="PyDMLineEdit_4">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>200</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="showUnits" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Rate</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_11">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Transmission:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0" colspan="2">
-    <widget class="Line" name="line_2">
+   <item row="7" column="0" colspan="2">
+    <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="label_15">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Rate:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
-    <widget class="PyDMPushButton" name="PyDMPushButton">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>200</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(148, 255, 85);</string>
-     </property>
-     <property name="text">
-      <string>Apply</string>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Apply</string>
-     </property>
-     <property name="showConfirmDialog" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="pressValue" stdset="0">
-      <string>1</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>40</width>
-       <height>20</height>
+       <width>20</width>
+       <height>40</height>
       </size>
      </property>
     </spacer>
-   </item>
-   <item row="1" column="0" colspan="2">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="PyDMLineEdit" name="PyDMLineEdit">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>200</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="showUnits" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_13">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Photon Energy Ranges:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QFrame" name="energy_range_frame">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Panel</enum>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="leftMargin">
-       <number>6</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QCheckBox" name="bit15">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit14">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit13">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit12">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit11">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit10">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit9">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit8">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit7">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit6">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit5">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit4">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit3">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit2">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit1">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bit0">
-        <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-QCheckBox::indicator::checked {background-color: green;}
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
    </item>
   </layout>
  </widget>
