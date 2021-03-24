@@ -123,73 +123,6 @@
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="4" column="1">
-           <widget class="PyDMLabel" name="PyDMLabel_3">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="showUnits" stdset="0">
-             <bool>true</bool>
-            </property>
-            <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}CurrentBP:Transmission_RBV</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="PyDMLabel" name="PyDMLabel_6">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="showUnits" stdset="0">
-             <bool>true</bool>
-            </property>
-            <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}RequestedBP:Transmission_RBV</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLabel" name="label_4">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Requested</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Transmission</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="label_6">
             <property name="enabled">
@@ -203,89 +136,6 @@
             </property>
             <property name="text">
              <string>Rate</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="PyDMLabel" name="PyDMLabel_4">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="showUnits" stdset="0">
-             <bool>true</bool>
-            </property>
-            <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}RequestedBP:Rate_RBV</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="PyDMLabel" name="PyDMLabel">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="showUnits" stdset="0">
-             <bool>true</bool>
-            </property>
-            <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}CurrentBP:Rate_RBV</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="PyDMLabel" name="PyDMLabel_5">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="showUnits" stdset="0">
-             <bool>true</bool>
-            </property>
-            <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}RequestedBP:PulseEnergy_RBV</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_3">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Current</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_5">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Pulse Energy</string>
             </property>
            </widget>
           </item>
@@ -308,8 +158,8 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="PyDMLabel" name="PyDMLabel_2">
+          <item row="2" column="1">
+           <widget class="PyDMLabel" name="PyDMLabel">
             <property name="enabled">
              <bool>true</bool>
             </property>
@@ -320,7 +170,109 @@
              <bool>true</bool>
             </property>
             <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}CurrentBP:PulseEnergy_RBV</string>
+             <string>ca://${line_arbiter_prefix}CurrentBP:Rate_RBV</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Transmission</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="PyDMLabel" name="PyDMLabel_4">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="showUnits" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="channel" stdset="0">
+             <string>ca://${line_arbiter_prefix}RequestedBP:Rate_RBV</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="PyDMLabel" name="PyDMLabel_6">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="showUnits" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="channel" stdset="0">
+             <string>ca://${line_arbiter_prefix}RequestedBP:Transmission_RBV</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="label_3">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Current</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="label_4">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Requested</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="PyDMLabel" name="PyDMLabel_3">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="showUnits" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="channel" stdset="0">
+             <string>ca://${line_arbiter_prefix}CurrentBP:Transmission_RBV</string>
             </property>
            </widget>
           </item>

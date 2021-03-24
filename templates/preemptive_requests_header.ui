@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>956</width>
+    <width>856</width>
     <height>47</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>956</width>
+    <width>856</width>
     <height>47</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>956</width>
+    <width>856</width>
     <height>47</height>
    </size>
   </property>
@@ -89,13 +89,13 @@
         <widget class="QLabel" name="label_4">
          <property name="minimumSize">
           <size>
-           <width>500</width>
+           <width>400</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>500</width>
+           <width>400</width>
            <height>16777215</height>
           </size>
          </property>
@@ -212,34 +212,6 @@
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QLabel" name="label_13">
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>200</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Pulse Energy</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
         </layout>
        </item>
       </layout>
@@ -325,13 +297,13 @@
     <widget class="Line" name="line">
      <property name="minimumSize">
       <size>
-       <width>956</width>
+       <width>856</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>956</width>
+       <width>856</width>
        <height>16777215</height>
       </size>
      </property>
