@@ -27,7 +27,6 @@ def morph_into_vertical(label):
     label.update()
 
 
-
 class PMPS(Display):
     def __init__(self, parent=None, args=None, macros=None):
         if not macros:
@@ -48,6 +47,8 @@ class PMPS(Display):
                 continue
             macros[m] = config.get(m)
 
+        # add CFG macro to display the Line when starting without macros
+        macros['CFG'] = config_name
         super(PMPS, self).__init__(parent=parent, args=args, macros=macros)
 
         self.config = config
