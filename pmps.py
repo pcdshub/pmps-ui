@@ -19,7 +19,15 @@ def morph_into_vertical(label):
         painter = QtGui.QPainter(label)
         painter.translate(label.sizeHint().width(), label.sizeHint().height())
         painter.rotate(270)
-        painter.drawText(0, 0, label.text())
+
+        # width of text inside the label widget
+        width = label.fontMetrics().boundingRect(label.text()).width()
+        # height of label widget
+        label_h = label.sizeHint().height()
+        # this will make it look like it is right (or top) justified
+        pos_x = label_h - width
+        painter.drawText(pos_x, 0, label.text())
+        label.update()
 
     label.minimumSizeHint = minimumSizeHint
     label.sizeHint = sizeHint
