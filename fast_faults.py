@@ -121,8 +121,7 @@ class FastFaults(Display):
         options = [
             {'name': 'ok', 'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:OK_RBV'},
             {'name': 'beampermitted', 'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:BeamPermitted_RBV'},
-            # TODO: seems like a type below: ca://ca://... probably not doing any harm?
-            {'name': 'bypassed', 'channel': 'ca://ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Active_RBV'}
+            {'name': 'bypassed', 'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Active_RBV'}
         ]
         filters = []
         for opt in default_options:
