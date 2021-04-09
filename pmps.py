@@ -1,9 +1,10 @@
-import yaml
 import webbrowser
 from os import path
-from qtpy import QtCore, QtWidgets, QtGui
+
+import yaml
 from pydm import Display
 from pydm.widgets import PyDMLabel
+from qtpy import QtCore, QtGui, QtWidgets
 
 
 def morph_into_vertical(label):

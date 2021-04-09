@@ -8,6 +8,7 @@ from pydm.widgets.byte import PyDMBitIndicator
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtWidgets
 from qtpy.QtGui import QColor
+
 from fast_faults import clear_channel
 
 

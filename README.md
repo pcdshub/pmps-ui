@@ -6,7 +6,7 @@ This display takes a macro called `CFG` which specify the prefix for the
 configuration file to be loaded, e.g. LFE_config.yml.
 
 By default to ensure backwards compatibility, if one launches the `pmps.py` file
-without specifying macros, the `LFE` configuration is loaded and the screen is 
+without specifying macros, the `LFE` configuration is loaded and the screen is
 launched.
 
 To launch a different configuration do:

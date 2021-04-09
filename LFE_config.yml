@@ -37,7 +37,7 @@ fastfaults:
 
   - prefix: "PLC:XRT:HOMS:"
     ffo_start: 1
-    ffo_end: 2  
+    ffo_end: 2
     ff_start: 1
     ff_end: 50
 
@@ -76,5 +76,3 @@ preemptive_requests:
     arbiter_instance: "ARB:01"
     assertion_pool_start: 1
     assertion_pool_end: 20
-
-
