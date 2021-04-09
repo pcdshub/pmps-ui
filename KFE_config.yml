@@ -1,7 +1,7 @@
 line_arbiter_prefix: "PMPS:KFE:"
 undulator_kicker_rate_pv: "IOC:BSY0:MP01:BYKIKS_RATE"
 
-dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PRr2cuGGz/k-pmps-events?refresh=10s&kiosk"
+dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PRr2cuGGz/k-pmps-events?viewPanel=2&orgId=1&refresh=10s&kiosk"
 
 fastfaults:
   - prefix: "PMPS:KFE:"
@@ -14,23 +14,29 @@ fastfaults:
     ffo_start: 1
     ffo_end: 1
     ff_start: 1
-    ff_end: 50
+    ff_end: 75
 
   - prefix: "PLC:KFE:VAC:K0:"
     ffo_start: 1
-    ffo_end: 2
+    ffo_end: 4
     ff_start: 1
-    ff_end: 50
+    ff_end: 10
 
-  - prefix: "PLC:TMO:VAC:"
+  - prefix: "TMO:VAC:"
     ffo_start: 1
-    ffo_end: 1
+    ffo_end: 4
     ff_start: 1
     ff_end: 50
 
   - prefix: "PLC:TMO:OPTICS:"
     ffo_start: 1
-    ffo_end: 1
+    ffo_end: 2
+    ff_start: 1
+    ff_end: 50
+
+  - prefix: "PLC:TMO:MOTION:"
+    ffo_start: 1
+    ffo_end: 2
     ff_start: 1
     ff_end: 50
 
@@ -40,13 +46,66 @@ fastfaults:
     ff_start: 1
     ff_end: 50
 
+  - prefix: "PLC:RIX:OPTICS:"
+    ffo_start: 1
+    ffo_end: 2
+    ff_start: 1
+    ff_end: 50
+
+  - prefix: "PLC:KFE:RIX:VAC:K2:"
+    ffo_start: 1
+    ffo_end: 2
+    ff_start: 1
+    ff_end: 50
+
+  - prefix: "PLC:RIX:MOTION:"
+    ffo_start: 1
+    ffo_end: 2
+    ff_start: 1
+    ff_end: 100
+
 preemptive_requests:
   - prefix: "PMPS:KFE:"
     arbiter_instance: "Arbiter:01"
-    assertion_pool_start: 0
+    assertion_pool_start: 1
     assertion_pool_end: 20
    
   - prefix: "PLC:KFE:MOTION:"
-    arbiter_instance: "ARB:01"
-    assertion_pool_start: 0
+    arbiter_instance: "ARB"
+    assertion_pool_start: 1
     assertion_pool_end: 20
+  
+  - prefix: "PLC:KFE:GATT:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+   
+  - prefix: "PLC:KFE:GATT:"
+    arbiter_instance: "ARB:02"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+   
+  - prefix: "PLC:TMO:MOTION:"
+    arbiter_instance: "ARB"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+   
+  - prefix: "PLC:TMO:VAC:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:TMO:VAC:"
+    arbiter_instance: "ARB:02"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:RIX:OPTICS:"
+    arbiter_instance: "ARB"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:RIX:MOTION:"
+    arbiter_instance: "ARB"
+    assertion_pool_start: 1
+    assertion_pool_end: 50
