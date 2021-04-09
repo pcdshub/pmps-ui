@@ -80,6 +80,7 @@ class PMPS(Display):
         self.setup_preemptive_requests()
         self.setup_arbiter_outputs()
         self.setup_ev_calculation()
+        self.setup_plc_ioc_status()
 
         # We are done... re-enable painting
         self.setUpdatesEnabled(True)
@@ -110,6 +111,12 @@ class PMPS(Display):
         tab = self.ui.tb_ev_calculation
         ev_widget = EVCalculation(macros=self.config)
         tab.layout().addWidget(ev_widget)
+
+    def setup_plc_ioc_status(self):
+        from plc_ioc_status import PLCIOCStatus
+        tab = self.ui.tb_plc_ioc_status
+        plc_widget = PLCIOCStatus(macros=self.config)
+        tab.layout().addWidget(plc_widget)
 
     def handle_open_browser(self):
         url = self.ui.webbrowser.url().toString()

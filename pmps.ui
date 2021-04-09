@@ -1004,6 +1004,12 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_8"/>
      </widget>
+     <widget class="QWidget" name="tb_plc_ioc_status">
+      <attribute name="title">
+       <string>PLC IOC Status</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_10"/>
+     </widget>
      <widget class="QWidget" name="tb_line_beam_param_ctrl">
       <attribute name="title">
        <string>Line Beam Parameters Control</string>
