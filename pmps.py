@@ -81,6 +81,7 @@ class PMPS(Display):
         self.setup_preemptive_requests()
         self.setup_arbiter_outputs()
         self.setup_ev_calculation()
+        self.setup_line_parameters_contorl()
         self.setup_plc_ioc_status()
 
         # We are done... re-enable painting
@@ -112,6 +113,12 @@ class PMPS(Display):
         tab = self.ui.tb_ev_calculation
         ev_widget = EVCalculation(macros=self.config)
         tab.layout().addWidget(ev_widget)
+
+    def setup_line_parameters_contorl(self):
+        from line_beam_parameters import LineBeamParametersControl
+        tab = self.ui.tb_line_beam_param_ctrl
+        beam_widget = LineBeamParametersControl(macros=self.config)
+        tab.layout().addWidget(beam_widget)
 
     def setup_plc_ioc_status(self):
         from plc_ioc_status import PLCIOCStatus
