@@ -1,7 +1,8 @@
 import json
-from qtpy import QtWidgets
+
 from pydm import Display
 from pydm.widgets import PyDMEmbeddedDisplay
+from qtpy import QtWidgets
 
 
 class ArbiterOutputs(Display):

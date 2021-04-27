@@ -1,11 +1,12 @@
-import json
 import functools
 import itertools
+import json
 from string import Template
-from qtpy import QtWidgets, QtCore
+
 from pydm import Display
 from pydm.widgets import PyDMEmbeddedDisplay
 from pydm.widgets.channel import PyDMChannel
+from qtpy import QtCore, QtWidgets
 
 
 def clear_channel(ch):

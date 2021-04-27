@@ -1,4 +1,5 @@
 from pydm import Display
+
 from widgets import UndulatorListWidget
 
 
