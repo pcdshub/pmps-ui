@@ -1,12 +1,13 @@
 import functools
 from string import Template
 
-from pydm.widgets.channel import PyDMChannel
 from pydm import Display
 from pydm.widgets import PyDMLabel
+from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
-from pmps import morph_into_vertical
+
 from fast_faults import clear_channel
+from pmps import morph_into_vertical
 
 
 class LineBeamParametersControl(Display):
