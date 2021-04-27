@@ -81,6 +81,7 @@ class PMPS(Display):
         self.setup_arbiter_outputs()
         self.setup_ev_calculation()
         self.setup_line_parameters_contorl()
+        self.setup_plc_ioc_status()
 
         # We are done... re-enable painting
         self.setUpdatesEnabled(True)
@@ -117,6 +118,12 @@ class PMPS(Display):
         tab = self.ui.tb_line_beam_param_ctrl
         beam_widget = LineBeamParametersControl(macros=self.config)
         tab.layout().addWidget(beam_widget)
+
+    def setup_plc_ioc_status(self):
+        from plc_ioc_status import PLCIOCStatus
+        tab = self.ui.tb_plc_ioc_status
+        plc_widget = PLCIOCStatus(macros=self.config)
+        tab.layout().addWidget(plc_widget)
 
     def handle_open_browser(self):
         url = self.ui.webbrowser.url().toString()
