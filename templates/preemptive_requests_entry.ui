@@ -141,6 +141,9 @@
      <property name="channel" stdset="0">
       <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:Transmission_RBV</string>
      </property>
+     <property name="displayFormat" stdset="0">
+      <enum>PyDMLabel::Exponential</enum>
+     </property>
     </widget>
    </item>
    <item>

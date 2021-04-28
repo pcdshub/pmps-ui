@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>927</width>
+    <width>1503</width>
     <height>215</height>
    </rect>
   </property>
@@ -716,11 +716,20 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
      <property name="toolTip">
       <string/>
      </property>
+     <property name="precision" stdset="0">
+      <number>2</number>
+     </property>
      <property name="showUnits" stdset="0">
-      <bool>true</bool>
+      <bool>false</bool>
+     </property>
+     <property name="precisionFromPV" stdset="0">
+      <bool>false</bool>
      </property>
      <property name="channel" stdset="0">
       <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission</string>
+     </property>
+     <property name="displayFormat" stdset="0">
+      <enum>PyDMLineEdit::Exponential</enum>
      </property>
     </widget>
    </item>

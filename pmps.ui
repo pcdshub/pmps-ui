@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1486</width>
+    <width>1767</width>
     <height>742</height>
    </rect>
   </property>
@@ -214,11 +214,20 @@
             <property name="toolTip">
              <string/>
             </property>
+            <property name="precision" stdset="0">
+             <number>0</number>
+            </property>
             <property name="showUnits" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="precisionFromPV" stdset="0">
              <bool>true</bool>
             </property>
             <property name="channel" stdset="0">
              <string>ca://${line_arbiter_prefix}RequestedBP:Transmission_RBV</string>
+            </property>
+            <property name="displayFormat" stdset="0">
+             <enum>PyDMLabel::Exponential</enum>
             </property>
            </widget>
           </item>
@@ -268,11 +277,20 @@
             <property name="toolTip">
              <string/>
             </property>
+            <property name="precision" stdset="0">
+             <number>0</number>
+            </property>
             <property name="showUnits" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="precisionFromPV" stdset="0">
              <bool>true</bool>
             </property>
             <property name="channel" stdset="0">
              <string>ca://${line_arbiter_prefix}CurrentBP:Transmission_RBV</string>
+            </property>
+            <property name="displayFormat" stdset="0">
+             <enum>PyDMLabel::Exponential</enum>
             </property>
            </widget>
           </item>
