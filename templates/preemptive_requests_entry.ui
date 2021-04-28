@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>856</width>
+    <width>1056</width>
     <height>40</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>856</width>
+    <width>1056</width>
     <height>40</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>856</width>
+    <width>1056</width>
     <height>40</height>
    </size>
   </property>
@@ -156,13 +156,13 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>200</width>
+       <width>400</width>
        <height>16</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>200</width>
+       <width>400</width>
        <height>16</height>
       </size>
      </property>
@@ -192,7 +192,7 @@
       <bool>false</bool>
      </property>
      <property name="numBits" stdset="0">
-      <number>16</number>
+      <number>32</number>
      </property>
     </widget>
    </item>

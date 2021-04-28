@@ -3,7 +3,7 @@ from os import path
 
 import yaml
 from pydm import Display
-from pydm.widgets import PyDMLabel
+from pydm.widgets import PyDMByteIndicator, PyDMLabel
 from qtpy import QtCore, QtGui, QtWidgets
 
 
@@ -67,7 +67,8 @@ class PMPS(Display):
         self.setup_tabs()
 
     def setup_ev_range_labels(self):
-        labels = range(7, 23)
+        labels = list(range(7, 40))
+        labels.remove(23)
         for l_idx in labels:
             l = self.findChild(PyDMLabel, "PyDMLabel_{}".format(l_idx))
             if l is not None:
@@ -133,3 +134,28 @@ class PMPS(Display):
 
     def ui_filename(self):
         return 'pmps.ui'
+
+
+# Hack for negative bitmasks
+def update_indicators(self):
+    """
+    Update the inner bit indicators accordingly with the new value.
+    """
+    if self._shift < 0:
+        value = int(self.value) << abs(self._shift)
+    else:
+        value = int(self.value) >> self._shift
+    if value < 0:
+        value = 2**32 + value
+
+    bits = [(value >> i) & 1
+            for i in range(self._num_bits)]
+    for bit, indicator in zip(bits, self._indicators):
+        if self._connected:
+            c = self._on_color if bit else self._off_color
+        else:
+            c = self._disconnected_color
+        indicator.setColor(c)
+
+
+PyDMByteIndicator.update_indicators = update_indicators

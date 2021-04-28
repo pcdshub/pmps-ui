@@ -16,10 +16,7 @@ class LineBeamParametersControl(Display):
     """
     # object names for all energy range bits checkboxes, set them all
     # to unchecked to start with
-    _bits = {'bit15': False, 'bit14': False, 'bit13': False, 'bit12': False,
-             'bit11': False, 'bit10': False, 'bit9': False, 'bit8': False,
-             'bit7': False, 'bit6': False, 'bit5': False, 'bit4': False,
-             'bit3': False, 'bit2': False, 'bit1': False, 'bit0': False}
+    _bits = {f'bit{num}': False for num in range(32)}
 
     # signal to emit when energy range is changed
     energy_range_signal = QtCore.Signal(int)
@@ -121,6 +118,11 @@ class LineBeamParametersControl(Display):
         """
         if energy_range is None:
             return
+
+        # EPICS is signed but we want the signed 32-bit int
+        if energy_range < 0:
+            energy_range = 2**32 + energy_range
+
         binary_range = list(bin(energy_range).replace("0b", ""))
         binary_list = list(map(int, binary_range))
         self._setting_bits = True

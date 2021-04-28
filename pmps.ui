@@ -161,7 +161,7 @@
           <item row="2" column="1">
            <widget class="PyDMLabel" name="PyDMLabel">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="toolTip">
              <string/>
@@ -193,7 +193,7 @@
           <item row="2" column="2">
            <widget class="PyDMLabel" name="PyDMLabel_4">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="toolTip">
              <string/>
@@ -209,7 +209,7 @@
           <item row="3" column="2">
            <widget class="PyDMLabel" name="PyDMLabel_6">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="toolTip">
              <string/>
@@ -263,7 +263,7 @@
           <item row="3" column="1">
            <widget class="PyDMLabel" name="PyDMLabel_3">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="toolTip">
              <string/>
@@ -322,7 +322,7 @@
           <item row="3" column="1" colspan="2">
            <widget class="PyDMByteIndicator" name="PyDMByteIndicator_4">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -356,48 +356,17 @@
              <bool>false</bool>
             </property>
             <property name="numBits" stdset="0">
-             <number>16</number>
+             <number>32</number>
             </property>
            </widget>
           </item>
-          <item row="1" column="1" colspan="2">
-           <widget class="PyDMByteIndicator" name="PyDMByteIndicator_2">
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_9">
             <property name="enabled">
              <bool>true</bool>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>16</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}CurrentBP:PhotonEnergyRanges_RBV</string>
-            </property>
-            <property name="onColor" stdset="0">
-             <color>
-              <red>10</red>
-              <green>90</green>
-              <blue>179</blue>
-             </color>
-            </property>
-            <property name="orientation" stdset="0">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="showLabels" stdset="0">
-             <bool>false</bool>
-            </property>
-            <property name="bigEndian" stdset="0">
-             <bool>true</bool>
-            </property>
-            <property name="circles" stdset="0">
-             <bool>false</bool>
-            </property>
-            <property name="numBits" stdset="0">
-             <number>16</number>
+            <property name="text">
+             <string>Requested</string>
             </property>
            </widget>
           </item>
@@ -406,6 +375,406 @@
             <property name="spacing">
              <number>0</number>
             </property>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_39">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[31:31]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_38">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[30:30]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_37">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[29:29]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_36">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[28:28]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_35">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[27:27]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_34">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[26:26]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_33">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[25:25]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_32">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[24:24]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_31">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[23:23]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_30">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[22:22]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_29">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[21:21]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_28">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[20:20]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_27">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[19:19]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_26">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[18:18]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_25">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[17:17]</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="PyDMLabel" name="PyDMLabel_24">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Arial</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string/>
+              </property>
+              <property name="text">
+               <string>25000</string>
+              </property>
+              <property name="precisionFromPV" stdset="0">
+               <bool>false</bool>
+              </property>
+              <property name="channel" stdset="0">
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[16:16]</string>
+              </property>
+             </widget>
+            </item>
             <item>
              <widget class="PyDMLabel" name="PyDMLabel_7">
               <property name="enabled">
@@ -808,36 +1177,10 @@
             </item>
            </layout>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_10">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Current</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QLabel" name="label_8">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>eV</string>
-            </property>
-           </widget>
-          </item>
           <item row="2" column="1" colspan="2">
            <widget class="PyDMByteIndicator" name="PyDMByteIndicator_3">
             <property name="enabled">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="maximumSize">
              <size>
@@ -871,7 +1214,74 @@
              <bool>false</bool>
             </property>
             <property name="numBits" stdset="0">
-             <number>16</number>
+             <number>32</number>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_10">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Current</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_8">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>eV</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1" colspan="2">
+           <widget class="PyDMByteIndicator" name="PyDMByteIndicator_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="channel" stdset="0">
+             <string>ca://${line_arbiter_prefix}CurrentBP:PhotonEnergyRanges_RBV</string>
+            </property>
+            <property name="onColor" stdset="0">
+             <color>
+              <red>10</red>
+              <green>90</green>
+              <blue>179</blue>
+             </color>
+            </property>
+            <property name="orientation" stdset="0">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="showLabels" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="bigEndian" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="circles" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="numBits" stdset="0">
+             <number>32</number>
             </property>
            </widget>
           </item>
@@ -882,16 +1292,6 @@
             </property>
             <property name="text">
              <string>Residual</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_9">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="text">
-             <string>Requested</string>
             </property>
            </widget>
           </item>
