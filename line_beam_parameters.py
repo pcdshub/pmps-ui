@@ -119,7 +119,7 @@ class LineBeamParametersControl(Display):
         if energy_range is None:
             return
 
-        # EPICS is signed but we want the signed 32-bit int
+        # EPICS is signed but we want the unsigned 32-bit int
         if energy_range < 0:
             energy_range = 2**32 + energy_range
 
