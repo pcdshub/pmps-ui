@@ -16,7 +16,7 @@ class LineBeamParametersControl(Display):
     """
     # object names for all energy range bits checkboxes, set them all
     # to unchecked to start with
-    _bits = {f'bit{num}': False for num in range(32)}
+    _bits = {f'bit{num}': False for num in reversed(range(32))}
 
     # signal to emit when energy range is changed
     energy_range_signal = QtCore.Signal(int)
