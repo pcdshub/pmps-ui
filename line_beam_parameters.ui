@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>927</width>
+    <width>1503</width>
     <height>215</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    <item row="6" column="1">
     <widget class="PyDMPushButton" name="PyDMPushButton">
      <property name="enabled">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="minimumSize">
       <size>
@@ -87,6 +87,262 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <item>
+       <widget class="QCheckBox" name="bit31">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit30">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit29">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit28">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit27">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit26">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit25">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit24">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit23">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit22">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit21">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit20">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit19">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit18">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit17">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit16">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QCheckBox" name="bit15">
         <property name="styleSheet">
@@ -395,7 +651,7 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
    <item row="5" column="1">
     <widget class="PyDMLineEdit" name="PyDMLineEdit_4">
      <property name="enabled">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="minimumSize">
       <size>
@@ -443,7 +699,7 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
    <item row="0" column="1">
     <widget class="PyDMLineEdit" name="PyDMLineEdit">
      <property name="enabled">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="minimumSize">
       <size>
@@ -460,11 +716,20 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
      <property name="toolTip">
       <string/>
      </property>
+     <property name="precision" stdset="0">
+      <number>2</number>
+     </property>
      <property name="showUnits" stdset="0">
-      <bool>true</bool>
+      <bool>false</bool>
+     </property>
+     <property name="precisionFromPV" stdset="0">
+      <bool>false</bool>
      </property>
      <property name="channel" stdset="0">
       <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission</string>
+     </property>
+     <property name="displayFormat" stdset="0">
+      <enum>PyDMLineEdit::Exponential</enum>
      </property>
     </widget>
    </item>
@@ -473,6 +738,499 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
      <property name="spacing">
       <number>0</number>
      </property>
+     <item>
+      <widget class="PyDMLabel" name="label_bit31">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[31:31]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit30">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[30:30]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit29">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[29:29]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit28">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[28:28]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit27">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[27:27]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit26">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[26:26]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit25">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[25:25]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit24">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[24:24]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit23">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[23:23]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit22">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[22:22]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit21">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[21:21]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit20">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[20:20]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit19">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[19:19]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit18">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[18:18]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit17">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[17:17]</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="label_bit16">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string>25000</string>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[16:16]</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <widget class="PyDMLabel" name="label_bit15">
        <property name="enabled">
