@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1420</width>
+    <width>1556</width>
     <height>60</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1420</width>
+    <width>1556</width>
     <height>60</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1420</width>
+    <width>1556</width>
     <height>70</height>
    </size>
   </property>
@@ -412,58 +412,46 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMLabel" name="PyDMLabel_6">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
+    <widget class="PyDMDateTimeLabel" name="PyDMDateTimeLabel">
      <property name="minimumSize">
       <size>
-       <width>80</width>
+       <width>185</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>80</width>
+       <width>185</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="toolTip">
       <string/>
      </property>
-     <property name="showUnits" stdset="0">
-      <bool>true</bool>
-     </property>
      <property name="channel" stdset="0">
-      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:ElapsedTime_RBV</string>
+      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:RemainingTime_RBV</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="PyDMLineEdit" name="PyDMLineEdit">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
+    <widget class="PyDMDateTimeEdit" name="PyDMDateTimeEdit">
      <property name="minimumSize">
       <size>
-       <width>100</width>
+       <width>185</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>100</width>
+       <width>185</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="toolTip">
       <string/>
      </property>
-     <property name="showUnits" stdset="0">
-      <bool>true</bool>
-     </property>
      <property name="channel" stdset="0">
-      <string>ca://ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Duration</string>
+      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Duration</string>
      </property>
     </widget>
    </item>
@@ -590,9 +578,14 @@ color: rgb(255, 255, 255)</string>
    <header>pydm.widgets.byte</header>
   </customwidget>
   <customwidget>
-   <class>PyDMLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>pydm.widgets.line_edit</header>
+   <class>PyDMDateTimeEdit</class>
+   <extends>QDateTimeEdit</extends>
+   <header>pydm.widgets.datetime</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMDateTimeLabel</class>
+   <extends>QLabel</extends>
+   <header>pydm.widgets.datetime</header>
   </customwidget>
   <customwidget>
    <class>PyDMPushButton</class>
