@@ -20,7 +20,18 @@ def morph_into_vertical(label):
         painter = QtGui.QPainter(label)
         painter.translate(label.sizeHint().width(), label.sizeHint().height())
         painter.rotate(270)
-        painter.drawText(0, 0, label.text())
+
+        # size of text inside the label widget
+        text_w = label.fontMetrics().boundingRect(label.text()).width()
+        text_h = label.fontMetrics().boundingRect(label.text()).height()
+        # size of label widget
+        label_h = label.sizeHint().height()
+        label_w = label.sizeHint().width()
+        # this will make it look like it is right (or top) justified
+        pos_x = label_h - text_w
+        # center the text on the bitmask
+        pos_y = -(label_w - text_h)
+        painter.drawText(pos_x, pos_y, label.text())
 
     label.minimumSizeHint = minimumSizeHint
     label.sizeHint = sizeHint
