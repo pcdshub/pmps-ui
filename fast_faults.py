@@ -6,6 +6,7 @@ from string import Template
 from pydm import Display
 from pydm.widgets import PyDMEmbeddedDisplay
 from pydm.widgets.channel import PyDMChannel
+from pydm.widgets.datetime import PyDMDateTimeEdit, PyDMDateTimeLabel
 from qtpy import QtCore, QtWidgets
 
 
@@ -68,6 +69,9 @@ class FastFaults(Display):
     def setup_ui(self):
         self.ui.btn_apply_filters.clicked.connect(self.update_filters)
         self.setup_fastfaults()
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(self.update_min_times)
+        self.timer.start(10000)
 
     def setup_fastfaults(self):
         ffs = self.config.get('fastfaults')
@@ -134,3 +138,10 @@ class FastFaults(Display):
                 opt['condition'] = cb.currentIndex()
                 filters.append(opt)
         self.filters_changed.emit(filters)
+
+    def update_min_times(self):
+        current_time = QtCore.QDateTime.currentSecsSinceEpoch()
+        latest_minute = current_time // 60 * 60
+        min_time = QtCore.QDateTime.fromSecsSinceEpoch(latest_minute)
+        for widget in self.findChildren(PyDMDateTimeEdit, 'ExpirationSelect'):
+            widget.setMinimumDateTime(min_time)
