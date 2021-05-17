@@ -48,7 +48,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="PyDMLabel" name="PyDMLabel_2">
+    <widget class="PyDMLabel" name="DeviceName">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -79,7 +79,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMLabel" name="PyDMLabel_3">
+    <widget class="PyDMLabel" name="TypeCode">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -158,7 +158,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="PyDMLabel" name="PyDMLabel_4">
+        <widget class="PyDMLabel" name="Path">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -241,7 +241,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="PyDMLabel" name="PyDMLabel_5">
+        <widget class="PyDMLabel" name="Desc">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -273,7 +273,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMByteIndicator" name="PyDMByteIndicator">
+    <widget class="PyDMByteIndicator" name="FFOk">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -342,7 +342,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMByteIndicator" name="PyDMByteIndicator_5">
+    <widget class="PyDMByteIndicator" name="FFBeamOk">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -380,7 +380,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMByteIndicator" name="PyDMByteIndicator_3">
+    <widget class="PyDMByteIndicator" name="BypassIndicator">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -418,7 +418,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMDateTimeLabel" name="PyDMDateTimeLabel">
+    <widget class="PyDMDateTimeLabel" name="ExpirationShow">
      <property name="minimumSize">
       <size>
        <width>185</width>
@@ -438,12 +438,18 @@
       <set>Qt::AlignCenter</set>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:RemainingTime_RBV</string>
+      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Duration_RBV</string>
+     </property>
+     <property name="timeBase" stdset="0">
+      <enum>PyDMDateTimeLabel::Seconds</enum>
+     </property>
+     <property name="relative" stdset="0">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="PyDMDateTimeEdit" name="PyDMDateTimeEdit">
+    <widget class="PyDMDateTimeEdit" name="ExpirationSelect">
      <property name="minimumSize">
       <size>
        <width>185</width>
@@ -465,6 +471,15 @@
      <property name="channel" stdset="0">
       <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Duration</string>
      </property>
+     <property name="timeBase" stdset="0">
+      <enum>PyDMDateTimeEdit::Seconds</enum>
+     </property>
+     <property name="relative" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="blockPastDate" stdset="0">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
@@ -484,7 +499,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="PyDMPushButton" name="PyDMPushButton_2">
+    <widget class="PyDMPushButton" name="BypassActivate">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -535,7 +550,7 @@ color: rgb(0, 0, 0);</string>
     </spacer>
    </item>
    <item>
-    <widget class="PyDMPushButton" name="PyDMPushButton_3">
+    <widget class="PyDMPushButton" name="BypassDeactivate">
      <property name="enabled">
       <bool>true</bool>
      </property>
