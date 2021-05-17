@@ -137,7 +137,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>275</width>
+        <width>274</width>
         <height>58</height>
        </rect>
       </property>
@@ -220,7 +220,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>275</width>
+        <width>274</width>
         <height>58</height>
        </rect>
       </property>
@@ -418,35 +418,70 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMDateTimeLabel" name="ExpirationShow">
-     <property name="minimumSize">
-      <size>
-       <width>185</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>185</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Duration_RBV</string>
-     </property>
-     <property name="timeBase" stdset="0">
-      <enum>PyDMDateTimeLabel::Seconds</enum>
-     </property>
-     <property name="relative" stdset="0">
-      <bool>false</bool>
-     </property>
-    </widget>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="PyDMDateTimeLabel" name="OverrideStartDate">
+       <property name="minimumSize">
+        <size>
+         <width>185</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>185</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:StartDT_RBV</string>
+       </property>
+       <property name="timeBase" stdset="0">
+        <enum>PyDMDateTimeLabel::Seconds</enum>
+       </property>
+       <property name="relative" stdset="0">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMDateTimeLabel" name="ExpirationShow">
+       <property name="minimumSize">
+        <size>
+         <width>185</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>185</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Expiration_RBV</string>
+       </property>
+       <property name="timeBase" stdset="0">
+        <enum>PyDMDateTimeLabel::Seconds</enum>
+       </property>
+       <property name="relative" stdset="0">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
     <widget class="PyDMDateTimeEdit" name="ExpirationSelect">
@@ -469,7 +504,7 @@
       <bool>false</bool>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Duration</string>
+      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Expiration</string>
      </property>
      <property name="timeBase" stdset="0">
       <enum>PyDMDateTimeEdit::Seconds</enum>

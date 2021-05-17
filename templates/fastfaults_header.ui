@@ -306,7 +306,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Expiration Time</string>
+        <string>Bypass Start/End</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
