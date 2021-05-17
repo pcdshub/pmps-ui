@@ -71,6 +71,7 @@ class FastFaults(Display):
         self.setup_fastfaults()
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.update_min_times)
+        self.timer.singleShot(1000, self.update_min_times)
         self.timer.start(10000)
 
     def setup_fastfaults(self):
