@@ -43,9 +43,9 @@ class CustomTableWidgetItem(QTableWidgetItem):
             other_widget = other.tableWidget().cellWidget(other.row(), column)
             widget = self.tableWidget().cellWidget(self.row(), column)
 
-            if isinstance(self._obj_type, QtWidgets.QLabel):
+            if self._obj_type == QtWidgets.QLabel:
                 other_value, value = self.sort_label(other_widget, widget)
-            elif isinstance(self._obj_type, PyDMByteIndicator):
+            elif self._obj_type == PyDMByteIndicator:
                 other_value, value = self.sort_byte_indicator(other_widget,
                                                               widget)
             else:
@@ -110,6 +110,7 @@ class CustomTableWidgetItem(QTableWidgetItem):
                 bit_color = i._brush.color().getRgb()
                 color = bit_color == on_color
                 temp.append(color)
+            # return how many OFF bits color there are out of 16
             return 16 - sum(temp)
         other_value = get_value(other_byte_indicator._indicators)
         value = get_value(byte_indicator._indicators)
