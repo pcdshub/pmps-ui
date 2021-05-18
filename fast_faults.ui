@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1488</width>
+    <width>1662</width>
     <height>261</height>
    </rect>
   </property>
@@ -38,9 +38,15 @@
    </item>
    <item>
     <widget class="QFrame" name="ff_frame_filters">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>1644</width>
        <height>70</height>
       </size>
      </property>
@@ -302,9 +308,15 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1468</width>
-        <height>122</height>
+        <width>1642</width>
+        <height>123</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <property name="spacing">

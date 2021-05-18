@@ -1,0 +1,18 @@
+line_arbiter_prefix: "PMPS:LFE:"
+undulator_kicker_rate_pv: "IOC:BSY0:MP01:BYKIK_RATE"
+
+dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PQBzCnmMz/l-pmps-events?refresh=10s&kiosk"
+
+
+fastfaults:
+  - prefix: "PLC:TST:MOT:"
+    ffo_start: 1
+    ffo_end: 1
+    ff_start: 1
+    ff_end: 50
+
+preemptive_requests:
+  - prefix: "PMPS:LFE:"
+    arbiter_instance: "Arbiter:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20

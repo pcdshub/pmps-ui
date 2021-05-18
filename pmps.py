@@ -4,6 +4,7 @@ from os import path
 import yaml
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMLabel
+from pydm.widgets.datetime import PyDMDateTimeEdit, TimeBase
 from qtpy import QtCore, QtGui, QtWidgets
 
 
@@ -20,7 +21,18 @@ def morph_into_vertical(label):
         painter = QtGui.QPainter(label)
         painter.translate(label.sizeHint().width(), label.sizeHint().height())
         painter.rotate(270)
-        painter.drawText(0, 0, label.text())
+
+        # size of text inside the label widget
+        text_w = label.fontMetrics().boundingRect(label.text()).width()
+        text_h = label.fontMetrics().boundingRect(label.text()).height()
+        # size of label widget
+        label_h = label.sizeHint().height()
+        label_w = label.sizeHint().width()
+        # this will make it look like it is right (or top) justified
+        pos_x = label_h - text_w
+        # center the text on the bitmask
+        pos_y = -(label_w - text_h)
+        painter.drawText(pos_x, pos_y, label.text())
 
     label.minimumSizeHint = minimumSizeHint
     label.sizeHint = sizeHint
@@ -159,3 +171,25 @@ def update_indicators(self):
 
 
 PyDMByteIndicator.update_indicators = update_indicators
+
+
+# Hack for broken datetime widget
+def send_value(self):
+    val = self.dateTime()
+    now = QtCore.QDateTime.currentDateTime()
+    if self._block_past_date and val < now:
+        #logger.error('Selected date cannot be lower than current date.')
+        print('Selected date cannot be lower than current date.')
+        return
+
+    if self.relative:
+        new_value = now.msecsTo(val)
+    else:
+        new_value = val.toMSecsSinceEpoch()
+
+    if self.timeBase == TimeBase.Seconds:
+        new_value /= 1000.0
+    self.send_value_signal.emit(new_value)
+
+
+PyDMDateTimeEdit.send_value = send_value
