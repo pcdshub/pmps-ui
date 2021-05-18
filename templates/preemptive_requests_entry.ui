@@ -71,7 +71,7 @@
       <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:Device_RBV</string>
      </property>
      <property name="displayFormat" stdset="0">
-      <enum>PyDMLabel::Hex</enum>
+      <enum>PyDMLabel::String</enum>
      </property>
     </widget>
    </item>
