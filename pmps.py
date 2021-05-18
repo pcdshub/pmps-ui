@@ -4,6 +4,7 @@ from os import path
 import yaml
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMLabel
+from pydm.widgets.datetime import PyDMDateTimeEdit, TimeBase
 from qtpy import QtCore, QtGui, QtWidgets
 
 
@@ -170,3 +171,25 @@ def update_indicators(self):
 
 
 PyDMByteIndicator.update_indicators = update_indicators
+
+
+# Hack for broken datetime widget
+def send_value(self):
+    val = self.dateTime()
+    now = QtCore.QDateTime.currentDateTime()
+    if self._block_past_date and val < now:
+        #logger.error('Selected date cannot be lower than current date.')
+        print('Selected date cannot be lower than current date.')
+        return
+
+    if self.relative:
+        new_value = now.msecsTo(val)
+    else:
+        new_value = val.toMSecsSinceEpoch()
+
+    if self.timeBase == TimeBase.Seconds:
+        new_value /= 1000.0
+    self.send_value_signal.emit(new_value)
+
+
+PyDMDateTimeEdit.send_value = send_value

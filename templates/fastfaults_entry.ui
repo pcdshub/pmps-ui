@@ -6,19 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1420</width>
+    <width>1644</width>
     <height>60</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
-    <width>1420</width>
+    <width>0</width>
     <height>60</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1420</width>
+    <width>1644</width>
     <height>70</height>
    </size>
   </property>
@@ -42,7 +48,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="PyDMLabel" name="PyDMLabel_2">
+    <widget class="PyDMLabel" name="DeviceName">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -73,7 +79,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMLabel" name="PyDMLabel_3">
+    <widget class="PyDMLabel" name="TypeCode">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -107,13 +113,13 @@
     <widget class="QScrollArea" name="scrollArea">
      <property name="minimumSize">
       <size>
-       <width>302</width>
+       <width>0</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>302</width>
+       <width>277</width>
        <height>16777215</height>
       </size>
      </property>
@@ -131,7 +137,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>300</width>
+        <width>274</width>
         <height>58</height>
        </rect>
       </property>
@@ -152,12 +158,12 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="PyDMLabel" name="PyDMLabel_4">
+        <widget class="PyDMLabel" name="Path">
          <property name="enabled">
           <bool>false</bool>
          </property>
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -190,13 +196,13 @@
     <widget class="QScrollArea" name="scrollArea_2">
      <property name="minimumSize">
       <size>
-       <width>252</width>
+       <width>0</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>252</width>
+       <width>277</width>
        <height>16777215</height>
       </size>
      </property>
@@ -214,7 +220,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>250</width>
+        <width>274</width>
         <height>58</height>
        </rect>
       </property>
@@ -235,7 +241,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="PyDMLabel" name="PyDMLabel_5">
+        <widget class="PyDMLabel" name="Desc">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -267,7 +273,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMByteIndicator" name="PyDMByteIndicator">
+    <widget class="PyDMByteIndicator" name="FFOk">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -336,7 +342,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMByteIndicator" name="PyDMByteIndicator_5">
+    <widget class="PyDMByteIndicator" name="FFBeamOk">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -374,7 +380,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMByteIndicator" name="PyDMByteIndicator_3">
+    <widget class="PyDMByteIndicator" name="BypassIndicator">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -412,58 +418,102 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMLabel" name="PyDMLabel_6">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>80</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>80</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="showUnits" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:ElapsedTime_RBV</string>
-     </property>
-    </widget>
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <widget class="PyDMDateTimeLabel" name="OverrideStartDate">
+       <property name="minimumSize">
+        <size>
+         <width>185</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>185</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:StartDT_RBV</string>
+       </property>
+       <property name="timeBase" stdset="0">
+        <enum>PyDMDateTimeLabel::Seconds</enum>
+       </property>
+       <property name="relative" stdset="0">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMDateTimeLabel" name="ExpirationShow">
+       <property name="minimumSize">
+        <size>
+         <width>185</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>185</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Expiration_RBV</string>
+       </property>
+       <property name="timeBase" stdset="0">
+        <enum>PyDMDateTimeLabel::Seconds</enum>
+       </property>
+       <property name="relative" stdset="0">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
    <item>
-    <widget class="PyDMLineEdit" name="PyDMLineEdit">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
+    <widget class="PyDMDateTimeEdit" name="ExpirationSelect">
      <property name="minimumSize">
       <size>
-       <width>100</width>
+       <width>185</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>100</width>
+       <width>185</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="toolTip">
       <string/>
      </property>
-     <property name="showUnits" stdset="0">
-      <bool>true</bool>
+     <property name="alarmSensitiveBorder" stdset="0">
+      <bool>false</bool>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Duration</string>
+      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Expiration</string>
+     </property>
+     <property name="timeBase" stdset="0">
+      <enum>PyDMDateTimeEdit::Seconds</enum>
+     </property>
+     <property name="relative" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="blockPastDate" stdset="0">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -472,16 +522,19 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>40</width>
+       <width>20</width>
        <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
    <item>
-    <widget class="PyDMPushButton" name="PyDMPushButton_2">
+    <widget class="PyDMPushButton" name="BypassActivate">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -520,16 +573,19 @@ color: rgb(0, 0, 0);</string>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>40</width>
+       <width>20</width>
        <height>20</height>
       </size>
      </property>
     </spacer>
    </item>
    <item>
-    <widget class="PyDMPushButton" name="PyDMPushButton_3">
+    <widget class="PyDMPushButton" name="BypassDeactivate">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -568,9 +624,12 @@ color: rgb(255, 255, 255)</string>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>40</width>
+       <width>20</width>
        <height>20</height>
       </size>
      </property>
@@ -590,9 +649,14 @@ color: rgb(255, 255, 255)</string>
    <header>pydm.widgets.byte</header>
   </customwidget>
   <customwidget>
-   <class>PyDMLineEdit</class>
-   <extends>QLineEdit</extends>
-   <header>pydm.widgets.line_edit</header>
+   <class>PyDMDateTimeEdit</class>
+   <extends>QDateTimeEdit</extends>
+   <header>pydm.widgets.datetime</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMDateTimeLabel</class>
+   <extends>QLabel</extends>
+   <header>pydm.widgets.datetime</header>
   </customwidget>
   <customwidget>
    <class>PyDMPushButton</class>
