@@ -81,7 +81,7 @@ class CustomTableWidgetItem(QTableWidgetItem):
             value = sys.maxsize
         return other_value, value
 
-    def sort_byte_indicator(self, other_byte_indicator, byte_indicator):
+    def sort_byte_indicator(self, other_widget, widget):
         """
         Get the value of the current PyDMbyteIndicator and previous one.
 
@@ -98,10 +98,10 @@ class CustomTableWidgetItem(QTableWidgetItem):
         """
         # color when the bits are on
         on_color = (21, 165, 62, 255)
-        other_byte_indicator = other_byte_indicator.embedded_widget.ui.findChild(
-            self._obj_type, str(self._obj_name))
+        other_byte_indicator = other_widget.embedded_widget.ui.findChild(
+            PyDMByteIndicator, str(self._obj_name))
 
-        byte_indicator = byte_indicator.embedded_widget.ui.findChild(
+        byte_indicator = widget.embedded_widget.ui.findChild(
             self._obj_type, str(self._obj_name))
 
         def get_value(indicators):
@@ -112,8 +112,11 @@ class CustomTableWidgetItem(QTableWidgetItem):
                 temp.append(color)
             # return how many OFF bits color there are out of 16
             return 16 - sum(temp)
-        other_value = get_value(other_byte_indicator._indicators)
-        value = get_value(byte_indicator._indicators)
+        other_value, value = 0, 0
+        if other_byte_indicator:
+            other_value = get_value(other_byte_indicator._indicators)
+        if byte_indicator:
+            value = get_value(byte_indicator._indicators)
         return other_value, value
 
 
