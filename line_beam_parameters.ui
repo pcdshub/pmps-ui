@@ -44,7 +44,7 @@
       <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Apply</string>
      </property>
      <property name="showConfirmDialog" stdset="0">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="pressValue" stdset="0">
       <string>1</string>
