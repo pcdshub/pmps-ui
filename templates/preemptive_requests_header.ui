@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>956</width>
+    <width>1206</width>
     <height>47</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>956</width>
+    <width>1206</width>
     <height>47</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>956</width>
+    <width>1206</width>
     <height>47</height>
    </size>
   </property>
@@ -53,6 +53,34 @@
       <enum>QLayout::SetFixedSize</enum>
      </property>
      <item>
+      <widget class="QLabel" name="label_8">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Device</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="label_5">
        <property name="minimumSize">
         <size>
@@ -75,6 +103,9 @@
        <property name="text">
         <string>Assertion ID</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
       </widget>
      </item>
      <item>
@@ -89,13 +120,13 @@
         <widget class="QLabel" name="label_4">
          <property name="minimumSize">
           <size>
-           <width>500</width>
+           <width>600</width>
            <height>0</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>500</width>
+           <width>600</width>
            <height>16777215</height>
           </size>
          </property>
@@ -188,13 +219,13 @@
           <widget class="QLabel" name="label_11">
            <property name="minimumSize">
             <size>
-             <width>200</width>
+             <width>400</width>
              <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>200</width>
+             <width>400</width>
              <height>16777215</height>
             </size>
            </property>
@@ -208,35 +239,7 @@
             <string>Photon Energy Ranges</string>
            </property>
            <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_13">
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>200</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Pulse Energy</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -325,13 +328,13 @@
     <widget class="Line" name="line">
      <property name="minimumSize">
       <size>
-       <width>956</width>
+       <width>1056</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>956</width>
+       <width>1056</width>
        <height>16777215</height>
       </size>
      </property>

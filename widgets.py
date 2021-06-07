@@ -1,10 +1,10 @@
 import functools
 import weakref
 
-from qtpy import QtCore, QtGui, QtWidgets
 from pydm.widgets.base import PyDMPrimitiveWidget, widget_destroyed
 from pydm.widgets.channel import PyDMChannel
 from pydm.widgets.label import PyDMLabel
+from qtpy import QtCore, QtGui, QtWidgets
 
 
 class UndulatorWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):

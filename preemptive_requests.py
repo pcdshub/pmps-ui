@@ -1,14 +1,15 @@
-import json
 import functools
 import itertools
+import json
 import sys
 from string import Template
 
-from fast_faults import VisibilityEmbedded
 from pydm import Display
-from pydm.widgets import PyDMByteIndicator
+from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay
 from PyQt5.QtGui import QIcon, QPixmap, QTableWidgetItem
 from qtpy import QtCore, QtWidgets
+
+from fast_faults import VisibilityEmbedded
 
 
 class CustomTableWidgetItem(QTableWidgetItem):

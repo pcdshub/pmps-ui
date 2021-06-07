@@ -1,9 +1,11 @@
-import yaml
 import webbrowser
 from os import path
-from qtpy import QtCore, QtWidgets, QtGui
+
+import yaml
 from pydm import Display
-from pydm.widgets import PyDMLabel
+from pydm.widgets import PyDMByteIndicator, PyDMLabel
+from pydm.widgets.datetime import PyDMDateTimeEdit, TimeBase
+from qtpy import QtCore, QtGui, QtWidgets
 
 
 def morph_into_vertical(label):
@@ -19,13 +21,23 @@ def morph_into_vertical(label):
         painter = QtGui.QPainter(label)
         painter.translate(label.sizeHint().width(), label.sizeHint().height())
         painter.rotate(270)
-        painter.drawText(0, 0, label.text())
+
+        # size of text inside the label widget
+        text_w = label.fontMetrics().boundingRect(label.text()).width()
+        text_h = label.fontMetrics().boundingRect(label.text()).height()
+        # size of label widget
+        label_h = label.sizeHint().height()
+        label_w = label.sizeHint().width()
+        # this will make it look like it is right (or top) justified
+        pos_x = label_h - text_w
+        # center the text on the bitmask
+        pos_y = -(label_w - text_h)
+        painter.drawText(pos_x, pos_y, label.text())
 
     label.minimumSizeHint = minimumSizeHint
     label.sizeHint = sizeHint
     label.paintEvent = paintEvent
     label.update()
-
 
 
 class PMPS(Display):
@@ -48,6 +60,8 @@ class PMPS(Display):
                 continue
             macros[m] = config.get(m)
 
+        # add CFG macro to display the Line when starting without macros
+        macros['CFG'] = config_name
         super(PMPS, self).__init__(parent=parent, args=args, macros=macros)
 
         self.config = config
@@ -65,7 +79,8 @@ class PMPS(Display):
         self.setup_tabs()
 
     def setup_ev_range_labels(self):
-        labels = range(7, 23)
+        labels = list(range(7, 40))
+        labels.remove(23)
         for l_idx in labels:
             l = self.findChild(PyDMLabel, "PyDMLabel_{}".format(l_idx))
             if l is not None:
@@ -79,6 +94,8 @@ class PMPS(Display):
         self.setup_preemptive_requests()
         self.setup_arbiter_outputs()
         self.setup_ev_calculation()
+        self.setup_line_parameters_contorl()
+        self.setup_plc_ioc_status()
 
         # We are done... re-enable painting
         self.setUpdatesEnabled(True)
@@ -110,6 +127,18 @@ class PMPS(Display):
         ev_widget = EVCalculation(macros=self.config)
         tab.layout().addWidget(ev_widget)
 
+    def setup_line_parameters_contorl(self):
+        from line_beam_parameters import LineBeamParametersControl
+        tab = self.ui.tb_line_beam_param_ctrl
+        beam_widget = LineBeamParametersControl(macros=self.config)
+        tab.layout().addWidget(beam_widget)
+
+    def setup_plc_ioc_status(self):
+        from plc_ioc_status import PLCIOCStatus
+        tab = self.ui.tb_plc_ioc_status
+        plc_widget = PLCIOCStatus(macros=self.config)
+        tab.layout().addWidget(plc_widget)
+
     def handle_open_browser(self):
         url = self.ui.webbrowser.url().toString()
         if url:
@@ -117,3 +146,50 @@ class PMPS(Display):
 
     def ui_filename(self):
         return 'pmps.ui'
+
+
+# Hack for negative bitmasks
+def update_indicators(self):
+    """
+    Update the inner bit indicators accordingly with the new value.
+    """
+    if self._shift < 0:
+        value = int(self.value) << abs(self._shift)
+    else:
+        value = int(self.value) >> self._shift
+    if value < 0:
+        value = 2**32 + value
+
+    bits = [(value >> i) & 1
+            for i in range(self._num_bits)]
+    for bit, indicator in zip(bits, self._indicators):
+        if self._connected:
+            c = self._on_color if bit else self._off_color
+        else:
+            c = self._disconnected_color
+        indicator.setColor(c)
+
+
+PyDMByteIndicator.update_indicators = update_indicators
+
+
+# Hack for broken datetime widget
+def send_value(self):
+    val = self.dateTime()
+    now = QtCore.QDateTime.currentDateTime()
+    if self._block_past_date and val < now:
+        #logger.error('Selected date cannot be lower than current date.')
+        print('Selected date cannot be lower than current date.')
+        return
+
+    if self.relative:
+        new_value = now.msecsTo(val)
+    else:
+        new_value = val.toMSecsSinceEpoch()
+
+    if self.timeBase == TimeBase.Seconds:
+        new_value /= 1000.0
+    self.send_value_signal.emit(new_value)
+
+
+PyDMDateTimeEdit.send_value = send_value
