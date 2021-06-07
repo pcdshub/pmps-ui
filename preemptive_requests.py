@@ -5,7 +5,8 @@ import sys
 from string import Template
 
 from pydm import Display
-from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay
+from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
+from pydm.widgets.channel import PyDMChannel
 from PyQt5.QtGui import QIcon, QPixmap, QTableWidgetItem
 from qtpy import QtCore, QtWidgets
 
@@ -29,92 +30,41 @@ class CustomTableWidgetItem(QTableWidgetItem):
     For now this class only handles sorting for the QLabel widgets and
     PyDMByteIndicators.
     """
-    def __init__(self, widget_type, widget_name, parent=None):
+    def __init__(self, widget_type, widget_name, channel, parent=None):
         QTableWidgetItem.__init__(self, parent)
+        self.setText('0')
         self._obj_name = widget_name
         self._obj_type = widget_type
+        self.channel = channel
+        self._channel = PyDMChannel(channel, value_slot=self.update_value)
+        self._channel.connect()
+
+    def channels(self):
+        """
+        Make sure PyDM sees this channel to clean up at the end
+        """
+        return [self._channel]
+
+    def update_value(self, value):
+        """
+        Use the hidden text field to store the value from the PV
+        """
+        if issubclass(self._obj_type, PyDMByteIndicator):
+            count = 0
+            if value < 0:
+                value = 2**32 + value
+            while value > 0:
+                if value % 2:
+                    count += 1
+                value = value >> 1
+            value = count
+        self.setText(str(value))
 
     def __lt__(self, other):
         """
-        Override the __lt__ to handle data sorting for rate.
+        Use numeric order instead of alphabetical
         """
-        # column 0 is where the embedded display widget data is at
-        column = 0
-        try:
-            other_widget = other.tableWidget().cellWidget(other.row(), column)
-            widget = self.tableWidget().cellWidget(self.row(), column)
-
-            if isinstance(self._obj_type, QtWidgets.QLabel):
-                other_value, value = self.sort_label(other_widget, widget)
-            elif isinstance(self._obj_type, PyDMByteIndicator):
-                other_value, value = self.sort_byte_indicator(other_widget,
-                                                              widget)
-            else:
-                return QTableWidgetItem.__lt__(self, other)
-            return float(other_value) < float(value)
-        except Exception:
-            return QTableWidgetItem.__lt__(self, other)
-
-    def sort_label(self, other_label, label):
-        """
-        Get the value of the current label and previous label.
-
-        Returns
-        -------
-        values : tuple
-            (other_value, value)
-        """
-        other_label = other_label.embedded_widget.ui.findChild(
-            self._obj_type, str(self._obj_name))
-        label = label.embedded_widget.ui.findChild(
-            self._obj_type, str(self._obj_name))
-        # # values in the labels will have their units displayed,
-        # # so we want to eliminate those
-        other_value = ''.join(filter(str.isdigit, other_label.text()))
-        value = ''.join(filter(str.isdigit, label.text()))
-        # if we cannot get the values because PVs are disconnected
-        # or we don't have numerical values for some reason, pretend
-        # they are maxsize so they go at the end of table if sorting
-        # in ascending order
-        if other_value == '':
-            other_value = sys.maxsize
-        if value == '':
-            value = sys.maxsize
-        return other_value, value
-
-    def sort_byte_indicator(self, other_byte_indicator, byte_indicator):
-        """
-        Get the value of the current PyDMbyteIndicator and previous one.
-
-        TODO: probably not a very safe idea here to do so:
-        Get the number of off bits based on the color of the bit, specifically
-        based on the `ON` color. If PVs are disconnected, the bits are
-        considered `0`. We could technically differentiate between the
-        disconnected and 0 bits by checking one more color if we need to.
-
-        Returns
-        -------
-        values : tuple
-            (other_value, value)
-        """
-        # color when the bits are on
-        on_color = (21, 165, 62, 255)
-        other_byte_indicator = other_byte_indicator.embedded_widget.ui.findChild(
-            self._obj_type, str(self._obj_name))
-
-        byte_indicator = byte_indicator.embedded_widget.ui.findChild(
-            self._obj_type, str(self._obj_name))
-
-        def get_value(indicators):
-            temp = []
-            for i in indicators:
-                bit_color = i._brush.color().getRgb()
-                color = bit_color == on_color
-                temp.append(color)
-            return 16 - sum(temp)
-        other_value = get_value(other_byte_indicator._indicators)
-        value = get_value(byte_indicator._indicators)
-        return other_value, value
+        return float(self.text()) < float(other.text())
 
 
 class PreemptiveRequests(Display):
@@ -184,12 +134,13 @@ class PreemptiveRequests(Display):
             return
         reqs_table = self.ui.reqs_table_widget
         # setup table
-        reqs_table.setColumnCount(3)
+        reqs_table.setColumnCount(4)
         # we only need a second column to be able to sort based on another
         # element other than the one in the first column - since the widgets
         # are placed in the first column we should hide the second one.
         reqs_table.hideColumn(1)
         reqs_table.hideColumn(2)
+        reqs_table.hideColumn(3)
         if reqs_table is None:
             return
         count = 0
@@ -217,37 +168,55 @@ class PreemptiveRequests(Display):
                 widget.loadWhenShown = False
                 widget.disconnectWhenHidden = False
 
-                # insert items in the table
+                # insert the widget you see into the table
                 row_position = reqs_table.rowCount()
                 reqs_table.insertRow(row_position)
                 reqs_table.setCellWidget(row_position, 0, widget)
 
                 # insert a fake customized QTableWidgetItem to allow sorting
-                # based on Rate - column position 0
-                rate_item = CustomTableWidgetItem(widget_type=QtWidgets.QLabel,
-                                                  widget_name='rate_label')
+                # based on Rate - column position 1
+                rate_widget = widget.findChild(PyDMLabel, 'rate_label')
+                rate_item = CustomTableWidgetItem(
+                    widget_type=QtWidgets.QLabel,
+                    widget_name='rate_label',
+                    channel=rate_widget.channel,
+                    )
                 rate_item.setSizeHint(widget.size())
-                reqs_table.setItem(row_position, 0, rate_item)
+                reqs_table.setItem(row_position, 1, rate_item)
                 # insert a fake customized QTableWidgetItem to allow sorting
-                # based on Transmission - column position 1
+                # based on Transmission - column position 2
+                trans_widget = widget.findChild(PyDMLabel, 'transmission_label')
+                trans_addr = trans_widget.channel
                 trans_item = CustomTableWidgetItem(
                     widget_type=QtWidgets.QLabel,
-                    widget_name='transmission_label')
+                    widget_name='transmission_label',
+                    channel=trans_widget.channel,
+                    )
                 trans_item.setSizeHint(widget.size())
-                reqs_table.setItem(row_position, 1, trans_item)
+                reqs_table.setItem(row_position, 2, trans_item)
 
                 # insert a fake customized QTableWidgetItem to allow sorting
-                # based on Energy Range Transmission
+                # based on Energy Range - column position 3
+                range_widget = widget.findChild(PyDMByteIndicator,
+                                                'energy_bytes')
                 energy_range = CustomTableWidgetItem(
                     widget_type=PyDMByteIndicator,
-                    widget_name='energy_range_indicator')
+                    widget_name='energy_range_indicator',
+                    channel=range_widget.channel,
+                    )
                 energy_range.setSizeHint(widget.size())
-                reqs_table.setItem(row_position, 2, energy_range)
+                reqs_table.setItem(row_position, 3, energy_range)
 
                 count += 1
         reqs_table.resizeRowsToContents()
         self.update_filters()
         print(f'Added {count} preemptive requests')
+
+    def update_table_value(self, value, table_item, processor=None):
+        if processor is not None:
+            value = processor(value)
+
+        table_item.setText(str(value))
 
     def sort_rate_items(self, btn):
         """
@@ -256,7 +225,7 @@ class PreemptiveRequests(Display):
         the values from the rate label (CustomTabWidgetItem column 0) will be
         compared and sorted.
         """
-        column = 0
+        column = 1
         state = self._toggle_rate_pb()
         if state is True:
             self.ui.reqs_table_widget.sortItems(column,
@@ -273,7 +242,7 @@ class PreemptiveRequests(Display):
         method, where the values from the transmission label
         (CustomTabWidgetItem column 1) will be compared and sorted.
         """
-        column = 1
+        column = 2
         state = self._toggle_transmission_pb()
         if state is True:
             self.ui.reqs_table_widget.sortItems(column,
@@ -290,7 +259,7 @@ class PreemptiveRequests(Display):
           method, where the values from the transmission label
           (CustomTabWidgetItem column 1) will be compared and sorted.
           """
-        column = 2
+        column = 3
         state = self._toggle_energy_range_pb()
         if state is True:
             self.ui.reqs_table_widget.sortItems(column,

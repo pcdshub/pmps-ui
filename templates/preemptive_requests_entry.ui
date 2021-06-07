@@ -42,7 +42,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="PyDMLabel" name="PyDMLabel_9">
+    <widget class="PyDMLabel" name="device_label">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -76,7 +76,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMLabel" name="PyDMLabel_6">
+    <widget class="PyDMLabel" name="id_label">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -181,7 +181,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMByteIndicator" name="PyDMByteIndicator_4">
+    <widget class="PyDMByteIndicator" name="energy_bytes">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -250,7 +250,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="PyDMLabel" name="PyDMLabel_10">
+    <widget class="PyDMLabel" name="cohort_label">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -297,7 +297,7 @@
     </spacer>
    </item>
    <item>
-    <widget class="PyDMByteIndicator" name="PyDMByteIndicator_3">
+    <widget class="PyDMByteIndicator" name="live_byte">
      <property name="enabled">
       <bool>false</bool>
      </property>
