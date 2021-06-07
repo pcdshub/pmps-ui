@@ -30,11 +30,10 @@ class CustomTableWidgetItem(QTableWidgetItem):
     For now this class only handles sorting for the QLabel widgets and
     PyDMByteIndicators.
     """
-    def __init__(self, widget_type, widget_name, channel, parent=None):
+    def __init__(self, channel, is_bitmask=False,parent=None):
         QTableWidgetItem.__init__(self, parent)
         self.setText('0')
-        self._obj_name = widget_name
-        self._obj_type = widget_type
+        self.is_bitmask = is_bitmask
         self.channel = channel
         self._channel = PyDMChannel(channel, value_slot=self.update_value)
         self._channel.connect()
@@ -49,7 +48,7 @@ class CustomTableWidgetItem(QTableWidgetItem):
         """
         Use the hidden text field to store the value from the PV
         """
-        if issubclass(self._obj_type, PyDMByteIndicator):
+        if self.is_bitmask:
             count = 0
             if value < 0:
                 value = 2**32 + value
@@ -177,9 +176,8 @@ class PreemptiveRequests(Display):
                 # based on Rate - column position 1
                 rate_widget = widget.findChild(PyDMLabel, 'rate_label')
                 rate_item = CustomTableWidgetItem(
-                    widget_type=QtWidgets.QLabel,
-                    widget_name='rate_label',
                     channel=rate_widget.channel,
+                    is_bitmask=False,
                     )
                 rate_item.setSizeHint(widget.size())
                 reqs_table.setItem(row_position, 1, rate_item)
@@ -188,9 +186,8 @@ class PreemptiveRequests(Display):
                 trans_widget = widget.findChild(PyDMLabel, 'transmission_label')
                 trans_addr = trans_widget.channel
                 trans_item = CustomTableWidgetItem(
-                    widget_type=QtWidgets.QLabel,
-                    widget_name='transmission_label',
                     channel=trans_widget.channel,
+                    is_bitmask=False,
                     )
                 trans_item.setSizeHint(widget.size())
                 reqs_table.setItem(row_position, 2, trans_item)
@@ -200,9 +197,8 @@ class PreemptiveRequests(Display):
                 range_widget = widget.findChild(PyDMByteIndicator,
                                                 'energy_bytes')
                 energy_range = CustomTableWidgetItem(
-                    widget_type=PyDMByteIndicator,
-                    widget_name='energy_range_indicator',
                     channel=range_widget.channel,
+                    is_bitmask=True,
                     )
                 energy_range.setSizeHint(widget.size())
                 reqs_table.setItem(row_position, 3, energy_range)
