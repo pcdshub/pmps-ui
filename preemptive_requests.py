@@ -37,8 +37,7 @@ class PreemptiveRequests(Display):
       and QTableWidget.showRow methods.
     """
     def __init__(self, parent=None, args=None, macros=None):
-        super(PreemptiveRequests, self).__init__(parent=parent,
-                                                 args=args, macros=macros)
+        super().__init__(parent=parent, args=args, macros=macros)
         self.config = macros
         self._channels = []
         self.setup_ui()
@@ -292,7 +291,7 @@ class PMPSTableWidgetItem(QTableWidgetItem):
     """
     def __init__(self, store_type, data_type, default,
                  channel=None, parent=None):
-        QTableWidgetItem.__init__(self, parent)
+        super().__init__(parent)
         self.store_type = store_type
         self.data_type = data_type
         self.setText(str(default))
