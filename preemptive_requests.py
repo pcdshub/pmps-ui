@@ -1,16 +1,12 @@
-import functools
-import itertools
 import json
-import sys
 import typing
 from dataclasses import dataclass
-from string import Template
 
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
-from PyQt5.QtGui import QIcon, QPixmap, QTableWidgetItem
-from qtpy import QtCore, QtWidgets
+from PyQt5.QtGui import QTableWidgetItem
+from qtpy import QtCore
 
 
 class PreemptiveRequests(Display):
