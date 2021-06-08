@@ -226,15 +226,10 @@ class PreemptiveRequests(Display):
 
     def sort_table(self, column, ascending):
         if ascending:
-            self.ui.reqs_table_widget.sortItems(
-                column,
-                QtCore.Qt.AscendingOrder,
-                )
+            order = QtCore.Qt.AscendingOrder
         else:
-            self.ui.reqs_table_widget.sortItems(
-                column,
-                QtCore.Qt.DescendingOrder,
-                )
+            order = QtCore.Qt.DescendingOrder
+        self.ui.reqs_table_widget.sortItems(column, order)
 
     def handle_item_changed(self, *args, **kwargs):
         if self.ui.auto_update.isChecked():
