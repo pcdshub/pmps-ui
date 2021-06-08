@@ -40,6 +40,7 @@ class PreemptiveRequests(Display):
         super(PreemptiveRequests, self).__init__(parent=parent,
                                                  args=args, macros=macros)
         self.config = macros
+        self._channels = []
         self.setup_ui()
 
     def setup_ui(self):
@@ -113,6 +114,7 @@ class PreemptiveRequests(Display):
                         )
                     item.setSizeHint(widget.size())
                     reqs_table.setItem(row_position, num + 2, item)
+                    self._channels.append(item.pydm_channel)
 
                 count += 1
         reqs_table.resizeRowsToContents()
@@ -254,6 +256,16 @@ class PreemptiveRequests(Display):
     def ui_filename(self):
         return 'preemptive_requests.ui'
 
+    def channels(self):
+        """
+        Make sure PyDM can find the channels we set up for cleanup.
+
+        Put this here instead of on the PMPSTableWidgetItem because
+        QTableWidgetItem instances are not instances of QWidget, and
+        therefore are not checked by PyDM for channels.
+        """
+        return self._channels
+
 
 class PMPSTableWidgetItem(QTableWidgetItem):
     """
@@ -287,19 +299,12 @@ class PMPSTableWidgetItem(QTableWidgetItem):
         self.channel = channel
         self.connected = False
         if channel is not None:
-            self._channel = PyDMChannel(
+            self.pydm_channel = PyDMChannel(
                 channel,
                 value_slot=self.update_value,
                 connection_slot=self.update_connection,
                 )
-            self._channel.connect()
-
-    def channels(self):
-        """Make sure PyDM sees the channel to clean up at the end."""
-        try:
-            return [self._channel]
-        except AttributeError:
-            return []
+            self.pydm_channel.connect()
 
     def update_value(self, value):
         """
