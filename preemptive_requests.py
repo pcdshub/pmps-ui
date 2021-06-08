@@ -337,14 +337,9 @@ class PMPSTableWidgetItem(QTableWidgetItem):
 def bitmask_count(bitmask):
     """Count the number of high bits in a bitmask."""
     bitmask = int(bitmask)
-    count = 0
     if bitmask < 0:
         bitmask += 2**32
-    while bitmask > 0:
-        if bitmask % 2:
-            count += 1
-        bitmask = bitmask >> 1
-    return count
+    return str(bin(bitmask)).count('1')
 
 
 def str_from_waveform(waveform_array):
