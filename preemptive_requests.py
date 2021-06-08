@@ -2,6 +2,7 @@ import functools
 import itertools
 import json
 import sys
+import typing
 from dataclasses import dataclass
 from string import Template
 
@@ -10,8 +11,6 @@ from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from PyQt5.QtGui import QIcon, QPixmap, QTableWidgetItem
 from qtpy import QtCore, QtWidgets
-
-from fast_faults import VisibilityEmbedded
 
 
 class CustomTableWidgetItem(QTableWidgetItem):
@@ -31,10 +30,12 @@ class CustomTableWidgetItem(QTableWidgetItem):
     For now this class only handles sorting for the QLabel widgets and
     PyDMByteIndicators.
     """
-    def __init__(self, channel=None, value_type=int, parent=None):
+    def __init__(self, store_type, sort_type, default,
+                 channel=None, parent=None):
         QTableWidgetItem.__init__(self, parent)
-        self.value_type = value_type
-        self.setText('0')
+        self.store_type = store_type
+        self.sort_type = sort_type
+        self.setText(str(default))
         self.channel = channel
         if channel is not None:
             self._channel = PyDMChannel(channel, value_slot=self.update_value)
@@ -53,13 +54,13 @@ class CustomTableWidgetItem(QTableWidgetItem):
         """
         Use the hidden text field to store the value from the PV
         """
-        self.setText(str(value))
+        self.setText(str(self.store_type(value)))
 
     def __lt__(self, other):
         """
         Use order of defined type, not alphabetical
         """
-        return self.value_type(self.text()) < other.value_type((other.text()))
+        return self.sort_type(self.text()) < other.sort_type((other.text()))
 
 
 def bitmask_count(bitmask_string):
@@ -74,13 +75,24 @@ def bitmask_count(bitmask_string):
     return count
 
 
+def str_from_waveform(waveform_array):
+    text = ''
+    for num in waveform_array:
+        if num == 0:
+            break
+        text += chr(num)
+    return text
+
+
 @dataclass
 class SortInfo:
     """All the data we need to set up the sortable table."""
     select_text: str
     widget_name: str
     widget_class: type
-    value_type: callable
+    store_type: callable
+    sort_type: callable
+    default: typing.Any
 
 
 sort_info_list = [
@@ -88,50 +100,62 @@ sort_info_list = [
         select_text='Name',
         widget_name='device_label',
         widget_class=PyDMLabel,
-        value_type=str,
+        store_type=str_from_waveform,
+        sort_type=str,
+        default='',
         ),
     SortInfo(
         select_text='ID',
         widget_name='id_label',
         widget_class=PyDMLabel,
-        value_type=str,
+        store_type=int,
+        sort_type=int,
+        default=0,
         ),
     SortInfo(
         select_text='Rate',
         widget_name='rate_label',
         widget_class=PyDMLabel,
-        value_type=int,
+        store_type=int,
+        sort_type=int,
+        default=0,
         ),
     SortInfo(
         select_text='Transmission',
         widget_name='transmission_label',
         widget_class=PyDMLabel,
-        value_type=float,
+        store_type=float,
+        sort_type=float,
+        default=0.0,
         ),
     SortInfo(
         select_text='Energy',
         widget_name='energy_bytes',
         widget_class=PyDMByteIndicator,
-        value_type=bitmask_count,
+        store_type=bitmask_count,
+        sort_type=int,
+        default=0,
         ),
     SortInfo(
         select_text='Cohort',
         widget_name='cohort_label',
         widget_class=PyDMLabel,
-        value_type=int,
+        store_type=int,
+        sort_type=int,
+        default=0,
         ),
     SortInfo(
         select_text='Active',
         widget_name='live_byte',
         widget_class=PyDMByteIndicator,
-        value_type=bool,
+        store_type=int,
+        sort_type=int,
+        default=0,
         ),
     ]
 
 
 class PreemptiveRequests(Display):
-    filters_changed = QtCore.Signal(list)
-
     _bits = {'bit15': False, 'bit14': False, 'bit13': False, 'bit12': False,
              'bit11': False, 'bit10': False, 'bit9': False, 'bit8': False,
              'bit7': False, 'bit6': False, 'bit5': False, 'bit4': False,
@@ -177,13 +201,9 @@ class PreemptiveRequests(Display):
                 pool = str(pool_id).zfill(pool_zfill)
                 macros = dict(index=count, P=prefix,
                               ARBITER=arbiter, POOL=pool)
-                ch = Template('ca://${P}${ARBITER}:AP:Entry:${POOL}:Live_RBV').safe_substitute(**macros)
-                widget = VisibilityEmbedded(parent=reqs_table, channel=ch)
+                widget = PyDMEmbeddedDisplay(parent=reqs_table)
                 widget.prefixes = macros
-                self.filters_changed[list].connect(widget.update_filter)
-
                 widget.macros = json.dumps(macros)
-
                 widget.filename = template
                 widget.loadWhenShown = False
                 widget.disconnectWhenHidden = False
@@ -193,8 +213,6 @@ class PreemptiveRequests(Display):
                 reqs_table.insertRow(row_position)
                 reqs_table.setCellWidget(row_position, 0, widget)
 
-                # Initialize the combobox
-
                 # insert invisible customized QTableWidgetItems for sorting
                 for num, info in enumerate(sort_info_list):
                     inner_widget = widget.findChild(
@@ -202,8 +220,10 @@ class PreemptiveRequests(Display):
                         info.widget_name,
                         )
                     item = CustomTableWidgetItem(
+                        store_type=info.store_type,
+                        sort_type=info.sort_type,
+                        default=info.default,
                         channel=inner_widget.channel,
-                        value_type=info.value_type,
                         )
                     item.setSizeHint(widget.size())
                     reqs_table.setItem(row_position, num + 1, item)
