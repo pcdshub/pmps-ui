@@ -179,7 +179,7 @@ class PreemptiveRequests(Display):
             return
         reqs_table = self.ui.reqs_table_widget
         # setup table
-        ncols = len(sort_info_list) + 1
+        ncols = len(sort_info_list) + 2
         reqs_table.setColumnCount(ncols)
         # hide extra sort columns: these just hold values for easy sorting
         for col in range(1, ncols):
@@ -213,6 +213,15 @@ class PreemptiveRequests(Display):
                 reqs_table.insertRow(row_position)
                 reqs_table.setCellWidget(row_position, 0, widget)
 
+                # insert a cell to preserve the original sort order
+                item = CustomTableWidgetItem(
+                    store_type=int,
+                    sort_type=int,
+                    default=count,
+                    )
+                item.setSizeHint(widget.size())
+                reqs_table.setItem(row_position, 1, item)
+
                 # insert invisible customized QTableWidgetItems for sorting
                 for num, info in enumerate(sort_info_list):
                     inner_widget = widget.findChild(
@@ -226,7 +235,7 @@ class PreemptiveRequests(Display):
                         channel=inner_widget.channel,
                         )
                     item.setSizeHint(widget.size())
-                    reqs_table.setItem(row_position, num + 1, item)
+                    reqs_table.setItem(row_position, num + 2, item)
 
                 count += 1
         reqs_table.resizeRowsToContents()
@@ -256,7 +265,7 @@ class PreemptiveRequests(Display):
             self.gui_table_sort()
 
     def gui_table_sort(self, *args, **kwargs):
-        column = self.ui.sort_choices.currentIndex()
+        column = self.ui.sort_choices.currentIndex() + 1
         ascending = self.ui.order_choice.currentIndex() == 0
         self.sort_table(column, ascending)
 
