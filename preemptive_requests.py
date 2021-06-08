@@ -116,12 +116,13 @@ class PreemptiveRequests(Display):
         self.ui.sort_choices.currentIndexChanged.connect(self.gui_table_sort)
         self.ui.order_choice.currentIndexChanged.connect(self.gui_table_sort)
         self.ui.sort_button.clicked.connect(self.gui_table_sort)
-        self.ui.reqs_table_widget.cellChanged.connect(
-            self.handle_item_changed,
-            )
+        self.ui.auto_update.clicked.connect(self.auto_sort_clicked)
         self.ui.full_beam.stateChanged.connect(self.update_all_filters)
         self.ui.inactive.stateChanged.connect(self.update_all_filters)
         self.ui.disconnected.stateChanged.connect(self.update_all_filters)
+        self.ui.reqs_table_widget.cellChanged.connect(
+            self.handle_item_changed,
+            )
         self.update_all_filters()
 
     def sort_table(self, column, ascending):
@@ -176,6 +177,16 @@ class PreemptiveRequests(Display):
         ascending = self.ui.order_choice.currentIndex() == 0
         self.sort_table(column, ascending)
 
+    def auto_sort_clicked(self, checked):
+        """
+        Slot to trigger a new sort when the auto_sort checkbox is checked.
+
+        Without this method, we can have an unsorted table with the checkbox
+        checked because it only re-sorts on update.
+        """
+        if checked:
+            self.gui_table_sort()
+
     def update_filter(self, row):
         """
         Hide or show a specific row of the table as appropriate.
@@ -223,7 +234,6 @@ class PreemptiveRequests(Display):
             table.hideRow(row)
         else:
             table.showRow(row)
-
 
     def update_all_filters(self, *args, **kwargs):
         """Call update_filter on every row of the table."""
