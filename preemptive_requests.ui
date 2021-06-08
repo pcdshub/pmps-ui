@@ -41,7 +41,65 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="0,0,0,0,0,0,0,0">
+     <layout class="QHBoxLayout" name="horizontalLayout_8" stretch="0,0,0,0,0">
+      <item>
+       <spacer name="horizontalSpacer_7">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="sort_by_label">
+          <property name="text">
+           <string>Sort by:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="sort_choices"/>
+        </item>
+        <item>
+         <widget class="QComboBox" name="order_choice">
+          <item>
+           <property name="text">
+            <string>Ascending</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Descending</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="sort_button">
+          <property name="text">
+           <string>Sort Again</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="auto_update">
+          <property name="text">
+           <string>Auto Update</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -56,709 +114,51 @@
        </spacer>
       </item>
       <item>
-       <layout class="QGridLayout" name="gridLayout">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
-        </property>
-        <property name="leftMargin">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="rightMargin">
          <number>0</number>
         </property>
-        <item row="1" column="1">
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="0" colspan="2">
+        <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
-           <string>Sort by Rate:</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="sort_rate_button">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>60</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="cursor">
-           <cursorShape>ArrowCursor</cursorShape>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="checkable">
-           <bool>false</bool>
-          </property>
-          <property name="autoDefault">
-           <bool>false</bool>
-          </property>
-          <property name="default">
-           <bool>false</bool>
-          </property>
-          <property name="flat">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="sort_transm_button">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>60</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="checkable">
-           <bool>false</bool>
-          </property>
-          <property name="autoDefault">
-           <bool>false</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Sort by Transmission:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <spacer name="horizontalSpacer_4">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <item row="1" column="0">
-         <widget class="QPushButton" name="sort_energy_range_button">
-          <property name="minimumSize">
-           <size>
-            <width>60</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <spacer name="horizontalSpacer_6">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="0" colspan="2">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>Sort by Energy Range:</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_5">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QGroupBox" name="ff_filter_gb_bitmask">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="title">
-         <string>Filter By: Photon Energy Ranges</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit15">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator:checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit14">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit13">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit12">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit11">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit10">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit9">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit8">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit7">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit6">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit5">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit4">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit3">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit2">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit1">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="filter_cb_bit0">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
-
-QCheckBox::indicator::checked {background-color: green;}
-
-QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
-
-QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>true</bool>
-           </property>
-           <property name="tristate">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,0,1">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btn_apply_filters">
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(141, 255, 168);</string>
-          </property>
-          <property name="text">
-           <string>Apply Filters</string>
+           <string>Hide:</string>
           </property>
          </widget>
         </item>
         <item>
-         <spacer name="verticalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+         <widget class="QCheckBox" name="full_beam">
+          <property name="text">
+           <string>Full Beam</string>
           </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
+          <property name="checked">
+           <bool>true</bool>
           </property>
-         </spacer>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="inactive">
+          <property name="text">
+           <string>Inactive</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="disconnected">
+          <property name="text">
+           <string>Disconnected</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>
       <item>
-       <spacer name="horizontalSpacer_3">
+       <spacer name="horizontalSpacer_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>

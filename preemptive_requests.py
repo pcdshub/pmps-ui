@@ -2,6 +2,7 @@ import functools
 import itertools
 import json
 import sys
+from dataclasses import dataclass
 from string import Template
 
 from pydm import Display
@@ -30,19 +31,23 @@ class CustomTableWidgetItem(QTableWidgetItem):
     For now this class only handles sorting for the QLabel widgets and
     PyDMByteIndicators.
     """
-    def __init__(self, channel, value_type, init_value, parent=None):
+    def __init__(self, channel=None, value_type=int, parent=None):
         QTableWidgetItem.__init__(self, parent)
         self.value_type = value_type
-        self.update_value(init_value)
+        self.setText('0')
         self.channel = channel
-        self._channel = PyDMChannel(channel, value_slot=self.update_value)
-        self._channel.connect()
+        if channel is not None:
+            self._channel = PyDMChannel(channel, value_slot=self.update_value)
+            self._channel.connect()
 
     def channels(self):
         """
         Make sure PyDM sees this channel to clean up at the end
         """
-        return [self._channel]
+        try:
+            return [self._channel]
+        except AttributeError:
+            return []
 
     def update_value(self, value):
         """
@@ -69,17 +74,63 @@ def bitmask_count(bitmask_string):
     return count
 
 
+@dataclass
+class SortInfo:
+    """All the data we need to set up the sortable table."""
+    select_text: str
+    widget_name: str
+    widget_class: type
+    value_type: callable
+
+
+sort_info_list = [
+    SortInfo(
+        select_text='Name',
+        widget_name='device_label',
+        widget_class=PyDMLabel,
+        value_type=str,
+        ),
+    SortInfo(
+        select_text='ID',
+        widget_name='id_label',
+        widget_class=PyDMLabel,
+        value_type=str,
+        ),
+    SortInfo(
+        select_text='Rate',
+        widget_name='rate_label',
+        widget_class=PyDMLabel,
+        value_type=int,
+        ),
+    SortInfo(
+        select_text='Transmission',
+        widget_name='transmission_label',
+        widget_class=PyDMLabel,
+        value_type=float,
+        ),
+    SortInfo(
+        select_text='Energy',
+        widget_name='energy_bytes',
+        widget_class=PyDMByteIndicator,
+        value_type=bitmask_count,
+        ),
+    SortInfo(
+        select_text='Cohort',
+        widget_name='cohort_label',
+        widget_class=PyDMLabel,
+        value_type=int,
+        ),
+    SortInfo(
+        select_text='Active',
+        widget_name='live_byte',
+        widget_class=PyDMByteIndicator,
+        value_type=bool,
+        ),
+    ]
+
+
 class PreemptiveRequests(Display):
     filters_changed = QtCore.Signal(list)
-    _toggle_rate_pb = itertools.cycle([True, False]).__next__
-    _toggle_transmission_pb = itertools.cycle([True, False]).__next__
-    _toggle_energy_range_pb = itertools.cycle([True, False]).__next__
-
-    # elements for the sorting buttons
-    sort_desc_pix = QPixmap("templates/sort_desc.png")
-    sort_asc_pix = QPixmap("templates/sort_asc.png")
-    sort_desc_icon = QIcon()
-    sort_asc_icon = QIcon()
 
     _bits = {'bit15': False, 'bit14': False, 'bit13': False, 'bit12': False,
              'bit11': False, 'bit10': False, 'bit9': False, 'bit8': False,
@@ -93,40 +144,8 @@ class PreemptiveRequests(Display):
         self.setup_ui()
 
     def setup_ui(self):
-        self.ui.ff_filter_gb_bitmask.toggled.connect(self.enable_bits)
-        self.ui.btn_apply_filters.clicked.connect(self.update_filters)
         self.setup_requests()
-        self.setup_sort_buttons()
-
-    def setup_sort_buttons(self):
-        self.ui.sort_rate_button.clicked.connect(
-            functools.partial(self.sort_rate_items, self.ui.sort_rate_button))
-        self.ui.sort_transm_button.clicked.connect(
-            functools.partial(self.sort_transmission_items,
-                              self.ui.sort_transm_button))
-        self.ui.sort_energy_range_button.clicked.connect(
-            functools.partial(self.sort_energy_range_items,
-                              self.ui.sort_energy_range_button)
-        )
-
-        self.sort_desc_icon.addPixmap(self.sort_desc_pix, QIcon.Normal, QIcon.Off)
-        self.sort_asc_icon.addPixmap(self.sort_asc_pix, QIcon.Normal, QIcon.Off)
-
-        self.ui.sort_rate_button.setIcon(self.sort_asc_icon)
-        self.ui.sort_rate_button.setIconSize(self.ui.sort_rate_button.size())
-
-        self.ui.sort_transm_button.setIcon(self.sort_asc_icon)
-        self.ui.sort_transm_button.setIconSize(self.ui.sort_transm_button.size())
-
-        self.ui.sort_energy_range_button.setIcon(self.sort_asc_icon)
-        self.ui.sort_energy_range_button.setIconSize(
-            self.ui.sort_energy_range_button.size())
-
-    def change_button_state_icon(self, state, btn):
-        if state is True:
-            btn.setIcon(self.sort_desc_icon)
-        else:
-            btn.setIcon(self.sort_asc_icon)
+        self.setup_sorts()
 
     def setup_requests(self):
         if not self.config:
@@ -136,13 +155,12 @@ class PreemptiveRequests(Display):
             return
         reqs_table = self.ui.reqs_table_widget
         # setup table
-        reqs_table.setColumnCount(4)
-        # we only need a second column to be able to sort based on another
-        # element other than the one in the first column - since the widgets
-        # are placed in the first column we should hide the second one.
-        reqs_table.hideColumn(1)
-        reqs_table.hideColumn(2)
-        reqs_table.hideColumn(3)
+        ncols = len(sort_info_list) + 1
+        reqs_table.setColumnCount(ncols)
+        # hide extra sort columns: these just hold values for easy sorting
+        for col in range(1, ncols):
+            reqs_table.hideColumn(col)
+
         if reqs_table is None:
             return
         count = 0
@@ -175,133 +193,61 @@ class PreemptiveRequests(Display):
                 reqs_table.insertRow(row_position)
                 reqs_table.setCellWidget(row_position, 0, widget)
 
-                # insert a fake customized QTableWidgetItem to allow sorting
-                # based on Rate - column position 1
-                rate_widget = widget.findChild(PyDMLabel, 'rate_label')
-                rate_item = CustomTableWidgetItem(
-                    channel=rate_widget.channel,
-                    value_type=int,
-                    init_value=0,
-                    )
-                rate_item.setSizeHint(widget.size())
-                reqs_table.setItem(row_position, 1, rate_item)
-                # insert a fake customized QTableWidgetItem to allow sorting
-                # based on Transmission - column position 2
-                trans_widget = widget.findChild(PyDMLabel, 'transmission_label')
-                trans_addr = trans_widget.channel
-                trans_item = CustomTableWidgetItem(
-                    channel=trans_widget.channel,
-                    value_type=float,
-                    init_value=0.0,
-                    )
-                trans_item.setSizeHint(widget.size())
-                reqs_table.setItem(row_position, 2, trans_item)
+                # Initialize the combobox
 
-                # insert a fake customized QTableWidgetItem to allow sorting
-                # based on Energy Range - column position 3
-                range_widget = widget.findChild(PyDMByteIndicator,
-                                                'energy_bytes')
-                energy_range = CustomTableWidgetItem(
-                    channel=range_widget.channel,
-                    value_type=bitmask_count,
-                    init_value=0,
-                    )
-                energy_range.setSizeHint(widget.size())
-                reqs_table.setItem(row_position, 3, energy_range)
+                # insert invisible customized QTableWidgetItems for sorting
+                for num, info in enumerate(sort_info_list):
+                    inner_widget = widget.findChild(
+                        info.widget_class,
+                        info.widget_name,
+                        )
+                    item = CustomTableWidgetItem(
+                        channel=inner_widget.channel,
+                        value_type=info.value_type,
+                        )
+                    item.setSizeHint(widget.size())
+                    reqs_table.setItem(row_position, num + 1, item)
 
                 count += 1
         reqs_table.resizeRowsToContents()
         self.update_filters()
         print(f'Added {count} preemptive requests')
 
-    def update_table_value(self, value, table_item, processor=None):
-        if processor is not None:
-            value = processor(value)
+    def setup_sorts(self):
+        self.ui.sort_choices.addItem('Unsorted')
+        for info in sort_info_list:
+            self.ui.sort_choices.addItem(info.select_text)
+        self.ui.sort_choices.currentIndexChanged.connect(self.gui_table_sort)
+        self.ui.order_choice.currentIndexChanged.connect(self.gui_table_sort)
+        self.ui.sort_button.clicked.connect(self.gui_table_sort)
+        self.ui.reqs_table_widget.cellChanged.connect(
+            self.handle_item_changed,
+            )
 
-        table_item.setText(str(value))
-
-    def sort_rate_items(self, btn):
-        """
-        Sort the items in the table based on the Rate values from the embedded
-        widget. sortItems will call CustomTableWidgetItem's __ld__ method where
-        the values from the rate label (CustomTabWidgetItem column 0) will be
-        compared and sorted.
-        """
-        column = 1
-        state = self._toggle_rate_pb()
-        if state is True:
-            self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.DescendingOrder)
+    def sort_table(self, column, ascending):
+        if ascending:
+            self.ui.reqs_table_widget.sortItems(
+                column,
+                QtCore.Qt.AscendingOrder,
+                )
         else:
-            self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.AscendingOrder)
-        self.change_button_state_icon(state, btn)
+            self.ui.reqs_table_widget.sortItems(
+                column,
+                QtCore.Qt.DescendingOrder,
+                )
 
-    def sort_transmission_items(self, btn):
-        """
-        Sort the items in the table based on the Transmission values from the
-        embedded widget. sortItems will call CustomTableWidgetItem's __ld__
-        method, where the values from the transmission label
-        (CustomTabWidgetItem column 1) will be compared and sorted.
-        """
-        column = 2
-        state = self._toggle_transmission_pb()
-        if state is True:
-            self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.DescendingOrder)
-        else:
-            self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.AscendingOrder)
-        self.change_button_state_icon(state, btn)
+    def handle_item_changed(self, *args, **kwargs):
+        if self.ui.auto_update.isChecked():
+            self.gui_table_sort()
 
-    def sort_energy_range_items(self, btn):
-        """
-          Sort the items in the table based on the Transmission values from the
-          embedded widget. sortItems will call CustomTableWidgetItem's __ld__
-          method, where the values from the transmission label
-          (CustomTabWidgetItem column 1) will be compared and sorted.
-          """
-        column = 3
-        state = self._toggle_energy_range_pb()
-        if state is True:
-            self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.DescendingOrder)
-        else:
-            self.ui.reqs_table_widget.sortItems(column,
-                                                QtCore.Qt.AscendingOrder)
-        self.change_button_state_icon(state, btn)
-
-    def enable_bits(self, toggle):
-        """
-        Enable the bits when the combo box is checked.
-        """
-        if toggle is True:
-            for key, item in self._bits.items():
-                cb = self.findChild(QtWidgets.QCheckBox, f"filter_cb_{key}")
-                cb.setEnabled(True)
-        else:
-            for key, item in self._bits.items():
-                cb = self.findChild(QtWidgets.QCheckBox, f"filter_cb_{key}")
-                cb.setEnabled(False)
-
-    def calc_bitmask(self):
-        """
-        Calculate a decimal number based on the checked/unchecked bits
-        from the filter (Photon Energy Range).
-        These bits are represented by check boxes where checked = True and
-        unchecked = False.
-        """
-        for key, item in self._bits.items():
-            cb = self.findChild(QtWidgets.QCheckBox, f"filter_cb_{key}")
-            self._bits[key] = cb.isChecked()
-
-        decimal_value = functools.reduce(
-            (lambda x, y: (x << 1) | y),
-            map(int, [item for key, item in self._bits.items()])
-        )
-        return decimal_value
+    def gui_table_sort(self, *args, **kwargs):
+        column = self.ui.sort_choices.currentIndex()
+        ascending = self.ui.order_choice.currentIndex() == 0
+        self.sort_table(column, ascending)
 
     def update_filters(self):
+        return
+        # TODO update based on other refactor
         default_options = [
             {'name': 'live',
              'channel': 'ca://${P}${ARBITER}:AP:Entry:${POOL}:Live_RBV',
