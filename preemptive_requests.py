@@ -20,6 +20,21 @@ class PreemptiveRequests(Display):
     - Column 1 stores the original table insertion order and is not visible
     - Columns 2 and up correspond with the item_info_list and are not visible
     - Each row is loaded using information from the config file
+
+    Unlike the fast fault tab, which populates a QVBoxLayout with a bunch of
+    instances of VisibilityEmbeddedWidget, this display populates a
+    QTableWidget with a bunch of instances of PyDMEmbeddedDisplay. This is done
+    for a few reasons:
+    - QVBoxLayout is not natively sortable without removing and replacing all
+      the widgets you want to include, which is ultimately messy and
+      potentially slow or error-prone depending on the implementation.
+      QTableWidget is natively sortable on any of its columns.
+    - Visibility of an item in a QTableWidget is not controlled by the normal
+      visibility properties, so the visibility rules cannot be used the same
+      way as in the fast faults tab. When you try this, you just see every row
+      of the table all the time. Therefore, the previous approch is not useful
+      here, and instead we link the channels up with the QTableWidget.hideRow
+      and QTableWidget.showRow methods.
     """
     def __init__(self, parent=None, args=None, macros=None):
         super(PreemptiveRequests, self).__init__(parent=parent,
