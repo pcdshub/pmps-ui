@@ -37,8 +37,13 @@ class CustomTableWidgetItem(QTableWidgetItem):
         self.sort_type = sort_type
         self.setText(str(default))
         self.channel = channel
+        self.connected = False
         if channel is not None:
-            self._channel = PyDMChannel(channel, value_slot=self.update_value)
+            self._channel = PyDMChannel(
+                channel,
+                value_slot=self.update_value,
+                connection_slot=self.update_connection,
+                )
             self._channel.connect()
 
     def channels(self):
@@ -56,11 +61,17 @@ class CustomTableWidgetItem(QTableWidgetItem):
         """
         self.setText(str(self.store_type(value)))
 
+    def update_connection(self, connected):
+        self.connected = connected
+
+    def get_value(self):
+        return self.sort_type(self.text())
+
     def __lt__(self, other):
         """
         Use order of defined type, not alphabetical
         """
-        return self.sort_type(self.text()) < other.sort_type((other.text()))
+        return self.get_value() < other.get_value()
 
 
 def bitmask_count(bitmask_string):
@@ -85,8 +96,9 @@ def str_from_waveform(waveform_array):
 
 
 @dataclass
-class SortInfo:
-    """All the data we need to set up the sortable table."""
+class ItemInfo:
+    """All the data we need to set up the sorts/filters"""
+    name: str
     select_text: str
     widget_name: str
     widget_class: type
@@ -95,24 +107,27 @@ class SortInfo:
     default: typing.Any
 
 
-sort_info_list = [
-    SortInfo(
-        select_text='Name',
+item_info_list = [
+    ItemInfo(
+        name='name',
+        select_text='Device',
         widget_name='device_label',
         widget_class=PyDMLabel,
         store_type=str_from_waveform,
         sort_type=str,
         default='',
         ),
-    SortInfo(
-        select_text='ID',
+    ItemInfo(
+        name='id',
+        select_text='Assertion ID',
         widget_name='id_label',
         widget_class=PyDMLabel,
         store_type=int,
         sort_type=int,
         default=0,
         ),
-    SortInfo(
+    ItemInfo(
+        name='rate',
         select_text='Rate',
         widget_name='rate_label',
         widget_class=PyDMLabel,
@@ -120,7 +135,8 @@ sort_info_list = [
         sort_type=int,
         default=0,
         ),
-    SortInfo(
+    ItemInfo(
+        name='trans',
         select_text='Transmission',
         widget_name='transmission_label',
         widget_class=PyDMLabel,
@@ -128,24 +144,27 @@ sort_info_list = [
         sort_type=float,
         default=0.0,
         ),
-    SortInfo(
-        select_text='Energy',
+    ItemInfo(
+        name='energy',
+        select_text='Photon Energy Ranges',
         widget_name='energy_bytes',
         widget_class=PyDMByteIndicator,
         store_type=bitmask_count,
         sort_type=int,
         default=0,
         ),
-    SortInfo(
-        select_text='Cohort',
+    ItemInfo(
+        name='cohort',
+        select_text='Cohort Number',
         widget_name='cohort_label',
         widget_class=PyDMLabel,
         store_type=int,
         sort_type=int,
         default=0,
         ),
-    SortInfo(
-        select_text='Active',
+    ItemInfo(
+        name='active',
+        select_text='Active Arbitration',
         widget_name='live_byte',
         widget_class=PyDMByteIndicator,
         store_type=int,
@@ -169,7 +188,7 @@ class PreemptiveRequests(Display):
 
     def setup_ui(self):
         self.setup_requests()
-        self.setup_sorts()
+        self.setup_sorts_and_filters()
 
     def setup_requests(self):
         if not self.config:
@@ -179,7 +198,7 @@ class PreemptiveRequests(Display):
             return
         reqs_table = self.ui.reqs_table_widget
         # setup table
-        ncols = len(sort_info_list) + 2
+        ncols = len(item_info_list) + 2
         reqs_table.setColumnCount(ncols)
         # hide extra sort columns: these just hold values for easy sorting
         for col in range(1, ncols):
@@ -223,7 +242,7 @@ class PreemptiveRequests(Display):
                 reqs_table.setItem(row_position, 1, item)
 
                 # insert invisible customized QTableWidgetItems for sorting
-                for num, info in enumerate(sort_info_list):
+                for num, info in enumerate(item_info_list):
                     inner_widget = widget.findChild(
                         info.widget_class,
                         info.widget_name,
@@ -239,12 +258,12 @@ class PreemptiveRequests(Display):
 
                 count += 1
         reqs_table.resizeRowsToContents()
-        self.update_filters()
+        self.row_count = count
         print(f'Added {count} preemptive requests')
 
-    def setup_sorts(self):
+    def setup_sorts_and_filters(self):
         self.ui.sort_choices.addItem('Unsorted')
-        for info in sort_info_list:
+        for info in item_info_list:
             self.ui.sort_choices.addItem(info.select_text)
         self.ui.sort_choices.currentIndexChanged.connect(self.gui_table_sort)
         self.ui.order_choice.currentIndexChanged.connect(self.gui_table_sort)
@@ -252,6 +271,10 @@ class PreemptiveRequests(Display):
         self.ui.reqs_table_widget.cellChanged.connect(
             self.handle_item_changed,
             )
+        self.ui.full_beam.stateChanged.connect(self.update_all_filters)
+        self.ui.inactive.stateChanged.connect(self.update_all_filters)
+        self.ui.disconnected.stateChanged.connect(self.update_all_filters)
+        self.update_all_filters()
 
     def sort_table(self, column, ascending):
         if ascending:
@@ -260,7 +283,8 @@ class PreemptiveRequests(Display):
             order = QtCore.Qt.DescendingOrder
         self.ui.reqs_table_widget.sortItems(column, order)
 
-    def handle_item_changed(self, *args, **kwargs):
+    def handle_item_changed(self, row, column):
+        self.update_filter(row, column)
         if self.ui.auto_update.isChecked():
             self.gui_table_sort()
 
@@ -269,27 +293,41 @@ class PreemptiveRequests(Display):
         ascending = self.ui.order_choice.currentIndex() == 0
         self.sort_table(column, ascending)
 
-    def update_filters(self):
-        return
-        # TODO update based on other refactor
-        default_options = [
-            {'name': 'live',
-             'channel': 'ca://${P}${ARBITER}:AP:Entry:${POOL}:Live_RBV',
-             'condition': 1
-             }]
-        options = [
-            {'name': 'bitmask',
-             'channel': 'ca://${P}${ARBITER}:AP:Entry:${POOL}:PhotonEnergyRanges_RBV'
-             }]
-        filters = []
-        for opt in default_options:
-            filters.append(opt)
-        for opt in options:
-            gb = self.findChild(QtWidgets.QGroupBox, f"ff_filter_gb_{opt['name']}")
-            if gb.isChecked():
-                opt['condition'] = self.calc_bitmask()
-                filters.append(opt)
-        self.filters_changed.emit(filters)
+    def update_filter(self, row, _col=None):
+        # Treat the entire row as one entity
+        table = self.ui.reqs_table_widget
+        values = {}
+        for info, column in zip(item_info_list, range(2, table.columnCount())):
+            item = table.item(row, column)
+            values[info.name] = item.get_value()
+
+        full_beam = all((
+            values['rate'] >= 120,
+            values['trans'] >= 1,
+            values['energy'] >= 32,
+            ))
+        active = bool(values['active'])
+        connected = item.connected
+
+        hide_full_beam = self.ui.full_beam.isChecked()
+        hide_inactive = self.ui.inactive.isChecked()
+        hide_disconnected = self.ui.disconnected.isChecked()
+
+        hide = any((
+            hide_full_beam and full_beam,
+            hide_inactive and not active,
+            hide_disconnected and not connected,
+            ))
+
+        if hide:
+            table.hideRow(row)
+        else:
+            table.showRow(row)
+
+
+    def update_all_filters(self, *args, **kwargs):
+        for row in range(self.row_count):
+            self.update_filter(row)
 
     def ui_filename(self):
         return 'preemptive_requests.ui'
