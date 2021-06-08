@@ -352,7 +352,7 @@ def str_from_waveform(waveform_array):
     return text
 
 
-@dataclass
+@dataclass(frozen=True)
 class ItemInfo:
     """All the data we need to set up the sorts/filters"""
     name: str
