@@ -13,28 +13,34 @@ from PyQt5.QtGui import QIcon, QPixmap, QTableWidgetItem
 from qtpy import QtCore, QtWidgets
 
 
-class CustomTableWidgetItem(QTableWidgetItem):
+class PMPSTableWidgetItem(QTableWidgetItem):
     """
-    Custom QTableWidgetItem to allow sorting items in a QTableWidget
-    based on the values from a PyDMEmbeddedDisplay widget.
+    QTableWidgetItem with extra utilities for the PMPS UI
+
+    Adds the following features:
+    - Fill value and connection state from PyDMChannel
+    - Configurable sorting
+    - Process inputs before storing in the table
+    - Able to sort as a non-str type
 
     Parameters
     ----------
-    widget_type : QtWidgets
-        Type of widget, eg. `QtWidgets.QLabel`
-    widget_name : str
-        The name of the widget (object name).
-
-    Note
-    ----
-    For now this class only handles sorting for the QLabel widgets and
-    PyDMByteIndicators.
+    store_type : callable
+        Function or type to call on the value from the PyDMChannel before
+        storing in the table.
+    data_type : callable
+        Function or type to call on the str stored in the table before
+        comparing with other PMPSTableWidgetItem instances for sorting.
+    default : Any
+        A starting value for the widget item.
+    channel : str, optional
+        PyDM channel address for value and connection updates.
     """
-    def __init__(self, store_type, sort_type, default,
+    def __init__(self, store_type, data_type, default,
                  channel=None, parent=None):
         QTableWidgetItem.__init__(self, parent)
         self.store_type = store_type
-        self.sort_type = sort_type
+        self.data_type = data_type
         self.setText(str(default))
         self.channel = channel
         self.connected = False
@@ -47,9 +53,7 @@ class CustomTableWidgetItem(QTableWidgetItem):
             self._channel.connect()
 
     def channels(self):
-        """
-        Make sure PyDM sees this channel to clean up at the end
-        """
+        """Make sure PyDM sees the channel to clean up at the end."""
         try:
             return [self._channel]
         except AttributeError:
@@ -57,26 +61,36 @@ class CustomTableWidgetItem(QTableWidgetItem):
 
     def update_value(self, value):
         """
-        Use the hidden text field to store the value from the PV
+        Use the hidden text field to store the value from the PV.
+
+        This is pre-processed by the "store_type" attribute because the
+        value can only be saved as a string via setText.
+
+        We use the setText instead of an attribute to help with debugging,
+        this means you can see what the table is being sorted on
+        if you unhide the columns.
         """
         self.setText(str(self.store_type(value)))
 
     def update_connection(self, connected):
+        """
+        When our PV connects or disconnects, store the state as an attribute.
+        """
         self.connected = connected
 
     def get_value(self):
-        return self.sort_type(self.text())
+        """The value in canonical python type (not string)."""
+        return self.data_type(self.text())
 
     def __lt__(self, other):
-        """
-        Use order of defined type, not alphabetical
-        """
+        """Use order of defined type, not alphabetical."""
         return self.get_value() < other.get_value()
 
 
-def bitmask_count(bitmask_string):
+def bitmask_count(bitmask):
+    """Count the number of high bits in a bitmask."""
+    bitmask = int(bitmask)
     count = 0
-    bitmask = int(bitmask_string)
     if bitmask < 0:
         bitmask += 2**32
     while bitmask > 0:
@@ -87,6 +101,7 @@ def bitmask_count(bitmask_string):
 
 
 def str_from_waveform(waveform_array):
+    """Convert an EPICS char waveform to a str."""
     text = ''
     for num in waveform_array:
         if num == 0:
@@ -103,10 +118,12 @@ class ItemInfo:
     widget_name: str
     widget_class: type
     store_type: callable
-    sort_type: callable
+    data_type: callable
     default: typing.Any
 
 
+# Each entry corresponds to one UI element in the template
+# In this way we can easily add/remove/configure the sorting behavior
 item_info_list = [
     ItemInfo(
         name='name',
@@ -114,7 +131,7 @@ item_info_list = [
         widget_name='device_label',
         widget_class=PyDMLabel,
         store_type=str_from_waveform,
-        sort_type=str,
+        data_type=str,
         default='',
         ),
     ItemInfo(
@@ -123,7 +140,7 @@ item_info_list = [
         widget_name='id_label',
         widget_class=PyDMLabel,
         store_type=int,
-        sort_type=int,
+        data_type=int,
         default=0,
         ),
     ItemInfo(
@@ -132,7 +149,7 @@ item_info_list = [
         widget_name='rate_label',
         widget_class=PyDMLabel,
         store_type=int,
-        sort_type=int,
+        data_type=int,
         default=0,
         ),
     ItemInfo(
@@ -141,7 +158,7 @@ item_info_list = [
         widget_name='transmission_label',
         widget_class=PyDMLabel,
         store_type=float,
-        sort_type=float,
+        data_type=float,
         default=0.0,
         ),
     ItemInfo(
@@ -150,7 +167,7 @@ item_info_list = [
         widget_name='energy_bytes',
         widget_class=PyDMByteIndicator,
         store_type=bitmask_count,
-        sort_type=int,
+        data_type=int,
         default=0,
         ),
     ItemInfo(
@@ -159,7 +176,7 @@ item_info_list = [
         widget_name='cohort_label',
         widget_class=PyDMLabel,
         store_type=int,
-        sort_type=int,
+        data_type=int,
         default=0,
         ),
     ItemInfo(
@@ -168,18 +185,24 @@ item_info_list = [
         widget_name='live_byte',
         widget_class=PyDMByteIndicator,
         store_type=int,
-        sort_type=int,
+        data_type=int,
         default=0,
         ),
     ]
 
 
 class PreemptiveRequests(Display):
-    _bits = {'bit15': False, 'bit14': False, 'bit13': False, 'bit12': False,
-             'bit11': False, 'bit10': False, 'bit9': False, 'bit8': False,
-             'bit7': False, 'bit6': False, 'bit5': False, 'bit4': False,
-             'bit3': False, 'bit2': False, 'bit1': False, 'bit0': False}
+    """
+    The Display that handles the Preemptive Requests tab.
 
+    This display features a sortable and filterable QTableWidget.
+
+    Internally, the table is structured as:
+    - Column 0 is the only visible column and holds the templated widgets
+    - Column 1 stores the original table insertion order and is not visible
+    - Columns 2 and up correspond with the item_info_list and are not visible
+    - Each row is loaded using information from the config file
+    """
     def __init__(self, parent=None, args=None, macros=None):
         super(PreemptiveRequests, self).__init__(parent=parent,
                                                  args=args, macros=macros)
@@ -187,10 +210,12 @@ class PreemptiveRequests(Display):
         self.setup_ui()
 
     def setup_ui(self):
+        """Do all steps to prepare the inner workings of the display."""
         self.setup_requests()
         self.setup_sorts_and_filters()
 
     def setup_requests(self):
+        """Populate the table from the config file and the item_info_list."""
         if not self.config:
             return
         reqs = self.config.get('preemptive_requests')
@@ -233,9 +258,9 @@ class PreemptiveRequests(Display):
                 reqs_table.setCellWidget(row_position, 0, widget)
 
                 # insert a cell to preserve the original sort order
-                item = CustomTableWidgetItem(
+                item = PMPSTableWidgetItem(
                     store_type=int,
-                    sort_type=int,
+                    data_type=int,
                     default=count,
                     )
                 item.setSizeHint(widget.size())
@@ -247,9 +272,9 @@ class PreemptiveRequests(Display):
                         info.widget_class,
                         info.widget_name,
                         )
-                    item = CustomTableWidgetItem(
+                    item = PMPSTableWidgetItem(
                         store_type=info.store_type,
-                        sort_type=info.sort_type,
+                        data_type=info.data_type,
                         default=info.default,
                         channel=inner_widget.channel,
                         )
@@ -262,6 +287,7 @@ class PreemptiveRequests(Display):
         print(f'Added {count} preemptive requests')
 
     def setup_sorts_and_filters(self):
+        """Initialize the sorting and filtering using the item_info_list."""
         self.ui.sort_choices.addItem('Unsorted')
         for info in item_info_list:
             self.ui.sort_choices.addItem(info.select_text)
@@ -277,6 +303,17 @@ class PreemptiveRequests(Display):
         self.update_all_filters()
 
     def sort_table(self, column, ascending):
+        """
+        Sort the table based on the values from one column of the table.
+
+        Parameters
+        ----------
+        column : int
+            The column of the table to sort on.
+        ascending : bool
+            If true, sort in ascending order, otherwise sort in descending
+            order.
+        """
         if ascending:
             order = QtCore.Qt.AscendingOrder
         else:
@@ -284,16 +321,56 @@ class PreemptiveRequests(Display):
         self.ui.reqs_table_widget.sortItems(column, order)
 
     def handle_item_changed(self, row, column):
-        self.update_filter(row, column)
+        """
+        Slot for all updates that trigger when a cell in the table updates.
+
+        This updates the filtering of the updated row, showing or
+        hiding it as appropriate, and then re-evaluates the table sort.
+
+        Parameters
+        ----------
+        row : int
+            The row of the cell in the table that recieved an update.
+        column : int
+            The column of the cell in the table that recieved an update.
+            This is currently unused, but is passed by the update signal.
+        """
+        self.update_filter(row)
         if self.ui.auto_update.isChecked():
             self.gui_table_sort()
 
     def gui_table_sort(self, *args, **kwargs):
+        """
+        Slot for all signals that want to trigger a full table sort.
+
+        The sort is done based on the current states of the sort_choices and
+        order_choice comboboxes.
+
+        Arguments are ignored and are only included so that any signal can
+        call the slot.
+        """
         column = self.ui.sort_choices.currentIndex() + 1
         ascending = self.ui.order_choice.currentIndex() == 0
         self.sort_table(column, ascending)
 
-    def update_filter(self, row, _col=None):
+    def update_filter(self, row):
+        """
+        Hide or show a specific row of the table as appropriate.
+
+        The row's values will be checked and compared against the selected
+        filters in the ui.
+
+        Currently supports the following filters, which are all active by
+        default:
+        - Hide if requesting full beam
+        - Hide if no activate arbitration
+        - Hide if PV disconnected
+
+        Parameters
+        ----------
+        row : int
+            The row of the table to show or hide.
+        """
         # Treat the entire row as one entity
         table = self.ui.reqs_table_widget
         values = {}
@@ -326,6 +403,7 @@ class PreemptiveRequests(Display):
 
 
     def update_all_filters(self, *args, **kwargs):
+        """Call update_filter on every row of the table."""
         for row in range(self.row_count):
             self.update_filter(row)
 
