@@ -561,7 +561,7 @@ color: rgb(0, 0, 0);</string>
       <string>Activate</string>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Activate</string>
+      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Activate</string>
      </property>
      <property name="pressValue" stdset="0">
       <string>1</string>
@@ -612,7 +612,7 @@ color: rgb(255, 255, 255)</string>
       <string>Deactivate</string>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Deactivate</string>
+      <string>ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Deactivate</string>
      </property>
      <property name="pressValue" stdset="0">
       <string>1</string>
