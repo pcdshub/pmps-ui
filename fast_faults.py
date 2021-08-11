@@ -122,7 +122,11 @@ class FastFaults(Display):
 
     def update_filters(self):
         default_options = [
-            {'name': 'inuse', 'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:Info:InUse_RBV', 'condition': 1}
+            {
+                'name': 'inuse',
+                'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:Info:InUse_RBV',
+                'condition': '"TRUE"',
+            }
         ]
         options = [
             {'name': 'ok', 'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:OK_RBV'},
@@ -136,7 +140,7 @@ class FastFaults(Display):
             gb = self.findChild(QtWidgets.QGroupBox, f"ff_filter_gb_{opt['name']}")
             cb = self.findChild(QtWidgets.QComboBox, f"ff_filter_cb_{opt['name']}")
             if gb.isChecked():
-                opt['condition'] = cb.currentIndex()
+                opt['condition'] = '"' + str(cb.currentText()).upper() + '"'
                 filters.append(opt)
         self.filters_changed.emit(filters)
 
