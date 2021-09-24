@@ -2,6 +2,7 @@ import functools
 from string import Template
 
 from pydm import Display
+from pydm.exception import raise_to_operator
 from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
@@ -27,6 +28,9 @@ class LineBeamParametersControl(Display):
     _setting_bits = False
     energy_channel = None
 
+    # Monitor the rate readback for use in the zero rate button
+    rate_channel = None
+
     def __init__(self, parent=None, args=None, macros=None):
         super(LineBeamParametersControl, self).__init__(parent=parent,
                                                         args=args,
@@ -34,14 +38,18 @@ class LineBeamParametersControl(Display):
         self.config = macros
         self.setup_ui()
 
-        if self.energy_channel:
+        if self.energy_channel is not None:
             self.destroyed.connect(functools.partial(clear_channel,
                                                      self.energy_channel))
+        if self.rate_channel is not None:
+            self.destroyed.connect(functools.partial(clear_channel,
+                                                     self.rate_channel))
 
     def setup_ui(self):
         self.setup_bits_connections()
         self.setup_bit_indicators()
         self.setup_energy_range_channel()
+        self.setup_zero_rate()
 
     def setup_bits_connections(self):
         """
@@ -134,6 +142,52 @@ class LineBeamParametersControl(Display):
         # set this value back to false so we don't create a infinite
         # loop between this slot and the energy_range_signal signal.
         self._setting_bits = False
+
+    def setup_zero_rate(self):
+        self.ui.zeroRate.clicked.connect(self.set_zero_rate)
+        self.ui.placeholder.hide()
+        self.rate_req = None
+        self.apply_attempts = 0
+        self.rate_channel = PyDMChannel(
+            self.ui.rateEdit.channel,
+            value_slot=self.watch_rate_update,
+        )
+        self.rate_channel.connect()
+        self.zero_rate_timer = QtCore.QTimer()
+        self.zero_rate_timer.timeout.connect(self.apply_zero_rate)
+        self.zero_rate_timer.setSingleShot(True)
+        self.zero_rate_timer.setInterval(100)
+
+    def watch_rate_update(self, value):
+        """
+        Watch the rate channel so we know the most recent value.
+        """
+        self.rate_req = value
+
+    def set_zero_rate(self):
+        """
+        Slot activated when the zero rate button is pressed.
+
+        Modify the rate edit, emit a signal for the apply step.
+        """
+        self.apply_attempts = 0
+        self.rateEdit.setText('0 Hz')
+        self.rateEdit.send_value()
+        self.zero_rate_timer.start()
+
+    def apply_zero_rate(self):
+        """
+        Try every 100ms, if our rate was updated then apply it.
+        """
+        if self.rate_req == 0:
+            self.applyButton.sendValue()
+        elif self.apply_attempts <= 10:
+            self.apply_attempts += 1
+            self.zero_rate_timer.start()
+        else:
+            raise_to_operator(
+                TimeoutError('Apply zero rate failed!')
+            )
 
     def ui_filename(self):
         return 'line_beam_parameters.ui'
