@@ -24,8 +24,13 @@ class PLCIOCStatus(Display):
         self.ffs_count_map = {}
         self.ffs_label_map = {}
         self.setup_ui()
-        if self.plc_status_ch:
-            self.destroyed.connect(functools.partial(clear_channel, self.plc_status_ch))
+        for ch in (
+            self.plc_status_ch,
+            self.plc_task1_vis_ch,
+            self.plc_task2_vis_ch,
+            self.plc_task3_vis_ch,
+        ):
+            self.destroyed.connect(functools.partial(clear_channel, ch))
 
     def setup_ui(self):
         self.setup_plc_ioc_status()
@@ -37,7 +42,10 @@ class PLCIOCStatus(Display):
         if self.plc_ioc_container is None:
             return
 
-        for ff in ffs:
+        grid = self.ui.plc_ioc_container.layout()
+        self.task_vis_data = {}
+
+        for row, ff in enumerate(ffs):
             prefix = ff.get('prefix')
             ffo_start = ff.get('ffo_start')
             ffo_end = ff.get('ffo_end')
@@ -88,6 +96,75 @@ class PLCIOCStatus(Display):
             plc_status_indicator.setColor(self._off_color)
             # TODO - maybe add the case where PLC On but stopped
 
+            # Handle the visibility of task 2 and 3 info
+            # Not every PLC has tasks 2 and 3
+            # These should be shown if they are valid or if they are nonzero
+            # These should be hidden if they are both 0 and invalid while
+            # task1 is still valid
+            # If task1 is invalid display all 3 (val of task1 irrelevant)
+            # I need to collect/cache a value and then show/hide appropriately
+            self.task_vis_data[plc_name] = {
+                'task1': {
+                    'value': 0,
+                    'sevr': 3,
+                },
+                'task2': {
+                    'value': 0,
+                    'sevr': 3,
+                },
+                'task3': {
+                    'value': 0,
+                    'sevr': 3,
+                },
+            }
+            self.plc_task1_vis_ch = PyDMChannel(
+                plc_task_info_1,
+                severity_slot=functools.partial(
+                    self.update_task_visibility,
+                    plc_name=plc_name,
+                    task='task1',
+                    value_type='sevr',
+                    widget=None,
+                ),
+            )
+            self.plc_task1_vis_ch.connect()
+            self.plc_task2_vis_ch = PyDMChannel(
+                plc_task_info_2,
+                value_slot=functools.partial(
+                    self.update_task_visibility,
+                    plc_name=plc_name,
+                    task='task2',
+                    value_type='value',
+                    widget=label_plc_task_info_2,
+                ),
+                severity_slot=functools.partial(
+                    self.update_task_visibility,
+                    plc_name=plc_name,
+                    task='task2',
+                    value_type='sevr',
+                    widget=label_plc_task_info_2,
+                ),
+            )
+            self.plc_task2_vis_ch.connect()
+            self.plc_task3_vis_ch = PyDMChannel(
+                plc_task_info_3,
+                value_slot=functools.partial(
+                    self.update_task_visibility,
+                    plc_name=plc_name,
+                    task='task3',
+                    value_type='value',
+                    widget=label_plc_task_info_3,
+                ),
+                severity_slot=functools.partial(
+                    self.update_task_visibility,
+                    plc_name=plc_name,
+                    task='task3',
+                    value_type='sevr',
+                    widget=label_plc_task_info_3,
+                ),
+            )
+            self.plc_task3_vis_ch.connect()
+
             # total initial number of ffs to initialize the dictionaries with
             # num_ffo * num_ff
             all_ffos = ((ffo_end - ffo_start) + 1) * (ff_end - ff_start + 1)
@@ -122,54 +199,62 @@ class PLCIOCStatus(Display):
                 channel.connect()
                 count += 1
 
-            widget = QtWidgets.QWidget()
-            widget_layout = QtWidgets.QHBoxLayout()
-
             # this is the same width as the labels in the plc_ioc_header
             max_width = 150
             min_width = 130
+            max_height = 30
+            min_height = 30
             widget_list = [label_name, label_online, label_in_use,
                            label_alarmed, label_heartbeat,
                            label_plc_task_info_1, label_plc_task_info_2,
                            label_plc_task_info_3, plc_status_indicator]
-            widget.setLayout(widget_layout)
 
-            # set minimum height of the widget
-            widget.setMinimumHeight(40)
-            self.setup_widget_size(max_width=max_width, min_width=min_width,
-                                   widget_list=widget_list)
-            widget.layout().addWidget(label_name)
-            widget.layout().addWidget(label_online)
-            widget.layout().addWidget(label_in_use)
-            widget.layout().addWidget(label_alarmed)
-            widget.layout().addWidget(label_heartbeat)
-            widget.layout().addWidget(label_plc_task_info_1)
-            widget.layout().addWidget(label_plc_task_info_2)
-            widget.layout().addWidget(label_plc_task_info_3)
-            widget.layout().addWidget(plc_status_indicator)
+            self.setup_widget_size(
+                max_width=max_width,
+                min_width=min_width,
+                max_height=max_height,
+                min_height=min_height,
+                widget_list=widget_list,
+            )
 
-            self.plc_ioc_container.layout().addWidget(widget)
-            vertical_spacer = (
-                QtWidgets.QSpacerItem(20, 20,
-                                      QtWidgets.QSizePolicy.Preferred,
-                                      QtWidgets.QSizePolicy.Maximum))
-            self.plc_ioc_container.layout().addItem(vertical_spacer)
+            grid.addWidget(label_name, row, 0)
+            grid.addWidget(label_online, row, 1)
+            grid.addWidget(label_in_use, row, 2)
+            grid.addWidget(label_alarmed, row, 3)
+            grid.addWidget(label_heartbeat, row, 4)
+            grid.addWidget(label_plc_task_info_1, row, 5)
+            grid.addWidget(label_plc_task_info_2, row, 6)
+            grid.addWidget(label_plc_task_info_3, row, 7)
+            grid.addWidget(plc_status_indicator, row, 8)
+
         b_vertical_spacer = (
             QtWidgets.QSpacerItem(20, 20,
                                   QtWidgets.QSizePolicy.Preferred,
                                   QtWidgets.QSizePolicy.Expanding))
-        self.plc_ioc_container.layout().addItem(b_vertical_spacer)
+        grid.addItem(b_vertical_spacer, row + 1, 0)
         self.plc_ioc_container.setSizePolicy(QtWidgets.QSizePolicy.Maximum,
                                              QtWidgets.QSizePolicy.Preferred)
 
-    def setup_widget_size(self, max_width, min_width, widget_list):
+    def setup_widget_size(self,
+        max_width,
+        min_width,
+        max_height,
+        min_height,
+        widget_list,
+    ):
         for widget in widget_list:
             widget.setMinimumWidth(min_width)
             widget.setMaximumWidth(max_width)
+            widget.setMinimumHeight(min_height)
+            widget.setMaximumHeight(max_height)
 
     def plc_cycle_count_severity_changed(self, key, alarm):
         """
         Process PLC Cycle Count PV severity change.
+
+        This targets only the first cycle counter. When the first
+        cycle counter goes "Invalid", mark PLC status as bad.
+        Otherwise, PLC status is good.
 
         Parameters
         ----------
@@ -190,6 +275,42 @@ class PLCIOCStatus(Display):
         else:
             plc['plc_status'] = True
         self.update_status_labels(key)
+
+    def update_task_visibility(
+        self,
+        value,
+        plc_name,
+        task,
+        value_type,
+        widget,
+    ):
+        """
+        Check if tasks 2 or 3 are valid to be shown.
+
+        The goal is that we shouldn't show invalid channels unless
+        they are true errors. The conditions for a non-error
+        expected "bad" state on counts 2 or 3 are:
+
+        - Task count 1 is valid
+        - Task counts 2 or 3 are 0 and invalid
+
+        Task 1 being invalid is always a bad state.
+        Task 2 or 3 being nonzero and invalid is also a bad state.
+        These usually means the PLC has crashed.
+        """
+        plc_data = self.task_vis_data[plc_name]
+        task_data = plc_data[task]
+        task_data[value_type] = value
+        if widget is None:
+            return
+        if all((
+            plc_data['task1']['sevr'] == 0,
+            task_data['value'] == 0,
+            task_data['sevr'] == 3,
+        )):
+            widget.hide()
+        else:
+            widget.show()
 
     def ffo_connection_callback(self, key, idx, conn):
         # Update ffos count for connected In_Use PVs
