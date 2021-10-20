@@ -168,9 +168,9 @@ class FastFaults(Display):
     def update_time_delta(self, arbiter_time):
         client_time = QtCore.QDateTime.currentSecsSinceEpoch()
         diff = arbiter_time - client_time
-        text = f'({diff:+d})'
+        text = f'({diff:+d}s)'
         self.ui.time_delta_label.setText(text)
         if abs(diff) >= 5:
             self.ui.time_delta_label.setStyleSheet("QLabel { color : red; }")
         elif abs(diff) < 2:
-            self.ui.time_delta.label.setStyleSheet("QLabel { color : black; }")
+            self.ui.time_delta_label.setStyleSheet("QLabel { color : black; }")

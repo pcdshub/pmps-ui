@@ -341,36 +341,11 @@
           </spacer>
          </item>
          <item>
-          <layout class="QGridLayout" name="gridLayout">
-           <property name="topMargin">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="leftMargin">
             <number>0</number>
            </property>
-           <property name="rightMargin">
-            <number>0</number>
-           </property>
-           <item row="1" column="0">
-            <widget class="PyDMDateTimeLabel" name="PyDMDateTimeLabel">
-             <property name="toolTip">
-              <string/>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-             <property name="channel" stdset="0">
-              <string>ca://${line_arbiter_prefix}SystemDT_RBV</string>
-             </property>
-             <property name="textFormat" stdset="0">
-              <string>yyyy/MM/dd hh:mm:ss.zzz</string>
-             </property>
-             <property name="timeBase" stdset="0">
-              <enum>PyDMDateTimeLabel::Seconds</enum>
-             </property>
-             <property name="relative" stdset="0">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
+           <item>
             <widget class="QLabel" name="label">
              <property name="text">
               <string>Local Arbiter Time:</string>
@@ -380,15 +355,41 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
-            <widget class="QLabel" name="time_delta_label">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="PyDMDateTimeLabel" name="PyDMDateTimeLabel">
+               <property name="toolTip">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="channel" stdset="0">
+                <string>ca://${line_arbiter_prefix}SystemDT_RBV</string>
+               </property>
+               <property name="textFormat" stdset="0">
+                <string>yyyy/MM/dd hh:mm:ss.zzz</string>
+               </property>
+               <property name="timeBase" stdset="0">
+                <enum>PyDMDateTimeLabel::Seconds</enum>
+               </property>
+               <property name="relative" stdset="0">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="time_delta_label">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>
