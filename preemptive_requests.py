@@ -1,12 +1,14 @@
+import functools
 import json
 import typing
 from dataclasses import dataclass
+from string import Template
 
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from PyQt5.QtGui import QTableWidgetItem
-from qtpy import QtCore
+from qtpy import QtCore, QtWidgets
 
 
 class PreemptiveRequests(Display):
@@ -36,6 +38,9 @@ class PreemptiveRequests(Display):
       here, and instead we link the channels up with the QTableWidget.hideRow
       and QTableWidget.showRow methods.
     """
+    # The rates that are allowed to be asserted in pmps in Hz
+    valid_rates = [120, 10, 1, 0]
+
     def __init__(self, parent=None, args=None, macros=None):
         super().__init__(parent=parent, args=args, macros=macros)
         self.config = macros
@@ -84,6 +89,26 @@ class PreemptiveRequests(Display):
                 widget.filename = template
                 widget.loadWhenShown = False
                 widget.disconnectWhenHidden = False
+
+                # special setup for the rate label
+                # this is a plain QLabel so we can display true rate
+                # true rate is locked to one of a few fixed values
+                rate_label = widget.findChild(
+                    QtWidgets.QLabel,
+                    'rate_label',
+                )
+                rate_label.channel = Template(
+                    'ca://${P}${ARBITER}:AP:Entry:${POOL}:Rate_RBV'
+                ).safe_substitute(**macros)
+                rate_channel = PyDMChannel(
+                    rate_label.channel,
+                    value_slot=functools.partial(
+                        self.update_valid_rate,
+                        label=rate_label,
+                    ),
+                )
+                rate_channel.connect()
+                self._channels.append(rate_channel)
 
                 # insert the widget you see into the table
                 row_position = reqs_table.rowCount()
@@ -252,6 +277,14 @@ class PreemptiveRequests(Display):
         for row in range(self.row_count):
             self.update_filter(row)
 
+    def update_valid_rate(self, value, label):
+        chosen_rate = 0
+        for rate in self.valid_rates:
+            if value >= rate:
+                chosen_rate = rate
+                break
+        label.setText(f'{chosen_rate} Hz')
+
     def ui_filename(self):
         return 'preemptive_requests.ui'
 
@@ -388,7 +421,7 @@ item_info_list = [
         name='rate',
         select_text='Rate',
         widget_name='rate_label',
-        widget_class=PyDMLabel,
+        widget_class=QtWidgets.QLabel,
         store_type=int,
         data_type=int,
         default=0,
