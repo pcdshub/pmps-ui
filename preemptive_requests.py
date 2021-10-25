@@ -10,6 +10,8 @@ from pydm.widgets.channel import PyDMChannel
 from PyQt5.QtGui import QTableWidgetItem
 from qtpy import QtCore, QtWidgets
 
+from data_bounds import get_valid_rate
+
 
 class PreemptiveRequests(Display):
     """
@@ -38,9 +40,6 @@ class PreemptiveRequests(Display):
       here, and instead we link the channels up with the QTableWidget.hideRow
       and QTableWidget.showRow methods.
     """
-    # The rates that are allowed to be asserted in pmps in Hz
-    valid_rates = [120, 10, 1, 0]
-
     def __init__(self, parent=None, args=None, macros=None):
         super().__init__(parent=parent, args=args, macros=macros)
         self.config = macros
@@ -278,12 +277,8 @@ class PreemptiveRequests(Display):
             self.update_filter(row)
 
     def update_valid_rate(self, value, label):
-        chosen_rate = 0
-        for rate in self.valid_rates:
-            if value >= rate:
-                chosen_rate = rate
-                break
-        label.setText(f'{chosen_rate} Hz')
+        valid_rate = get_valid_rate(value)
+        label.setText(f'{valid_rate} Hz')
 
     def ui_filename(self):
         return 'preemptive_requests.ui'

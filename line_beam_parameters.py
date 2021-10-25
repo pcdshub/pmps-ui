@@ -7,6 +7,7 @@ from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
+from data_bounds import VALID_RATES, get_valid_rate
 from fast_faults import clear_channel
 from pmps import morph_into_vertical
 
@@ -33,9 +34,6 @@ class LineBeamParametersControl(Display):
 
     # Signal to set a new rate from the combobox or from zero rate button
     update_rate_signal = QtCore.Signal(int)
-
-    # List of valid rate selections from high to low in Hz
-    valid_rates = [120, 10, 1, 0]
 
 
     def __init__(self, parent=None, args=None, macros=None):
@@ -212,7 +210,7 @@ class LineBeamParametersControl(Display):
         """
         Fill the combobox for rate selection and make it work.
         """
-        for rate in self.valid_rates:
+        for rate in VALID_RATES:
             self.ui.rateComboBox.addItem(f'{rate} Hz')
         self.ui.rateComboBox.activated.connect(self.select_new_rate)
 
@@ -220,7 +218,7 @@ class LineBeamParametersControl(Display):
         """
         Handler for when the user selects a new rate using the combo box.
         """
-        self.update_rate_signal.emit(self.valid_rates[index])
+        self.update_rate_signal.emit(VALID_RATES[index])
 
     def update_rate_combobox_value(self, value):
         """
@@ -232,9 +230,5 @@ class LineBeamParametersControl(Display):
         If value is not a valid value, the combobox will display the
         nearest lowest valid value.
         """
-        chosen_rate = 0
-        for rate in self.valid_rates:
-            if value >= rate:
-                chosen_rate = rate
-                break
-        self.ui.rateComboBox.setCurrentIndex(self.valid_rates.index(chosen_rate))
+        valid_rate = get_valid_rate(value)
+        self.ui.rateComboBox.setCurrentIndex(VALID_RATES.index(valid_rate))
