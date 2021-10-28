@@ -20,7 +20,7 @@ fastfaults:
     ffo_start: 1
     ffo_end: 4
     ff_start: 1
-    ff_end: 10
+    ff_end: 20
 
   - prefix: "PLC:TMO:VAC:"
     ffo_start: 1
