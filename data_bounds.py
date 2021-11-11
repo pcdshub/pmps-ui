@@ -1,5 +1,5 @@
 # List of valid rate selections from high to low in Hz
-VALID_RATES = [120, 10, 1, 0]
+VALID_RATES = (120, 10, 1, 0)
 
 def get_valid_rate(rate):
     """
