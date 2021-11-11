@@ -69,14 +69,25 @@ class PMPS(Display):
         self.setup_ui()
 
     def setup_ui(self):
-        dash_url = self.config.get('dashboard_url')
-        if dash_url:
-            self.ui.webbrowser.load(QtCore.QUrl(dash_url))
+        self.dash_url = self.config.get('dashboard_url')
+        self.web_open = False
+        if self.dash_url:
+            self.ui.tab_arbiter_outputs.currentChanged.connect(
+                self.open_webpage_if_tab,
+                )
 
         self.ui.btn_open_browser.clicked.connect(self.handle_open_browser)
 
         self.setup_ev_range_labels()
         self.setup_tabs()
+
+    def open_webpage_if_tab(self, tab_index):
+        if tab_index == 6 and not self.web_open:
+            self.ui.webbrowser.load(QtCore.QUrl(self.dash_url))
+            self.web_open = True
+        elif self.web_open:
+            self.ui.webbrowser.load(QtCore.QUrl('about:blank'))
+            self.web_open = False
 
     def setup_ev_range_labels(self):
         labels = list(range(7, 40))

@@ -2,10 +2,12 @@ import functools
 from string import Template
 
 from pydm import Display
+from pydm.exception import raise_to_operator
 from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
+from data_bounds import VALID_RATES, get_valid_rate
 from fast_faults import clear_channel
 from pmps import morph_into_vertical
 
@@ -27,6 +29,13 @@ class LineBeamParametersControl(Display):
     _setting_bits = False
     energy_channel = None
 
+    # Monitor the rate readback for use in the zero rate button
+    rate_channel = None
+
+    # Signal to set a new rate from the combobox or from zero rate button
+    update_rate_signal = QtCore.Signal(int)
+
+
     def __init__(self, parent=None, args=None, macros=None):
         super(LineBeamParametersControl, self).__init__(parent=parent,
                                                         args=args,
@@ -34,14 +43,24 @@ class LineBeamParametersControl(Display):
         self.config = macros
         self.setup_ui()
 
-        if self.energy_channel:
+        if self.energy_channel is not None:
             self.destroyed.connect(functools.partial(clear_channel,
                                                      self.energy_channel))
+        if self.rate_channel is not None:
+            self.destroyed.connect(functools.partial(clear_channel,
+                                                     self.rate_channel))
+
+    def ui_filename(self):
+        return 'line_beam_parameters.ui'
 
     def setup_ui(self):
         self.setup_bits_connections()
         self.setup_bit_indicators()
         self.setup_energy_range_channel()
+        self.setup_rate_channel()
+        self.setup_zero_rate()
+        self.setup_rate_combo()
+        self.rate_channel.connect()
 
     def setup_bits_connections(self):
         """
@@ -135,5 +154,81 @@ class LineBeamParametersControl(Display):
         # loop between this slot and the energy_range_signal signal.
         self._setting_bits = False
 
-    def ui_filename(self):
-        return 'line_beam_parameters.ui'
+    def setup_rate_channel(self):
+        prefix = self.config.get('line_arbiter_prefix')
+        self.rate_channel = PyDMChannel(
+            f'ca://{prefix}BeamParamCntl:ReqBP:Rate',
+            value_slot=self.watch_rate_update,
+            value_signal=self.update_rate_signal,
+        )
+
+    def setup_zero_rate(self):
+        self.ui.zeroRate.clicked.connect(self.set_zero_rate)
+        self.ui.placeholder.hide()
+        self.rate_req = None
+        self.apply_attempts = 0
+        self.zero_rate_timer = QtCore.QTimer()
+        self.zero_rate_timer.timeout.connect(self.apply_zero_rate)
+        self.zero_rate_timer.setSingleShot(True)
+        self.zero_rate_timer.setInterval(100)
+
+    def watch_rate_update(self, value):
+        """
+        Watch the rate channel so we know the most recent value.
+
+        This is also used to update the rate selection combobox on
+        one GUI after another GUI makes a selection.
+        """
+        self.rate_req = value
+        self.update_rate_combobox_value(value)
+
+    def set_zero_rate(self):
+        """
+        Slot activated when the zero rate button is pressed.
+
+        Modify the rate edit, emit a signal for the apply step.
+        """
+        self.apply_attempts = 0
+        self.update_rate_signal.emit(0)
+        self.zero_rate_timer.start()
+
+    def apply_zero_rate(self):
+        """
+        Try every 100ms, if our rate was updated then apply it.
+        """
+        if self.rate_req == 0:
+            self.applyButton.sendValue()
+        elif self.apply_attempts <= 10:
+            self.apply_attempts += 1
+            self.zero_rate_timer.start()
+        else:
+            raise_to_operator(
+                TimeoutError('Apply zero rate failed!')
+            )
+
+    def setup_rate_combo(self):
+        """
+        Fill the combobox for rate selection and make it work.
+        """
+        for rate in VALID_RATES:
+            self.ui.rateComboBox.addItem(f'{rate} Hz')
+        self.ui.rateComboBox.activated.connect(self.select_new_rate)
+
+    def select_new_rate(self, index):
+        """
+        Handler for when the user selects a new rate using the combo box.
+        """
+        self.update_rate_signal.emit(VALID_RATES[index])
+
+    def update_rate_combobox_value(self, value):
+        """
+        Set the combobox to the index that corresponds with value.
+
+        This does not write to the PV, it just changes the visual
+        state of the combobox.
+
+        If value is not a valid value, the combobox will display the
+        nearest lowest valid value.
+        """
+        valid_rate = get_valid_rate(value)
+        self.ui.rateComboBox.setCurrentIndex(VALID_RATES.index(valid_rate))

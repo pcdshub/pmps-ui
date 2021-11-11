@@ -69,10 +69,7 @@ class FastFaults(Display):
     def setup_ui(self):
         self.ui.btn_apply_filters.clicked.connect(self.update_filters)
         self.setup_fastfaults()
-        self.timer = QtCore.QTimer()
-        self.timer.timeout.connect(self.update_min_times)
-        self.timer.singleShot(1000, self.update_min_times)
-        self.timer.start(10000)
+        self.setup_datetimes()
 
     def setup_fastfaults(self):
         ffs = self.config.get('fastfaults')
@@ -122,7 +119,11 @@ class FastFaults(Display):
 
     def update_filters(self):
         default_options = [
-            {'name': 'inuse', 'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:Info:InUse_RBV', 'condition': 1}
+            {
+                'name': 'inuse',
+                'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:Info:InUse_RBV',
+                'condition': '"TRUE"',
+            }
         ]
         options = [
             {'name': 'ok', 'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:OK_RBV'},
@@ -136,9 +137,26 @@ class FastFaults(Display):
             gb = self.findChild(QtWidgets.QGroupBox, f"ff_filter_gb_{opt['name']}")
             cb = self.findChild(QtWidgets.QComboBox, f"ff_filter_cb_{opt['name']}")
             if gb.isChecked():
-                opt['condition'] = cb.currentIndex()
+                opt['condition'] = '"' + str(cb.currentText()).upper() + '"'
                 filters.append(opt)
         self.filters_changed.emit(filters)
+
+    def setup_datetimes(self):
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(self.update_min_times)
+        self.timer.singleShot(1000, self.update_min_times)
+        self.timer.start(10000)
+        self.dt_channel = PyDMChannel(
+            self.ui.PyDMDateTimeLabel.channel,
+            value_slot=self.update_time_delta,
+        )
+        self.dt_channel.connect()
+        self.destroyed.connect(
+            functools.partial(
+                clear_channel,
+                self.dt_channel,
+            )
+        )
 
     def update_min_times(self):
         current_time = QtCore.QDateTime.currentSecsSinceEpoch()
@@ -146,3 +164,13 @@ class FastFaults(Display):
         min_time = QtCore.QDateTime.fromSecsSinceEpoch(latest_minute)
         for widget in self.findChildren(PyDMDateTimeEdit, 'ExpirationSelect'):
             widget.setMinimumDateTime(min_time)
+
+    def update_time_delta(self, arbiter_time):
+        client_time = QtCore.QDateTime.currentSecsSinceEpoch()
+        diff = arbiter_time - client_time
+        text = f'({diff:+d}s)'
+        self.ui.time_delta_label.setText(text)
+        if abs(diff) >= 5:
+            self.ui.time_delta_label.setStyleSheet("QLabel { color : red; }")
+        elif abs(diff) < 2:
+            self.ui.time_delta_label.setStyleSheet("QLabel { color : black; }")

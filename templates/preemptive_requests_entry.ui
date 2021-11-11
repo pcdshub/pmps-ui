@@ -110,7 +110,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMLabel" name="rate_label">
+    <widget class="QLabel" name="rate_label">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -132,14 +132,11 @@
        <height>16777215</height>
       </size>
      </property>
-     <property name="toolTip">
+     <property name="styleSheet">
+      <string notr="true">QLabel { color : black; }</string>
+     </property>
+     <property name="text">
       <string/>
-     </property>
-     <property name="showUnits" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:Rate_RBV</string>
      </property>
     </widget>
    </item>
