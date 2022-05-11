@@ -7,7 +7,6 @@ from string import Template
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
-from PyQt5.QtGui import QTableWidgetItem
 from qtpy import QtCore, QtWidgets
 
 from data_bounds import get_valid_rate
@@ -294,7 +293,7 @@ class PreemptiveRequests(Display):
         return self._channels
 
 
-class PMPSTableWidgetItem(QTableWidgetItem):
+class PMPSTableWidgetItem(QtWidgets.QTableWidgetItem):
     """
     QTableWidgetItem with extra utilities for the PMPS UI
 
