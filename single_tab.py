@@ -3,6 +3,7 @@ import os.path
 import sys
 
 import yaml
+from pcdsutils.profile import profiler_context
 from pydm import PyDMApplication
 from pydm.utilities import setup_renderer
 from qtpy.QtCore import QTimer
@@ -34,22 +35,22 @@ def load_config(cfg: str) -> dict:
 
 
 def main(args):
-    Cls = options[args.tab.lower()]
-
+    module = args.tab.lower()
+    Cls = options[module]
     setup_renderer()
-
     app = PyDMApplication(use_main_window=False)
 
-    tab = Cls(macros=load_config(args.cfg.upper()))
-    tab.show()
+    with profiler_context(module_names=['pydm', 'PyQt5', module], filename=f'{module}.prof'):
+        tab = Cls(macros=load_config(args.cfg.upper()))
+        tab.show()
 
-    if args.close:
-        close_timer = QTimer()
-        close_timer.setSingleShot(True)
-        close_timer.timeout.connect(tab.close)
-        close_timer.start(1000)
+        if args.close:
+            close_timer = QTimer()
+            close_timer.setSingleShot(True)
+            close_timer.timeout.connect(tab.close)
+            close_timer.start(1000)
 
-    sys.exit(app.exec_())
+        app.exec_()
 
 
 if __name__ == "__main__":
