@@ -112,5 +112,6 @@ ENV/
 # mypy
 .mypy_cache/
 
-# vim
+# vim, emacs
 *.swp
+*~
