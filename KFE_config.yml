@@ -84,7 +84,12 @@ preemptive_requests:
     assertion_pool_end: 20
 
   - prefix: "PLC:KFE:MOTION:"
-    arbiter_instance: "ARB"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:KFE:MOTION:"
+    arbiter_instance: "ARB:02"
     assertion_pool_start: 1
     assertion_pool_end: 20
 
