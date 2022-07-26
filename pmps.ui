@@ -408,7 +408,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[31:31]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -433,7 +433,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[30:30]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -458,7 +458,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[29:29]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -483,7 +483,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[28:28]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -508,7 +508,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[27:27]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -533,7 +533,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[26:26]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -558,7 +558,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[25:25]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -583,7 +583,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[24:24]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -608,7 +608,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[23:23]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -633,7 +633,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[22:22]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -658,7 +658,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[21:21]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -683,7 +683,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[20:20]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -708,7 +708,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[19:19]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -733,7 +733,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[18:18]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -758,7 +758,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[17:17]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -783,7 +783,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[16:16]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -808,7 +808,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[15:15]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -833,7 +833,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[14:14]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -858,7 +858,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[13:13]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -883,7 +883,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[12:12]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -908,7 +908,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[11:11]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -933,7 +933,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[10:10]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -958,7 +958,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[9:9]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -983,7 +983,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[8:8]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -1008,7 +1008,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[7:7]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -1033,7 +1033,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[6:6]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -1058,7 +1058,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[5:5]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -1083,7 +1083,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[4:4]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -1108,7 +1108,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[3:3]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -1133,7 +1133,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[2:2]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -1158,7 +1158,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[1:1]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -1183,7 +1183,7 @@
                <string/>
               </property>
               <property name="text">
-               <string>25000</string>
+               <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[0:0]</string>
               </property>
               <property name="precisionFromPV" stdset="0">
                <bool>false</bool>
@@ -1390,62 +1390,7 @@
       <attribute name="title">
        <string>Grafana Log Display</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_9" stretch="0,1">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0">
-         <item>
-          <spacer name="horizontalSpacer_3">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item>
-          <widget class="QPushButton" name="btn_open_browser">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>200</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(214, 214, 214);</string>
-           </property>
-           <property name="text">
-            <string>Open in a new Window...</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QWebEngineView" name="webbrowser">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>400</height>
-          </size>
-         </property>
-         <property name="url">
-          <url>
-           <string>about:blank</string>
-          </url>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <layout class="QVBoxLayout" name="verticalLayout_9" stretch=""/>
      </widget>
     </widget>
    </item>
@@ -1466,11 +1411,6 @@
    <class>PyDMByteIndicator</class>
    <extends>QWidget</extends>
    <header>pydm.widgets.byte</header>
-  </customwidget>
-  <customwidget>
-   <class>QWebEngineView</class>
-   <extends>QWidget</extends>
-   <header location="global">QtWebEngineWidgets/QWebEngineView</header>
   </customwidget>
  </customwidgets>
  <resources/>
