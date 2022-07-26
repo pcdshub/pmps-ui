@@ -1,4 +1,3 @@
-import webbrowser
 from os import path
 
 import yaml
@@ -69,25 +68,8 @@ class PMPS(Display):
         self.setup_ui()
 
     def setup_ui(self):
-        self.dash_url = self.config.get('dashboard_url')
-        self.web_open = False
-        if self.dash_url:
-            self.ui.tab_arbiter_outputs.currentChanged.connect(
-                self.open_webpage_if_tab,
-                )
-
-        self.ui.btn_open_browser.clicked.connect(self.handle_open_browser)
-
         self.setup_ev_range_labels()
         self.setup_tabs()
-
-    def open_webpage_if_tab(self, tab_index):
-        if tab_index == 6 and not self.web_open:
-            self.ui.webbrowser.load(QtCore.QUrl(self.dash_url))
-            self.web_open = True
-        elif self.web_open:
-            self.ui.webbrowser.load(QtCore.QUrl('about:blank'))
-            self.web_open = False
 
     def setup_ev_range_labels(self):
         labels = list(range(7, 40))
@@ -107,6 +89,12 @@ class PMPS(Display):
         self.setup_ev_calculation()
         self.setup_line_parameters_contorl()
         self.setup_plc_ioc_status()
+
+        dash_url = self.config.get('dashboard_url')
+        if '--no-web' in self.args() or dash_url is None:
+            self.ui.tab_arbiter_outputs.removeTab(6)
+        else:
+            self.setup_grafana_log_display()
 
         # We are done... re-enable painting
         self.setUpdatesEnabled(True)
@@ -150,10 +138,15 @@ class PMPS(Display):
         plc_widget = PLCIOCStatus(macros=self.config)
         tab.layout().addWidget(plc_widget)
 
-    def handle_open_browser(self):
-        url = self.ui.webbrowser.url().toString()
-        if url:
-            webbrowser.open(url, new=2, autoraise=True)
+    def setup_grafana_log_display(self):
+        from grafana_log_display import GrafanaLogDisplay
+        tab = self.ui.tb_grafana_log_display
+        grafana_widget = GrafanaLogDisplay(macros=self.config)
+        self.ui.tab_arbiter_outputs.currentChanged.connect(
+            grafana_widget.open_webpage_if_tab,
+        )
+        tab.layout().addWidget(grafana_widget)
+
 
     def ui_filename(self):
         return 'pmps.ui'

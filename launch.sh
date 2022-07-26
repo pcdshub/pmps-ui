@@ -1,2 +1,4 @@
 #!/bin/bash
-pydm --hide-nav-bar --hide-status-bar -m "CFG=${1}" pmps.py
+config="${1}"
+shift
+pydm --hide-nav-bar --hide-status-bar -m "CFG=${config}" pmps.py $@
