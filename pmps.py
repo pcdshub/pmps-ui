@@ -1,3 +1,4 @@
+import argparse
 from os import path
 
 import yaml
@@ -5,6 +6,19 @@ from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMLabel
 from pydm.widgets.datetime import PyDMDateTimeEdit, TimeBase
 from qtpy import QtCore, QtGui, QtWidgets
+
+
+def make_parser():
+    parser = argparse.ArgumentParser(
+        description='Display the PMPS diagnostic tool inside of PyDM.',
+        prog='pydm pmps.py',
+    )
+    parser.add_argument(
+        '--no-web',
+        action='store_true',
+        help='Disable the grafana web view tab.',
+    )
+    return parser
 
 
 def morph_into_vertical(label):
@@ -41,6 +55,8 @@ def morph_into_vertical(label):
 
 class PMPS(Display):
     def __init__(self, parent=None, args=None, macros=None):
+        parser = make_parser()
+        self.user_args = parser.parse_args(args=args or [])
         if not macros:
             macros = {}
         # Fallback for old start without macros
@@ -91,7 +107,7 @@ class PMPS(Display):
         self.setup_plc_ioc_status()
 
         dash_url = self.config.get('dashboard_url')
-        if '--no-web' in self.args() or dash_url is None:
+        if self.user_args.no_web or dash_url is None:
             self.ui.tab_arbiter_outputs.removeTab(6)
         else:
             self.setup_grafana_log_display()
