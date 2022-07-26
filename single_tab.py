@@ -3,6 +3,7 @@ import os.path
 import sys
 
 import yaml
+from grafana_log_display import GrafanaLogDisplay
 from pcdsutils.profile import profiler_context
 from pydm import PyDMApplication
 from pydm.utilities import setup_renderer
@@ -22,6 +23,7 @@ options = {
     'ev_calculation': EVCalculation,
     'line_beam_parameters': LineBeamParametersControl,
     'plc_ioc_status': PLCIOCStatus,
+    'grafana_log_dispaly': GrafanaLogDisplay,
 }
 
 
