@@ -1145,7 +1145,7 @@
       <string/>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}RequestedBP:Rate_RBV</string>
+      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Rate_RBV</string>
      </property>
     </widget>
    </item>
@@ -1230,7 +1230,7 @@
       <string/>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}RequestedBP:Transmission_RBV</string>
+      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission_RBV</string>
      </property>
     </widget>
    </item>
