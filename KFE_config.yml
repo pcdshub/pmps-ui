@@ -64,7 +64,7 @@ fastfaults:
     ff_start: 1
     ff_end: 100
 
-  - prefix: "PLC:CRIX:VAC:"
+  - prefix: "PLC:CRIXS:VAC:"
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
@@ -153,7 +153,7 @@ preemptive_requests:
     assertion_pool_start: 1
     assertion_pool_end: 20
 
-  - prefix: "PLC:CRIX:VAC:"
+  - prefix: "PLC:CRIXS:VAC:"
     arbiter_instance: "ARB:01"
     assertion_pool_start: 1
     assertion_pool_end: 20
