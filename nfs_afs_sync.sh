@@ -1,7 +1,8 @@
 #!/bin/bash
 # rsync the files in the deployed directory to afs to be picked up by acr
-LOG="$(readlink -f "$(dirname -- "${BASH_SOURCE[0]}")")/sync_log.txt"
-SOURCE="/cds/group/pcds/epics-dev/screens/pydm/pmps-ui"
+HERE="$(readlink -f "$(dirname -- "${BASH_SOURCE[0]}")")"
+LOG="${HERE}/sync_log.txt"
+SOURCE="${HERE}"
 DEST="/afs/slac/g/lcls/tools/pydm/display/xray/pmps-ui"
 
 echo "Sync at $(date)" >> "${LOG}"
