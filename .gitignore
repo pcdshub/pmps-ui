@@ -1,3 +1,6 @@
+# Sync log
+sync_log.txt
+
 # PyTest Cache
 .pytest_cache
 
