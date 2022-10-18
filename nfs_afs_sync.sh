@@ -8,5 +8,5 @@ echo "Sync at $(date)" >> "${LOG}"
 echo "from ${SOURCE}" >> "${LOG}"
 echo "to ${DEST}" >> "${LOG}"
 # Avoid git repo + random junk like screenshots
-rsync -rv ${SOURCE}/*.py ${SOURCE}/*.ui ${SOURCE}/*.yml ${SOURCE}/*.sh ${SOURCE}/*.sh ${SOURCE}/templates "${DEST}" >> "${LOG}"
+rsync -rv ${SOURCE}/*.py ${SOURCE}/*.ui ${SOURCE}/*.yml ${SOURCE}/*.sh ${SOURCE}/templates "${DEST}" >> "${LOG}"
 echo "---------------------------" >> "${LOG}"
