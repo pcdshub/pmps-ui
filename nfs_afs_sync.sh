@@ -9,4 +9,4 @@ echo "from ${SOURCE}"
 echo "to ${DEST}"
 # Avoid git repo + random junk like screenshots
 rsync -rv ${SOURCE}/*.py ${SOURCE}/*.ui ${SOURCE}/*.yml ${SOURCE}/*.sh ${SOURCE}/templates "${DEST}"
-echo "---------------------------" >> "${LOG}"
+echo "---------------------------"
