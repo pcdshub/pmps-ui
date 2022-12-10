@@ -68,7 +68,11 @@ class PMPS(Display):
         with open(c_file, 'r') as f:
             config = yaml.safe_load(f)
 
-        macros_from_config = ['line_arbiter_prefix', 'undulator_kicker_rate_pv']
+        macros_from_config = [
+            'line_arbiter_prefix',
+            'undulator_kicker_rate_pv',
+            'accelerator_mode_pv',
+        ]
 
         for m in macros_from_config:
             if m in macros:
@@ -103,7 +107,7 @@ class PMPS(Display):
         self.setup_preemptive_requests()
         self.setup_arbiter_outputs()
         self.setup_ev_calculation()
-        self.setup_line_parameters_contorl()
+        self.setup_line_parameters_control()
         self.setup_plc_ioc_status()
 
         dash_url = self.config.get('dashboard_url')
@@ -142,7 +146,7 @@ class PMPS(Display):
         ev_widget = EVCalculation(macros=self.config)
         tab.layout().addWidget(ev_widget)
 
-    def setup_line_parameters_contorl(self):
+    def setup_line_parameters_control(self):
         from line_beam_parameters import LineBeamParametersControl
         tab = self.ui.tb_line_beam_param_ctrl
         beam_widget = LineBeamParametersControl(macros=self.config)
