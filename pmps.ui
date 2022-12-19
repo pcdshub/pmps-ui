@@ -1595,6 +1595,12 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7"/>
      </widget>
+     <widget class="QWidget" name="tb_beamclass_table">
+      <attribute name="title">
+       <string>Beamclass Table</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_11"/>
+     </widget>
      <widget class="QWidget" name="tb_grafana_log_display">
       <attribute name="title">
        <string>Grafana Log Display</string>

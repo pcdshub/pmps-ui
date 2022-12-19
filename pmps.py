@@ -109,10 +109,11 @@ class PMPS(Display):
         self.setup_ev_calculation()
         self.setup_line_parameters_control()
         self.setup_plc_ioc_status()
+        self.setup_beam_class_table()
 
         dash_url = self.config.get('dashboard_url')
         if self.user_args.no_web or dash_url is None:
-            self.ui.tab_arbiter_outputs.removeTab(6)
+            self.ui.tab_arbiter_outputs.removeTab(7)
         else:
             self.setup_grafana_log_display()
 
@@ -158,6 +159,12 @@ class PMPS(Display):
         plc_widget = PLCIOCStatus(macros=self.config)
         tab.layout().addWidget(plc_widget)
 
+    def setup_beam_class_table(self):
+        from beamclass_table import BeamclassTable
+        tab = self.ui.tb_beamclass_table
+        beamclass_widget = BeamclassTable(macros=self.config)
+        tab.layout().addWidget(beamclass_widget)
+
     def setup_grafana_log_display(self):
         from grafana_log_display import GrafanaLogDisplay
         tab = self.ui.tb_grafana_log_display
@@ -166,7 +173,6 @@ class PMPS(Display):
             grafana_widget.open_webpage_if_tab,
         )
         tab.layout().addWidget(grafana_widget)
-
 
     def ui_filename(self):
         return 'pmps.ui'
