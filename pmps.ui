@@ -170,7 +170,7 @@
              <string>ca://${line_arbiter_prefix}CurrentBP:BeamClass_RBV</string>
             </property>
             <property name="rules" stdset="0">
-             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]==\&quot;SC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;NC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
             </property>
             <property name="precision" stdset="0">
              <number>0</number>
@@ -248,7 +248,7 @@
              <string/>
             </property>
             <property name="rules" stdset="0">
-             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]==\&quot;NC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;SC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
             </property>
             <property name="precision" stdset="0">
              <number>0</number>
@@ -326,7 +326,7 @@
              <string/>
             </property>
             <property name="rules" stdset="0">
-             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]==\&quot;NC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;SC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
             </property>
             <property name="precision" stdset="0">
              <number>0</number>
@@ -363,7 +363,7 @@
              <string>ca://${line_arbiter_prefix}RequestedBP:BeamClass_RBV</string>
             </property>
             <property name="rules" stdset="0">
-             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]==\&quot;SC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;NC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
             </property>
             <property name="precision" stdset="0">
              <number>0</number>
@@ -422,7 +422,7 @@
              <string>NC Rate</string>
             </property>
             <property name="rules" stdset="0">
-             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]==\&quot;NC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;SC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
             </property>
             <property name="precision" stdset="0">
              <number>0</number>
@@ -462,7 +462,7 @@
              <string>SC Beam Class</string>
             </property>
             <property name="rules" stdset="0">
-             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]==\&quot;SC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;NC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;ca://${accelerator_mode_pv}&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
             </property>
             <property name="precision" stdset="0">
              <number>0</number>

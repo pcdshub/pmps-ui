@@ -160,7 +160,35 @@
           <enum>QLayout::SetFixedSize</enum>
          </property>
          <item>
-          <widget class="QLabel" name="label_10">
+          <widget class="QLabel" name="rate_header">
+           <property name="minimumSize">
+            <size>
+             <width>50</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Rate</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="beamclass_header">
            <property name="minimumSize">
             <size>
              <width>100</width>
@@ -180,7 +208,7 @@
             </font>
            </property>
            <property name="text">
-            <string>Rate</string>
+            <string>Beam Class</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -326,15 +354,21 @@
    </item>
    <item>
     <widget class="Line" name="line">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>1056</width>
+       <width>1190</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>1056</width>
+       <width>1190</width>
        <height>16777215</height>
       </size>
      </property>

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1208</width>
+    <width>1218</width>
     <height>242</height>
    </rect>
   </property>
@@ -175,6 +175,12 @@
    </item>
    <item>
     <widget class="Line" name="line">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
        <width>1190</width>
@@ -187,7 +193,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMEmbeddedDisplay" name="PyDMEmbeddedDisplay">
+    <widget class="PyDMEmbeddedDisplay" name="table_header">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -211,6 +217,9 @@
      </property>
      <property name="filename" stdset="0">
       <string>templates/preemptive_requests_header.ui</string>
+     </property>
+     <property name="loadWhenShown" stdset="0">
+      <bool>false</bool>
      </property>
      <property name="disconnectWhenHidden" stdset="0">
       <bool>false</bool>

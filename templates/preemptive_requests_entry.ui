@@ -122,6 +122,37 @@
      </property>
      <property name="minimumSize">
       <size>
+       <width>50</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QLabel { color : black; }</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="PyDMLabel" name="beamclass_label">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
        <width>100</width>
        <height>0</height>
       </size>
@@ -132,11 +163,17 @@
        <height>16777215</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true">QLabel { color : black; }</string>
-     </property>
-     <property name="text">
+     <property name="toolTip">
       <string/>
+     </property>
+     <property name="showUnits" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:BeamClass_RBV</string>
+     </property>
+     <property name="displayFormat" stdset="0">
+      <enum>PyDMLabel::Default</enum>
      </property>
     </widget>
    </item>

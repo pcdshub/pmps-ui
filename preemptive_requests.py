@@ -1,5 +1,6 @@
 import functools
 import json
+import logging
 import typing
 from dataclasses import dataclass
 from string import Template
@@ -10,6 +11,8 @@ from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
 from data_bounds import get_valid_rate
+
+logger = logging.getLogger(__name__)
 
 
 class PreemptiveRequests(Display):
@@ -43,12 +46,16 @@ class PreemptiveRequests(Display):
         super().__init__(parent=parent, args=args, macros=macros)
         self.config = macros
         self._channels = []
+        self.mode = None
+        self.mode_index = None
+        self.mode_enum = None
         self.setup_ui()
 
     def setup_ui(self):
         """Do all steps to prepare the inner workings of the display."""
         self.setup_requests()
         self.setup_sorts_and_filters()
+        self.setup_mode()
 
     def setup_requests(self):
         """Populate the table from the config file and the item_info_list."""
@@ -160,6 +167,62 @@ class PreemptiveRequests(Display):
             )
         self.update_all_filters()
 
+    def new_mode(self, value):
+        """
+        Update the display's "mode" to either NC or SC.
+
+        This will hide or show the rate and beamclass columns as appropriate
+        and re-interpret the definition of "full beam".
+        """
+        if isinstance(value, int):
+            self.mode_index = value
+            if self.mode_enum is None:
+                return
+            try:
+                self.mode = self.mode_enum[self.mode_index]
+            except IndexError:
+                logger.error(
+                    'Bad mode enum strs %s for index %d',
+                    self.mode_enum,
+                    self.mode_index,
+                )
+                self.mode = None
+        elif isinstance(value, str):
+            self.mode = value
+        else:
+            self.mode = None
+        header = self.ui.table_header.embedded_widget.ui
+        # Show both if value is None
+        header.rate_header.setVisible(self.mode != 'SC')
+        header.beamclass_header.setVisible(self.mode != 'NC')
+        # Full beam filter depends on the mode
+        self.update_all_filters()
+
+    def new_mode_enum_strs(self, value):
+        """
+        Update the enum strings used to interpret the mode.
+
+        Re-runs new_mode if we have an index already.
+        """
+        self.mode_enum = value
+        if self.mode_index is not None:
+            self.new_mode(self.mode_index)
+
+    def setup_mode(self):
+        """Create a channel to react to mode changes"""
+        mode_pvname = self.config.get('accelerator_mode_pv')
+        if not mode_pvname:
+            # We'll run in ambiguous mode
+            logger.warning('No accelerator_mode_pv in config file.')
+            return
+        self._mode_channel = PyDMChannel(
+            f'ca://{mode_pvname}',
+            value_slot=self.new_mode,
+            enum_strings_slot=self.new_mode_enum_strs,
+        )
+        self._channels.append(self._mode_channel)
+        self._mode_channel.connect()
+
     def sort_table(self, column, ascending):
         """
         Sort the table based on the values from one column of the table.
@@ -235,6 +298,9 @@ class PreemptiveRequests(Display):
         - Hide if no activate arbitration
         - Hide if PV disconnected
 
+        In addition, the rate or beamclass widget will be hidden based on the
+        mode if the mode is unambiguous.
+
         Parameters
         ----------
         row : int
@@ -247,8 +313,24 @@ class PreemptiveRequests(Display):
             item = table.item(row, column)
             values[info.name] = item.get_value()
 
+        full_rate = values['rate'] >= 120
+        full_bc = values['beamclass'] >= 13
+        if self.mode == 'NC':
+            rate_cpt = full_rate
+        elif self.mode == 'SC':
+            rate_cpt = full_bc
+        else:
+            # Ambiguous mode- use both sources
+            rate_cpt = full_rate and full_bc
+
+        # Make sure we show/hide the column elements based on mode
+        # Ambiguous mode means we show both
+        row_widget = table.cellWidget(row, 0).embedded_widget.ui
+        row_widget.rate_label.setVisible(self.mode != 'SC')
+        row_widget.beamclass_label.setVisible(self.mode != 'NC')
+
         full_beam = all((
-            values['rate'] >= 120,
+            rate_cpt,
             values['trans'] >= 1,
             values['energy'] >= 32,
             ))
@@ -401,7 +483,7 @@ item_info_list = [
         store_type=str_from_waveform,
         data_type=str,
         default='',
-        ),
+    ),
     ItemInfo(
         name='id',
         select_text='Assertion ID',
@@ -410,16 +492,25 @@ item_info_list = [
         store_type=int,
         data_type=int,
         default=0,
-        ),
+    ),
     ItemInfo(
         name='rate',
-        select_text='Rate',
+        select_text='Rate [NC]',
         widget_name='rate_label',
         widget_class=QtWidgets.QLabel,
         store_type=int,
         data_type=int,
         default=0,
-        ),
+    ),
+    ItemInfo(
+        name='beamclass',
+        select_text='Beam Class [SC]',
+        widget_name='beamclass_label',
+        widget_class=PyDMLabel,
+        store_type=int,
+        data_type=int,
+        default=0,
+    ),
     ItemInfo(
         name='trans',
         select_text='Transmission',
@@ -428,7 +519,7 @@ item_info_list = [
         store_type=float,
         data_type=float,
         default=0.0,
-        ),
+    ),
     ItemInfo(
         name='energy',
         select_text='Photon Energy Ranges',
@@ -437,7 +528,7 @@ item_info_list = [
         store_type=bitmask_count,
         data_type=int,
         default=0,
-        ),
+    ),
     ItemInfo(
         name='cohort',
         select_text='Cohort Number',
@@ -446,7 +537,7 @@ item_info_list = [
         store_type=int,
         data_type=int,
         default=0,
-        ),
+    ),
     ItemInfo(
         name='active',
         select_text='Active Arbitration',
@@ -455,5 +546,5 @@ item_info_list = [
         store_type=int,
         data_type=int,
         default=0,
-        ),
-    ]
+    ),
+]
