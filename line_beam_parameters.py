@@ -9,8 +9,7 @@ from qtpy import QtCore, QtWidgets
 
 from beamclass_table import bc_table, get_desc_for_bc, get_tooltip_for_bc
 from data_bounds import VALID_RATES, get_valid_rate
-from fast_faults import clear_channel
-from pmps import morph_into_vertical
+from utils import morph_into_vertical
 
 
 class LineBeamParametersControl(Display):
@@ -43,14 +42,12 @@ class LineBeamParametersControl(Display):
                                                         args=args,
                                                         macros=macros)
         self.config = macros
+        self._channels = []
         self.setup_ui()
 
-        if self.energy_channel is not None:
-            self.destroyed.connect(functools.partial(clear_channel,
-                                                     self.energy_channel))
-        if self.rate_channel is not None:
-            self.destroyed.connect(functools.partial(clear_channel,
-                                                     self.rate_channel))
+    def channels(self):
+        "Make sure PyDM can find the channels we set up for cleanup."
+        return self._channels
 
     def ui_filename(self):
         return 'line_beam_parameters.ui'
@@ -126,6 +123,7 @@ class LineBeamParametersControl(Display):
             value_signal=self.energy_range_signal
         )
         self.energy_channel.connect()
+        self._channels.append(self.energy_channel)
 
     def energy_range_changed(self, energy_range):
         """
@@ -173,6 +171,9 @@ class LineBeamParametersControl(Display):
             f'ca://{prefix}BeamParamCntl:ReqBP:BeamClass_RBV',
             value_slot=self.watch_beamclass_rbv_update,
         )
+        self._channels.append(self.rate_channel)
+        self._channels.append(self.beamclass_channel)
+        self._channels.append(self.beamclass_rbv_channel)
 
     def setup_zero_rate(self):
         self.ui.zeroRate.clicked.connect(self.set_zero_rate)
