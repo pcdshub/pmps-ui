@@ -7,6 +7,7 @@ from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
+from beamclass_table import bc_table, get_desc_for_bc, get_tooltip_for_bc
 from data_bounds import VALID_RATES, get_valid_rate
 from fast_faults import clear_channel
 from pmps import morph_into_vertical
@@ -34,7 +35,8 @@ class LineBeamParametersControl(Display):
 
     # Signal to set a new rate from the combobox or from zero rate button
     update_rate_signal = QtCore.Signal(int)
-
+    # Signal to set a new beamclass from the combobox or from zero rate button
+    update_beamclass_signal = QtCore.Signal(int)
 
     def __init__(self, parent=None, args=None, macros=None):
         super(LineBeamParametersControl, self).__init__(parent=parent,
@@ -60,6 +62,7 @@ class LineBeamParametersControl(Display):
         self.setup_rate_channel()
         self.setup_zero_rate()
         self.setup_rate_combo()
+        self.setup_beamclass_combo()
         self.rate_channel.connect()
 
     def setup_bits_connections(self):
@@ -161,11 +164,20 @@ class LineBeamParametersControl(Display):
             value_slot=self.watch_rate_update,
             value_signal=self.update_rate_signal,
         )
+        self.beamclass_channel = PyDMChannel(
+            f'ca://{prefix}BeamParamCntl:ReqBP:BeamClass',
+            value_slot=self.watch_beamclass_update,
+            value_signal=self.update_beamclass_signal,
+        )
+        self.beamclass_rbv_channel = PyDMChannel(
+            f'ca://{prefix}BeamParamCntl:ReqBP:BeamClass_RBV',
+            value_slot=self.watch_beamclass_rbv_update,
+        )
 
     def setup_zero_rate(self):
         self.ui.zeroRate.clicked.connect(self.set_zero_rate)
-        self.ui.placeholder.hide()
         self.rate_req = None
+        self.beamclass_req = None
         self.apply_attempts = 0
         self.zero_rate_timer = QtCore.QTimer()
         self.zero_rate_timer.timeout.connect(self.apply_zero_rate)
@@ -182,6 +194,26 @@ class LineBeamParametersControl(Display):
         self.rate_req = value
         self.update_rate_combobox_value(value)
 
+    def watch_beamclass_update(self, value):
+        """
+        Watch the beamclass channel so we know the most recent value.
+
+        This is also used to update the beamclass selection combobox on
+        one GUI after another GUI makes a selection, as well as the tooltip
+        with the most recent beamclass summary information.
+        """
+        self.beamclass_req = value
+        self.update_beamclass_combobox_value(value)
+
+    def watch_beamclass_rbv_update(self, value):
+        """
+        Watch the beamclass channel so we know the most recent value.
+
+        This is also used to update the rbv tooltip with the most recent
+        beamclass summary information.
+        """
+        self.ui.beamclass_rbv_label.PyDMToolTip = get_tooltip_for_bc(value)
+
     def set_zero_rate(self):
         """
         Slot activated when the zero rate button is pressed.
@@ -190,6 +222,7 @@ class LineBeamParametersControl(Display):
         """
         self.apply_attempts = 0
         self.update_rate_signal.emit(0)
+        self.update_beamclass_signal.emit(0)
         self.zero_rate_timer.start()
 
     def apply_zero_rate(self):
@@ -232,3 +265,37 @@ class LineBeamParametersControl(Display):
         """
         valid_rate = get_valid_rate(value)
         self.ui.rateComboBox.setCurrentIndex(VALID_RATES.index(valid_rate))
+
+    def setup_beamclass_combo(self):
+        """
+        Fill the combobox for beamclass selection and make it work.
+        """
+        for beamclass_index in range(len(bc_table)):
+            desc = get_desc_for_bc(beamclass_index)
+            if desc == 'Spare':
+                continue
+            self.ui.beamclassComboBox.addItem(f'{beamclass_index}: {desc}')
+        self.update_beamclass_combobox_tooltip(0)
+        self.ui.beamclassComboBox.activated.connect(self.select_new_beamclass)
+        self.ui.beamclassComboBox.currentIndexChanged.connect(
+            self.update_beamclass_combobox_tooltip
+        )
+
+    def update_beamclass_combobox_tooltip(self, index):
+        """Make the beamclass combobox tooltip match the text."""
+        self.ui.beamclassComboBox.setToolTip(get_tooltip_for_bc(index))
+
+    def select_new_beamclass(self, index):
+        """
+        Handler for when the user selects a new beamclass using the combo box.
+        """
+        self.update_beamclass_signal.emit(index)
+
+    def update_beamclass_combobox_value(self, value):
+        """
+        Set the combobox to the index that corresponds with value.
+
+        This does not write to the PV, it just changes the visual
+        state of the combobox.
+        """
+        self.ui.beamclassCombobox.setCurrentIndex(value)

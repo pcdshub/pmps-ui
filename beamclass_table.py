@@ -75,4 +75,11 @@ def get_tooltip_for_bc(beamclass: int) -> str:
     table = prettytable.PrettyTable()
     table.field_names = bc_header
     table.add_row(bc_table[beamclass])
-    return str(table)
+    return '<pre>' + str(table) + '</pre>'
+
+
+def get_desc_for_bc(beamclass: int) -> str:
+    """
+    Get just the short description of a beamclass.
+    """
+    return bc_table[beamclass][1]

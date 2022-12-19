@@ -377,7 +377,7 @@ class PreemptiveRequests(Display):
         label.setText(f'{valid_rate} Hz')
 
     def update_beamclass_tooltip(self, value, label):
-        label.PyDMToolTip = get_tooltip_for_bc('<pre>' + value + '</pre>')
+        label.PyDMToolTip = get_tooltip_for_bc(value)
 
     def ui_filename(self):
         return 'preemptive_requests.ui'
