@@ -210,6 +210,7 @@ class PreemptiveRequests(Display):
         # Show both if value is None
         header.rate_header.setVisible(self.mode != 'SC')
         header.beamclass_header.setVisible(self.mode != 'NC')
+        header.beamclass_ranges_header.setVisible(self.mode != 'NC')
         # Full beam filter depends on the mode
         self.update_all_filters()
 
@@ -343,6 +344,7 @@ class PreemptiveRequests(Display):
         row_widget = table.cellWidget(row, 0).embedded_widget.ui
         row_widget.rate_label.setVisible(self.mode != 'SC')
         row_widget.beamclass_label.setVisible(self.mode != 'NC')
+        row_widget.beamclass_bytes.setVisible(self.mode != 'NC')
 
         full_beam = all((
             rate_cpt,
@@ -526,6 +528,15 @@ item_info_list = [
         widget_name='beamclass_label',
         widget_class=PyDMLabel,
         store_type=int,
+        data_type=int,
+        default=0,
+    ),
+    ItemInfo(
+        name='beamclass ranges',
+        select_text='Beam Class Ranges [SC]',
+        widget_name='beamclass_bytes',
+        widget_class=PyDMByteIndicator,
+        store_type=bitmask_count,
         data_type=int,
         default=0,
     ),

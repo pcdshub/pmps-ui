@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1206</width>
+    <width>1392</width>
     <height>40</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1206</width>
+    <width>1392</width>
     <height>40</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1206</width>
+    <width>1392</width>
     <height>40</height>
    </size>
   </property>
@@ -178,6 +178,59 @@
     </widget>
    </item>
    <item>
+    <widget class="PyDMByteIndicator" name="beamclass_bytes">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>186</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>183</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:BeamClassRanges_RBV</string>
+     </property>
+     <property name="onColor" stdset="0">
+      <color>
+       <red>21</red>
+       <green>165</green>
+       <blue>62</blue>
+      </color>
+     </property>
+     <property name="orientation" stdset="0">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="showLabels" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="bigEndian" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="circles" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="numBits" stdset="0">
+      <number>15</number>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="PyDMLabel" name="transmission_label">
      <property name="enabled">
       <bool>false</bool>
@@ -202,6 +255,9 @@
      </property>
      <property name="toolTip">
       <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <property name="showUnits" stdset="0">
       <bool>true</bool>
