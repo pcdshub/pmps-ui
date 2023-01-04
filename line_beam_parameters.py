@@ -7,7 +7,8 @@ from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
-from beamclass_table import bc_table, get_desc_for_bc, get_tooltip_for_bc
+from beamclass_table import (bc_table, get_desc_for_bc, get_tooltip_for_bc,
+                             install_bc_setText)
 from data_bounds import VALID_RATES, get_valid_rate
 from utils import morph_into_vertical
 
@@ -59,6 +60,7 @@ class LineBeamParametersControl(Display):
         self.setup_rate_channel()
         self.setup_zero_rate()
         self.setup_rate_combo()
+        install_bc_setText(self.ui.beamclass_rbv_label)
         self.setup_beamclass_combo()
         self.rate_channel.connect()
 

@@ -10,7 +10,7 @@ from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
-from beamclass_table import get_tooltip_for_bc
+from beamclass_table import get_tooltip_for_bc, install_bc_setText
 from data_bounds import get_valid_rate
 
 logger = logging.getLogger(__name__)
@@ -129,6 +129,7 @@ class PreemptiveRequests(Display):
                 )
                 bc_channel.connect()
                 self._channels.append(bc_channel)
+                install_bc_setText(beamclass_label)
 
                 # insert the widget you see into the table
                 row_position = reqs_table.rowCount()

@@ -8,7 +8,7 @@ from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 
-from beamclass_table import get_tooltip_for_bc
+from beamclass_table import get_tooltip_for_bc, install_bc_setText
 from utils import morph_into_vertical
 
 logger = logging.getLogger(__name__)
@@ -83,6 +83,7 @@ class PMPS(Display):
             )
             ch.connect()
             self._channels.append(ch)
+            install_bc_setText(label)
 
     def update_bc_tooltip(self, value, label):
         label.PyDMToolTip = get_tooltip_for_bc(value)

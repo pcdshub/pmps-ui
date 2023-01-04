@@ -1,6 +1,9 @@
+from functools import partial
+from typing import Callable
+
 import prettytable
 from pydm import Display
-from qtpy.QtWidgets import QTableWidgetItem
+from qtpy.QtWidgets import QLabel, QTableWidgetItem
 
 
 class BeamclassTable(Display):
@@ -83,3 +86,23 @@ def get_desc_for_bc(beamclass: int) -> str:
     Get just the short description of a beamclass.
     """
     return bc_table[beamclass][1]
+
+
+def install_bc_setText(widget: QLabel):
+    """
+    Replace QLabel.setText to get the description too.
+
+    Without this, the labels display:
+    13
+    With this, you get:
+    13: Unlimited
+    """
+    def bc_setText(text: str) -> None:
+        try:
+            text = f'{text}: {get_desc_for_bc(int(text))}'
+        except Exception:
+            pass
+        return widget._original_setText(text)
+
+    widget._original_setText = widget.setText
+    widget.setText = bc_setText
