@@ -185,23 +185,7 @@ class PreemptiveRequests(Display):
         This will hide or show the rate and beamclass columns as appropriate
         and re-interpret the definition of "full beam".
         """
-        if isinstance(value, int):
-            self.mode_index = value
-            if self.mode_enum is None:
-                return
-            try:
-                self.mode = self.mode_enum[self.mode_index]
-            except IndexError:
-                logger.error(
-                    'Bad mode enum strs %s for index %d',
-                    self.mode_enum,
-                    self.mode_index,
-                )
-                self.mode = None
-        elif isinstance(value, str):
-            self.mode = value
-        else:
-            self.mode = None
+        self.mode = value
         header = self.ui.table_header.embedded_widget.ui
         # Show both if value is None
         header.rate_header.setVisible(self.mode != 'SC')
@@ -210,27 +194,11 @@ class PreemptiveRequests(Display):
         # Full beam filter depends on the mode
         self.update_all_filters()
 
-    def new_mode_enum_strs(self, value):
-        """
-        Update the enum strings used to interpret the mode.
-
-        Re-runs new_mode if we have an index already.
-        """
-        self.mode_enum = value
-        if self.mode_index is not None:
-            self.new_mode(self.mode_index)
-
     def setup_mode(self):
         """Create a channel to react to mode changes"""
-        mode_pvname = self.config.get('accelerator_mode_pv')
-        if not mode_pvname:
-            # We'll run in ambiguous mode
-            logger.warning('No accelerator_mode_pv in config file.')
-            return
         self._mode_channel = PyDMChannel(
-            f'ca://{mode_pvname}',
+            'loc://selected_mode',
             value_slot=self.new_mode,
-            enum_strings_slot=self.new_mode_enum_strs,
         )
         self._mode_channel.connect()
         self._channels.append(self._mode_channel)

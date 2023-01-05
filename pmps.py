@@ -2,11 +2,13 @@ import argparse
 import logging
 from functools import partial
 from os import path
+from typing import Optional
 
 import yaml
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
+from qtpy import QtCore
 
 from beamclass_table import get_tooltip_for_bc, install_bc_setText
 from utils import morph_into_vertical
@@ -28,6 +30,8 @@ def make_parser():
 
 
 class PMPS(Display):
+    new_mode_signal = QtCore.Signal(str)
+
     def __init__(self, parent=None, args=None, macros=None):
         parser = make_parser()
         self.user_args = parser.parse_args(args=args or [])
@@ -62,9 +66,52 @@ class PMPS(Display):
         self.setup_ui()
 
     def setup_ui(self):
+        self.setup_mode_selector()
         self.setup_ev_range_labels()
         self.setup_bc_tooltips()
         self.setup_tabs()
+
+    def setup_mode_selector(self):
+        self.ui.mode_combo.addItems(
+            ['Auto', 'NC', 'SC', 'Both']
+        )
+        self.last_mode_index = 0
+        loc = PyDMChannel(
+            'loc://selected_mode?type=str&init=Both',
+            value_signal=self.new_mode_signal,
+        )
+        loc.connect()
+        self._channels.append(loc)
+        pvname = self.config.get('accelerator_mode_pv')
+        self.last_pv_mode = None
+        if pvname is not None:
+            pv = PyDMChannel(
+                f'ca://{pvname}',
+                value_slot=self.new_mode_from_pv,
+            )
+            self._channels.append(pv)
+        self.ui.mode_combo.activated.connect(self.new_mode_activated)
+
+    def new_mode_activated(self, index: Optional[int] = None):
+        if index is None:
+            index = self.last_mode_index
+        else:
+            self.last_mode_index = index
+        if index == 0:
+            if self.last_pv_mode is None:
+                self.new_mode_signal.emit('Both')
+            else:
+                self.new_mode_signal.emit(self.last_pv_mode)
+        elif index == 1:
+            self.new_mode_signal.emit('NC')
+        elif index == 2:
+            self.new_mode_signal.emit('SC')
+        elif index == 3:
+            self.new_mode_signal.emit('Both')
+
+    def new_mode_from_pv(self, value: str):
+        self.last_pv_mode = value
+        self.new_mode_activated()
 
     def setup_ev_range_labels(self):
         labels = list(range(7, 40))
