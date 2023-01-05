@@ -5,6 +5,7 @@ import typing
 from dataclasses import dataclass
 from string import Template
 
+import numpy as np
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
@@ -118,7 +119,11 @@ class PreemptiveRequests(Display):
                 rate_channel.connect()
                 self._channels.append(rate_channel)
 
-                row_logic = BCRowLogic(widget.embedded_widget, parent=self)
+                row_logic = BCRowLogic(
+                    widget.embedded_widget,
+                    self.config.get('line_arbiter_prefix'),
+                    parent=self,
+                )
                 self._channels.extend(row_logic.pydm_channels)
 
                 # insert the widget you see into the table
@@ -468,57 +473,98 @@ def str_from_waveform(waveform_array):
     return text
 
 
-def update_beamclass_tooltip(value, widget):
-    widget.PyDMToolTip = get_tooltip_for_bc(value)
-
-
-def update_bitmask_tooltip(value, widget):
-    widget.PyDMToolTip = get_tooltip_for_bc_bitmask(value)
-
-
 class BCRowLogic(QtCore.QObject):
     max_bc_sig = QtCore.Signal(int)
 
-    def __init__(self, row_widget: Display, parent=None):
+    def __init__(self, row_widget: Display, line_arbiter_prefix: str, parent=None):
         super().__init__(parent=parent)
+        self.line_arbiter_prefix = line_arbiter_prefix
         # Extra channel for the beamclass
         # This lets us sub in an appropriate tooltip stub based on
         # the beamclass value as it updates
-        beamclass_label = row_widget.ui.beamclass_label
+        self.beamclass_label = row_widget.ui.beamclass_label
         bc_channel = PyDMChannel(
-            beamclass_label.channel.split('?')[0],
-            value_slot=functools.partial(
-                update_beamclass_tooltip,
-                widget=beamclass_label,
-            ),
+            self.beamclass_label.channel.split('?')[0],
+            value_slot=self.update_beamclass_tooltip,
             value_signal=self.max_bc_sig,
         )
         bc_channel.connect()
-        install_bc_setText(beamclass_label)
+        install_bc_setText(self.beamclass_label)
 
         # Extra channels for the beamclass bitmask
         # This lets us put a tooltip stub based on the bitmask
         # This also lets us update the bc_channel, which is a local
-        beamclass_bytes = row_widget.ui.beamclass_bytes
+        self.beamclass_bytes = row_widget.ui.beamclass_bytes
         bc_range_channel1 = PyDMChannel(
-            beamclass_bytes.channel,
-            value_slot=functools.partial(
-                update_bitmask_tooltip,
-                widget=beamclass_bytes,
-            ),
+            self.beamclass_bytes.channel,
+            value_slot=self.update_bc_bitmask_tooltip,
         )
         bc_range_channel1.connect()
         bc_range_channel2 = PyDMChannel(
-            beamclass_bytes.channel,
+            self.beamclass_bytes.channel,
             value_slot=self.update_max_bc,
         )
         bc_range_channel2.connect()
-        self.pydm_channels = [bc_channel, bc_range_channel1, bc_range_channel2]
+
+        # Extra channel for the eV range definition
+        # We need this for the eV bitmask tooltip
+        self.ev_ranges = None
+        self.last_ev_range = 0
+        ev_definition = PyDMChannel(
+            f'ca://{self.line_arbiter_prefix}eVRangeCnst_RBV',
+            value_slot=self.new_ev_ranges,
+        )
+        ev_definition.connect()
+        # Set the eV range tooltip
+        self.ev_bytes = row_widget.ui.energy_bytes
+        ev_range_channel = PyDMChannel(
+            self.ev_bytes.channel,
+            value_slot=self.update_ev_range_tooltip,
+        )
+        ev_range_channel.connect()
+
+        self.pydm_channels = [bc_channel, bc_range_channel1, bc_range_channel2, ev_definition, ev_range_channel]
 
     def update_max_bc(self, value: int):
         self.max_bc_sig.emit(
             get_max_bc_from_bitmask(value)
         )
+
+    def new_ev_ranges(self, value: np.ndarray):
+        self.ev_ranges = value
+        self.update_ev_range_tooltip()
+
+    def update_beamclass_tooltip(self, value: int):
+        self.beamclass_label.PyDMToolTip = get_tooltip_for_bc(value)
+
+    def update_bc_bitmask_tooltip(self, value: int):
+        self.beamclass_bytes.PyDMToolTip = get_tooltip_for_bc_bitmask(value)
+
+    def update_ev_range_tooltip(self, value=None):
+        if value is None:
+            value = self.last_ev_range
+        else:
+            self.last_ev_range = value
+        if self.ev_ranges is None:
+            return
+        lines = []
+
+        width = 0
+        for bound in self.ev_ranges:
+            width = max(width, len(str(bound)))
+
+        prev = 0
+        for bit, ev in enumerate(self.ev_ranges):
+            val = (value >> bit) % 2
+            count = bit + 1
+            if val:
+                text = 'allowed'
+            else:
+                text = 'disallowed'
+            line = f'Bit {count:2}: {val} ({prev:{width}}, {ev:{width}}) {text}'
+            lines.append(line)
+            prev = ev
+        self.ev_bytes.PyDMToolTip = '<pre>' + '\n'.join(lines) + '</pre>'
 
 
 @dataclass(frozen=True)
