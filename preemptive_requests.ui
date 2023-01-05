@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1218</width>
+    <width>1471</width>
     <height>242</height>
    </rect>
   </property>
@@ -228,6 +228,12 @@
    </item>
    <item>
     <widget class="QTableWidget" name="reqs_table_widget">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::NoSelection</enum>
+     </property>
      <property name="showGrid">
       <bool>true</bool>
      </property>
