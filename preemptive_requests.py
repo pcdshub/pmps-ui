@@ -10,7 +10,8 @@ from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
-from beamclass_table import get_tooltip_for_bc, install_bc_setText
+from beamclass_table import (get_max_bc_from_bitmask, get_tooltip_for_bc,
+                             get_tooltip_for_bc_bitmask, install_bc_setText)
 from data_bounds import get_valid_rate
 
 logger = logging.getLogger(__name__)
@@ -76,6 +77,7 @@ class PreemptiveRequests(Display):
         if reqs_table is None:
             return
         count = 0
+        self.row_logics = []
         for req in reqs:
             prefix = req.get('prefix')
             arbiter = req.get('arbiter_instance')
@@ -116,20 +118,8 @@ class PreemptiveRequests(Display):
                 rate_channel.connect()
                 self._channels.append(rate_channel)
 
-                # Extra channel for the beamclass
-                # This lets us sub in an appropriate tooltip stub based on
-                # the beamclass value as it updates
-                beamclass_label = widget.embedded_widget.ui.beamclass_label
-                bc_channel = PyDMChannel(
-                    beamclass_label.channel,
-                    value_slot=functools.partial(
-                        self.update_beamclass_tooltip,
-                        label=beamclass_label,
-                    ),
-                )
-                bc_channel.connect()
-                self._channels.append(bc_channel)
-                install_bc_setText(beamclass_label)
+                row_logic = BCRowLogic(widget.embedded_widget, parent=self)
+                self._channels.extend(row_logic.pydm_channels)
 
                 # insert the widget you see into the table
                 row_position = reqs_table.rowCount()
@@ -379,9 +369,6 @@ class PreemptiveRequests(Display):
         valid_rate = get_valid_rate(value)
         label.setText(f'{valid_rate} Hz')
 
-    def update_beamclass_tooltip(self, value, label):
-        label.PyDMToolTip = get_tooltip_for_bc(value)
-
     def ui_filename(self):
         return 'preemptive_requests.ui'
 
@@ -481,6 +468,59 @@ def str_from_waveform(waveform_array):
     return text
 
 
+def update_beamclass_tooltip(value, widget):
+    widget.PyDMToolTip = get_tooltip_for_bc(value)
+
+
+def update_bitmask_tooltip(value, widget):
+    widget.PyDMToolTip = get_tooltip_for_bc_bitmask(value)
+
+
+class BCRowLogic(QtCore.QObject):
+    max_bc_sig = QtCore.Signal(int)
+
+    def __init__(self, row_widget: Display, parent=None):
+        super().__init__(parent=parent)
+        # Extra channel for the beamclass
+        # This lets us sub in an appropriate tooltip stub based on
+        # the beamclass value as it updates
+        beamclass_label = row_widget.ui.beamclass_label
+        bc_channel = PyDMChannel(
+            beamclass_label.channel.split('?')[0],
+            value_slot=functools.partial(
+                update_beamclass_tooltip,
+                widget=beamclass_label,
+            ),
+            value_signal=self.max_bc_sig,
+        )
+        bc_channel.connect()
+        install_bc_setText(beamclass_label)
+
+        # Extra channels for the beamclass bitmask
+        # This lets us put a tooltip stub based on the bitmask
+        # This also lets us update the bc_channel, which is a local
+        beamclass_bytes = row_widget.ui.beamclass_bytes
+        bc_range_channel1 = PyDMChannel(
+            beamclass_bytes.channel,
+            value_slot=functools.partial(
+                update_bitmask_tooltip,
+                widget=beamclass_bytes,
+            ),
+        )
+        bc_range_channel1.connect()
+        bc_range_channel2 = PyDMChannel(
+            beamclass_bytes.channel,
+            value_slot=self.update_max_bc,
+        )
+        bc_range_channel2.connect()
+        self.pydm_channels = [bc_channel, bc_range_channel1, bc_range_channel2]
+
+    def update_max_bc(self, value: int):
+        self.max_bc_sig.emit(
+            get_max_bc_from_bitmask(value)
+        )
+
+
 @dataclass(frozen=True)
 class ItemInfo:
     """All the data we need to set up the sorts/filters"""
@@ -525,7 +565,7 @@ item_info_list = [
     ),
     ItemInfo(
         name='beamclass',
-        select_text='Beam Class [SC]',
+        select_text='Max Beam Class [SC]',
         widget_name='beamclass_label',
         widget_class=PyDMLabel,
         store_type=int,

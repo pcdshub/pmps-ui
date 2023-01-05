@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1392</width>
+    <width>1412</width>
     <height>40</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1392</width>
+    <width>1412</width>
     <height>40</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1392</width>
+    <width>1412</width>
     <height>40</height>
    </size>
   </property>
@@ -153,24 +153,27 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>100</width>
+       <width>120</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>100</width>
+       <width>120</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="toolTip">
       <string/>
      </property>
+     <property name="text">
+      <string>loc://${P}${ARBITER}${POOL}:MaxBC?type=int&amp;init=0</string>
+     </property>
      <property name="showUnits" stdset="0">
       <bool>true</bool>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:BeamClass_RBV</string>
+      <string>loc://${P}${ARBITER}${POOL}:MaxBC?type=int&amp;init=0</string>
      </property>
      <property name="displayFormat" stdset="0">
       <enum>PyDMLabel::Default</enum>

@@ -1,6 +1,3 @@
-from functools import partial
-from typing import Callable
-
 import prettytable
 from pydm import Display
 from qtpy.QtWidgets import QLabel, QTableWidgetItem
@@ -81,6 +78,22 @@ def get_tooltip_for_bc(beamclass: int) -> str:
     return '<pre>' + str(table) + '</pre>'
 
 
+def get_tooltip_for_bc_bitmask(bitmask: int) -> str:
+    """
+    Create a partial table suitable for a bitmask tooltip.
+    """
+    table = prettytable.PrettyTable()
+    table.field_names = bc_header
+    table.add_row(bc_table[0])
+    count = 0
+    while bitmask > 0:
+        count += 1
+        if bitmask % 2:
+            table.add_row(bc_table[count])
+        bitmask = bitmask >> 1
+    return '<pre>' + str(table) + '</pre>'
+
+
 def get_desc_for_bc(beamclass: int) -> str:
     """
     Get just the short description of a beamclass.
@@ -106,3 +119,16 @@ def install_bc_setText(widget: QLabel):
 
     widget._original_setText = widget.setText
     widget.setText = bc_setText
+
+
+def get_max_bc_from_bitmask(bitmask: int) -> int:
+    """
+    Given a beamclass bitmask, get the highest non-spare beamclass.
+    """
+    max_bc = 0
+    while bitmask > 0:
+        bitmask = bitmask >> 1
+        max_bc += 1
+    while bc_table[max_bc][1] == 'Spare':
+        max_bc -= 1
+    return max_bc
