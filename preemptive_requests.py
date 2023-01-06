@@ -515,24 +515,44 @@ class BCRowLogic(QtCore.QObject):
             self.last_ev_range = value
         if self.ev_ranges is None:
             return
-        lines = []
 
-        width = 0
-        for bound in self.ev_ranges:
-            width = max(width, len(str(bound)))
+        ev_range = value
 
+        bounds = []
+        curr_bound = None
         prev = 0
+
         for bit, ev in enumerate(self.ev_ranges):
-            val = (value >> bit) % 2
-            count = bit + 1
-            if val:
-                text = 'allowed'
+            ok = (ev_range >> bit) % 2
+            if ok:
+                if curr_bound is None:
+                    curr_bound = (prev, ev)
+                else:
+                    curr_bound = (curr_bound[0], ev)
             else:
-                text = 'disallowed'
-            line = f'Bit {count:2}: {val} ({prev:{width}}, {ev:{width}}) {text}'
-            lines.append(line)
+                if curr_bound is not None:
+                    bounds.append(curr_bound)
+                    curr_bound = None
             prev = ev
-        self.ev_bytes.PyDMToolTip = '<pre>' + '\n'.join(lines) + '</pre>'
+
+        if curr_bound is not None:
+            bounds.append(curr_bound)
+
+        if bounds:
+            left_width = 0
+            right_width = 0
+            for left, right in bounds:
+                left_width = max(left_width, len(str(left)))
+                right_width = max(right_width, len(str(right)))
+            lines = []
+            for under, over in bounds:
+                line = f'Allow {under:{left_width}}eV &lt; energy &lt; {over:{right_width}}eV'
+                lines.append(line)
+            text = '\n'.join(lines)
+        else:
+            text = 'No eV range allowed.'
+
+        self.ev_bytes.PyDMToolTip = '<pre>' + text + '</pre>'
 
 
 @dataclass(frozen=True)
