@@ -27,11 +27,6 @@ class LineBeamParametersControl(Display):
     # signal to emit when bc range is changed
     bc_range_signal = QtCore.Signal(int)
 
-    # this is a gate to break an infinite loop of
-    # - Update from channel value
-    # - Write back to channel
-    _setting_bits = False
-    _setting_bc_bits = False
     energy_channel = None
     bc_range_channel = None
 
@@ -77,7 +72,7 @@ class LineBeamParametersControl(Display):
         """
         for key in self._bits:
             cb = self.findChild(QtWidgets.QCheckBox, key)
-            cb.stateChanged.connect(functools.partial(
+            cb.clicked.connect(functools.partial(
                 self.calc_energy_range, key))
 
     def setup_bit_indicators(self):
@@ -89,7 +84,7 @@ class LineBeamParametersControl(Display):
             if label is not None:
                 morph_into_vertical(label)
 
-    def calc_energy_range(self, key, state):
+    def calc_energy_range(self, key, checked):
         """
         Catch when a check box is checked/unchecked and calculate
         the current bitmask.
@@ -98,26 +93,17 @@ class LineBeamParametersControl(Display):
         ----------
         key : str
             The check box object name.
-        state : int
-            The state of the check box.
-            0 = unchecked
-            2 = checked
-
-        Note
-        ----
-        The checkboxes can be tri-states - here we use the states 0 and 2
-        for unchecked and checked respectively.
+        checked: bool
+            True if the checkbox is checked
         """
-        status = state == 2
-        self._bits[key] = status
+        self._bits[key] = checked
         decimal_value = functools.reduce(
             (lambda x, y: (x << 1) | y),
             map(int, [value for value in self._bits.values()])
         )
 
-        if not self._setting_bits:
-            # emit the decimal value to the PhotonEnergyRange
-            self.energy_range_signal.emit(decimal_value)
+        # emit the decimal value to the PhotonEnergyRange
+        self.energy_range_signal.emit(decimal_value)
 
     def setup_energy_range_channel(self):
         prefix = self.config.get('line_arbiter_prefix')
@@ -151,15 +137,12 @@ class LineBeamParametersControl(Display):
 
         binary_range = list(bin(energy_range).replace("0b", ""))
         binary_list = list(map(int, binary_range))
-        self._setting_bits = True
+        while len(binary_list) < 32:
+            binary_list = [0] + binary_list
         for key, status in zip(self._bits.keys(), binary_list):
             self._bits[key] = bool(status)
             cb = self.findChild(QtWidgets.QCheckBox, key)
-            state = 2 if status == 1 else 0
-            cb.setCheckState(state)
-        # set this value back to false so we don't create a infinite
-        # loop between this slot and the energy_range_signal signal.
-        self._setting_bits = False
+            cb.setChecked(bool(status))
 
     def setup_rate_channel(self):
         prefix = self.config.get('line_arbiter_prefix')
@@ -181,10 +164,10 @@ class LineBeamParametersControl(Display):
         self.bc_range_signal.connect(self.update_beamclass_max_from_bitmask)
         for key in self._bc_bits:
             cb = self.findChild(QtWidgets.QCheckBox, key)
-            cb.stateChanged.connect(functools.partial(
+            cb.clicked.connect(functools.partial(
                 self.calc_bc_range, key))
 
-    def calc_bc_range(self, key, state):
+    def calc_bc_range(self, key, checked):
         """
         Catch when a check box is checked/unchecked and calculate
         the current bitmask.
@@ -193,26 +176,17 @@ class LineBeamParametersControl(Display):
         ----------
         key : str
             The check box object name.
-        state : int
-            The state of the check box.
-            0 = unchecked
-            2 = checked
-
-        Note
-        ----
-        The checkboxes can be tri-states - here we use the states 0 and 2
-        for unchecked and checked respectively.
+        checked: bool
+            True if the checkbox is checked
         """
-        status = state == 2
-        self._bc_bits[key] = status
+        self._bc_bits[key] = checked
         decimal_value = functools.reduce(
             (lambda x, y: (x << 1) | y),
             map(int, [value for value in self._bc_bits.values()])
         )
 
-        if not self._setting_bc_bits:
-            # emit the decimal value to the PhotonEnergyRange
-            self.bc_range_signal.emit(decimal_value)
+        # emit the decimal value to the PhotonEnergyRange
+        self.bc_range_signal.emit(decimal_value)
 
     def setup_bc_range_channel(self):
         prefix = self.config.get('line_arbiter_prefix')
@@ -246,15 +220,12 @@ class LineBeamParametersControl(Display):
 
         binary_range = list(bin(bc_range).replace("0b", ""))
         binary_list = list(map(int, binary_range))
-        self._setting_bc_bits = True
+        while len(binary_list) < 15:
+            binary_list = [0] + binary_list
         for key, status in zip(self._bc_bits.keys(), binary_list):
             self._bc_bits[key] = bool(status)
             cb = self.findChild(QtWidgets.QCheckBox, key)
-            state = 2 if status == 1 else 0
-            cb.setCheckState(state)
-        # set this value back to false so we don't create a infinite
-        # loop between this slot and the energy_range_signal signal.
-        self._setting_bc_bits = False
+            cb.setChecked(bool(status))
 
     def setup_bc_rbv_channel(self):
         prefix = self.config.get('line_arbiter_prefix')
