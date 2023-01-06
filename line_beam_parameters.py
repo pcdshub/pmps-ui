@@ -63,6 +63,7 @@ class LineBeamParametersControl(Display):
         self.setup_rate_channel()
         self.setup_bc_bits_connections()
         self.setup_bc_range_channel()
+        self.setup_bc_rbv_channel()
         self.setup_zero_rate()
         self.setup_rate_combo()
         install_bc_setText(self.ui.max_bc_label)
@@ -258,7 +259,6 @@ class LineBeamParametersControl(Display):
     def setup_bc_rbv_channel(self):
         prefix = self.config.get('line_arbiter_prefix')
         ch = f'ca://{prefix}BeamParamCntl:ReqBP:BeamClassRanges_RBV'
-
         self.bc_range_rbv_channel = PyDMChannel(
             ch,
             value_slot=self.update_beamclass_max_rbv_from_bitmask,
