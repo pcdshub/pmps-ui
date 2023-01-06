@@ -208,7 +208,7 @@ class LineBeamParametersControl(Display):
 
         Parameters
         ----------
-        energy_range : int
+        bc_range : int
             The decimal value of the photon energy range.
         """
         if bc_range is None:
@@ -226,6 +226,7 @@ class LineBeamParametersControl(Display):
             self._bc_bits[key] = bool(status)
             cb = self.findChild(QtWidgets.QCheckBox, key)
             cb.setChecked(bool(status))
+        self.update_beamclass_max_from_bitmask(bc_range)
 
     def setup_bc_rbv_channel(self):
         prefix = self.config.get('line_arbiter_prefix')
