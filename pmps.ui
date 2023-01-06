@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>4095</width>
+    <width>1200</width>
     <height>742</height>
    </rect>
   </property>
@@ -166,6 +166,12 @@
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="toolTip">
              <string/>
             </property>
@@ -202,6 +208,12 @@
            <widget class="PyDMLabel" name="PyDMLabel_6">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
             </property>
             <property name="toolTip">
              <string/>
@@ -247,6 +259,12 @@
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="toolTip">
              <string/>
             </property>
@@ -280,6 +298,12 @@
            <widget class="PyDMLabel" name="PyDMLabel_3">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
             </property>
             <property name="toolTip">
              <string/>
@@ -325,6 +349,12 @@
             <property name="enabled">
              <bool>false</bool>
             </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="toolTip">
              <string/>
             </property>
@@ -358,6 +388,12 @@
            <widget class="PyDMLabel" name="req_bc_label">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
             </property>
             <property name="toolTip">
              <string/>
@@ -610,6 +646,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -634,6 +676,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_38">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -660,6 +708,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -684,6 +738,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_36">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -710,6 +770,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -734,6 +800,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_34">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -760,6 +832,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -784,6 +862,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_32">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -810,6 +894,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -834,6 +924,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_30">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -860,6 +956,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -884,6 +986,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_28">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -910,6 +1018,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -934,6 +1048,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_26">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -960,6 +1080,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -984,6 +1110,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_24">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -1010,6 +1142,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1034,6 +1172,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_11">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -1060,6 +1204,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1084,6 +1234,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_9">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -1110,6 +1266,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1134,6 +1296,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_13">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -1160,6 +1328,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1184,6 +1358,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_15">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -1210,6 +1390,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1234,6 +1420,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_16">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -1260,6 +1452,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1284,6 +1482,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_21">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -1310,6 +1514,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1334,6 +1544,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_18">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -1360,6 +1576,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1384,6 +1606,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_22">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>

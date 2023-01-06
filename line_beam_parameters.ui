@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>4095</width>
-    <height>410</height>
+    <width>877</width>
+    <height>341</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -681,6 +681,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -711,6 +717,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit30">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -743,6 +755,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -773,6 +791,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit28">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -805,6 +829,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -835,6 +865,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit26">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -867,6 +903,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -897,6 +939,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit24">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -929,6 +977,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -959,6 +1013,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit22">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -991,6 +1051,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1021,6 +1087,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit20">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -1053,6 +1125,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1083,6 +1161,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit18">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -1115,6 +1199,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1146,6 +1236,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1173,6 +1269,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit15">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -1202,6 +1304,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1229,6 +1337,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit13">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -1258,6 +1372,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1285,6 +1405,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit11">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -1314,6 +1440,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1341,6 +1473,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit9">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -1370,6 +1508,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1397,6 +1541,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit7">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -1426,6 +1576,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1453,6 +1609,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit5">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -1482,6 +1644,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1509,6 +1677,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit3">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -1538,6 +1712,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1566,6 +1746,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1593,6 +1779,12 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <widget class="PyDMLabel" name="label_bit0">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>

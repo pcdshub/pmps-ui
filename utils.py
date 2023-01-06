@@ -1,7 +1,7 @@
 from qtpy import QtCore, QtGui, QtWidgets
 
 
-def morph_into_vertical(label):
+def morph_into_vertical(label: QtWidgets.QLabel):
     def minimumSizeHint(*args, **kwargs):
         s = QtWidgets.QLabel.minimumSizeHint(label)
         return QtCore.QSize(s.height(), s.width())
@@ -26,6 +26,9 @@ def morph_into_vertical(label):
         # center the text on the bitmask
         pos_y = -(label_w - text_h)
         painter.drawText(pos_x, pos_y, label.text())
+
+    # Unbind the size restrictions from the ui file that make it viewable in designer
+    label.setMaximumWidth(label.maximumHeight())
 
     label.minimumSizeHint = minimumSizeHint
     label.sizeHint = sizeHint
