@@ -1,5 +1,4 @@
 import functools
-from string import Template
 
 from pydm import Display
 from pydm.exception import raise_to_operator
@@ -20,15 +19,21 @@ class LineBeamParametersControl(Display):
     # object names for all energy range bits checkboxes, set them all
     # to unchecked to start with
     _bits = {f'bit{num}': False for num in reversed(range(32))}
+    # same but for the beamclass bits
+    _bc_bits = {f'bit{num}_2': False for num in reversed(range(15))}
 
     # signal to emit when energy range is changed
     energy_range_signal = QtCore.Signal(int)
+    # signal to emit when bc range is changed
+    bc_range_signal = QtCore.Signal(int)
 
     # this is a gate to break an infinite loop of
     # - Update from channel value
     # - Write back to channel
     _setting_bits = False
+    _setting_bc_bits = False
     energy_channel = None
+    bc_range_channel = None
 
     # Monitor the rate readback for use in the zero rate button
     rate_channel = None
@@ -39,9 +44,7 @@ class LineBeamParametersControl(Display):
     update_beamclass_signal = QtCore.Signal(int)
 
     def __init__(self, parent=None, args=None, macros=None):
-        super(LineBeamParametersControl, self).__init__(parent=parent,
-                                                        args=args,
-                                                        macros=macros)
+        super().__init__(parent=parent, args=args, macros=macros)
         self.config = macros
         self._channels = []
         self.setup_ui()
@@ -58,9 +61,11 @@ class LineBeamParametersControl(Display):
         self.setup_bit_indicators()
         self.setup_energy_range_channel()
         self.setup_rate_channel()
+        self.setup_bc_bits_connections()
+        self.setup_bc_range_channel()
         self.setup_zero_rate()
         self.setup_rate_combo()
-        install_bc_setText(self.ui.beamclass_rbv_label)
+        install_bc_setText(self.ui.max_bc_label)
         self.setup_beamclass_combo()
         self.rate_channel.connect()
 
@@ -69,7 +74,7 @@ class LineBeamParametersControl(Display):
         Connect all the check boxes bits with the calc_energy_range method to
         calculate the range upon changing a bit state.
         """
-        for key, item in self._bits.items():
+        for key in self._bits:
             cb = self.findChild(QtWidgets.QCheckBox, key)
             cb.stateChanged.connect(functools.partial(
                 self.calc_energy_range, key))
@@ -78,7 +83,7 @@ class LineBeamParametersControl(Display):
         """
         Borrowed function from fast_faults, to help morph the labels vertically
         """
-        for key in self._bits.keys():
+        for key in self._bits:
             label = self.findChild(PyDMLabel, f"label_{key}")
             if label is not None:
                 morph_into_vertical(label)
@@ -106,7 +111,7 @@ class LineBeamParametersControl(Display):
         self._bits[key] = status
         decimal_value = functools.reduce(
             (lambda x, y: (x << 1) | y),
-            map(int, [item for key, item in self._bits.items()])
+            map(int, [value for value in self._bits.values()])
         )
 
         if not self._setting_bits:
@@ -115,10 +120,8 @@ class LineBeamParametersControl(Display):
 
     def setup_energy_range_channel(self):
         prefix = self.config.get('line_arbiter_prefix')
+        ch = f'ca://{prefix}BeamParamCntl:ReqBP:PhotonEnergyRanges'
 
-        ch_macros = dict(PREFIX=prefix)
-        ch = Template(
-            'ca://${PREFIX}BeamParamCntl:ReqBP:PhotonEnergyRanges').safe_substitute(**ch_macros)
         self.energy_channel = PyDMChannel(
             ch,
             value_slot=self.energy_range_changed,
@@ -150,7 +153,7 @@ class LineBeamParametersControl(Display):
         self._setting_bits = True
         for key, status in zip(self._bits.keys(), binary_list):
             self._bits[key] = bool(status)
-            cb = self.findChild(QtWidgets.QCheckBox, f"{key}")
+            cb = self.findChild(QtWidgets.QCheckBox, key)
             state = 2 if status == 1 else 0
             cb.setCheckState(state)
         # set this value back to false so we don't create a infinite
@@ -164,18 +167,104 @@ class LineBeamParametersControl(Display):
             value_slot=self.watch_rate_update,
             value_signal=self.update_rate_signal,
         )
-        self.beamclass_channel = PyDMChannel(
-            f'ca://{prefix}BeamParamCntl:ReqBP:BeamClass',
-            value_slot=self.watch_beamclass_update,
-            value_signal=self.update_beamclass_signal,
-        )
-        self.beamclass_rbv_channel = PyDMChannel(
-            f'ca://{prefix}BeamParamCntl:ReqBP:BeamClass_RBV',
-            value_slot=self.watch_beamclass_rbv_update,
-        )
         self._channels.append(self.rate_channel)
-        self._channels.append(self.beamclass_channel)
-        self._channels.append(self.beamclass_rbv_channel)
+
+    def setup_bc_bits_connections(self):
+        """
+        Set up the beamclass selector updates
+
+        Connect all the check boxes bits with the calc_energy_range method to
+        calculate the range upon changing a bit state.
+        """
+        self.update_beamclass_signal.connect(self.update_beamclass_bitmask_from_max)
+        self.bc_range_signal.connect(self.update_beamclass_max_from_bitmask)
+        for key in self._bits:
+            cb = self.findChild(QtWidgets.QCheckBox, key)
+            cb.stateChanged.connect(functools.partial(
+                self.calc_bc_range, key))
+
+    def calc_bc_range(self, key, state):
+        """
+        Catch when a check box is checked/unchecked and calculate
+        the current bitmask.
+
+        Parameters
+        ----------
+        key : str
+            The check box object name.
+        state : int
+            The state of the check box.
+            0 = unchecked
+            2 = checked
+
+        Note
+        ----
+        The checkboxes can be tri-states - here we use the states 0 and 2
+        for unchecked and checked respectively.
+        """
+        status = state == 2
+        self._bc_bits[key] = status
+        decimal_value = functools.reduce(
+            (lambda x, y: (x << 1) | y),
+            map(int, [value for value in self._bc_bits.values()])
+        )
+
+        if not self._setting_bits:
+            # emit the decimal value to the PhotonEnergyRange
+            self.bc_range_signal.emit(decimal_value)
+
+    def setup_bc_range_channel(self):
+        prefix = self.config.get('line_arbiter_prefix')
+        ch = f'ca://{prefix}BeamParamCntl:ReqBP:BeamClassRanges'
+
+        self.bc_range_channel = PyDMChannel(
+            ch,
+            value_slot=self.bc_range_changed,
+            value_signal=self.bc_range_signal,
+        )
+        self.bc_range_channel.connect()
+        self._channels.append(self.bc_range_channel)
+
+    def bc_range_changed(self, bc_range):
+        """
+        This slot is supposed to handled the initial value of the
+        Beamclass Range coming in as soon as we connect, as well
+        as whenever this value is changed outside this application.
+
+        Parameters
+        ----------
+        energy_range : int
+            The decimal value of the photon energy range.
+        """
+        if bc_range is None:
+            return
+
+        # EPICS is signed but we want the unsigned 32-bit int
+        if bc_range < 0:
+            bc_range = 2**32 + bc_range
+
+        binary_range = list(bin(bc_range).replace("0b", ""))
+        binary_list = list(map(int, binary_range))
+        self._setting_bc_bits = True
+        for key, status in zip(self._bc_bits.keys(), binary_list):
+            self._bc_bits[key] = bool(status)
+            cb = self.findChild(QtWidgets.QCheckBox, key)
+            state = 2 if status == 1 else 0
+            cb.setCheckState(state)
+        # set this value back to false so we don't create a infinite
+        # loop between this slot and the energy_range_signal signal.
+        self._setting_bc_bits = False
+
+    def setup_bc_rbv_channel(self):
+        prefix = self.config.get('line_arbiter_prefix')
+        ch = f'ca://{prefix}BeamParamCntl:ReqBP:BeamClassRanges_RBV'
+
+        self.bc_range_rbv_channel = PyDMChannel(
+            ch,
+            value_slot=self.update_beamclass_max_rbv_from_bitmask,
+        )
+        self.bc_range_rbv_channel.connect()
+        self._channels.append(self.bc_range_rbv_channel)
 
     def setup_zero_rate(self):
         self.ui.zeroRate.clicked.connect(self.set_zero_rate)
@@ -196,26 +285,6 @@ class LineBeamParametersControl(Display):
         """
         self.rate_req = value
         self.update_rate_combobox_value(value)
-
-    def watch_beamclass_update(self, value):
-        """
-        Watch the beamclass channel so we know the most recent value.
-
-        This is also used to update the beamclass selection combobox on
-        one GUI after another GUI makes a selection, as well as the tooltip
-        with the most recent beamclass summary information.
-        """
-        self.beamclass_req = value
-        self.update_beamclass_combobox_value(value)
-
-    def watch_beamclass_rbv_update(self, value):
-        """
-        Watch the beamclass channel so we know the most recent value.
-
-        This is also used to update the rbv tooltip with the most recent
-        beamclass summary information.
-        """
-        self.ui.beamclass_rbv_label.PyDMToolTip = get_tooltip_for_bc(value)
 
     def set_zero_rate(self):
         """
@@ -302,3 +371,29 @@ class LineBeamParametersControl(Display):
         state of the combobox.
         """
         self.ui.beamclassCombobox.setCurrentIndex(value)
+
+    def update_beamclass_bitmask_from_max(self, value):
+        """
+        Given a max value, generate the simplified beamclass bitmask.
+
+        This is a bitmask that doesn't skip any bits between 0 and the
+        desired max value.
+        """
+        self.bc_range_signal.emit(2**value-1)
+
+    def update_beamclass_max_from_bitmask(self, value):
+        """
+        Given a bitmask, update the max value combobox appropriately.
+        """
+        count = 0
+        while value > 0:
+            count += 1
+            value = value >> 1
+        self.update_beamclass_combobox_value(count)
+
+    def update_beamclass_max_rbv_from_bitmask(self, value):
+        count = 0
+        while value > 0:
+            count += 1
+            value = value >> 1
+        self.max_bc_label.setText(str(count))
