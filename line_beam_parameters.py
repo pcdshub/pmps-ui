@@ -179,7 +179,7 @@ class LineBeamParametersControl(Display):
         """
         self.update_beamclass_signal.connect(self.update_beamclass_bitmask_from_max)
         self.bc_range_signal.connect(self.update_beamclass_max_from_bitmask)
-        for key in self._bits:
+        for key in self._bc_bits:
             cb = self.findChild(QtWidgets.QCheckBox, key)
             cb.stateChanged.connect(functools.partial(
                 self.calc_bc_range, key))
@@ -210,7 +210,7 @@ class LineBeamParametersControl(Display):
             map(int, [value for value in self._bc_bits.values()])
         )
 
-        if not self._setting_bits:
+        if not self._setting_bc_bits:
             # emit the decimal value to the PhotonEnergyRange
             self.bc_range_signal.emit(decimal_value)
 
@@ -370,7 +370,7 @@ class LineBeamParametersControl(Display):
         This does not write to the PV, it just changes the visual
         state of the combobox.
         """
-        self.ui.beamclassCombobox.setCurrentIndex(value)
+        self.ui.beamclassComboBox.setCurrentIndex(value)
 
     def update_beamclass_bitmask_from_max(self, value):
         """
