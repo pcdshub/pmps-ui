@@ -19,7 +19,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="PyDMByteIndicator" name="PyDMByteIndicator_3">
+        <widget class="PyDMByteIndicator" name="bc_bytes">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -33,18 +33,14 @@
           <enum>Qt::Vertical</enum>
          </property>
          <property name="numBits" stdset="0">
-          <number>8</number>
+          <number>4</number>
          </property>
          <property name="labels" stdset="0">
           <stringlist>
-           <string>Channel 01 - BC_1HZ</string>
-           <string>Channel 02 - BC_10HZ</string>
-           <string>Channel 03 - BC_FULL</string>
-           <string>Channel 04 - BC_FULL</string>
-           <string>Channel 05 - BC_FULL</string>
-           <string>Channel 06 - BC_FULL</string>
-           <string>Channel 07 - BC_FULL</string>
-           <string>Channel 08 - BC_FULL</string>
+           <string>Channel 01 - BC Bit 0 (LSB)</string>
+           <string>Channel 02 - BC Bit 1</string>
+           <string>Channel 03 - BC Bit 2</string>
+           <string>Channel 04 - BC Bit 3 (MSB)</string>
           </stringlist>
          </property>
         </widget>
@@ -65,9 +61,16 @@
       </layout>
      </item>
      <item>
+      <widget class="QLabel" name="bc_summary_label">
+       <property name="text">
+        <string>Loading...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="PyDMByteIndicator" name="PyDMByteIndicator_4">
+        <widget class="PyDMByteIndicator" name="rate_bytes">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -106,6 +109,13 @@
         </spacer>
        </item>
       </layout>
+     </item>
+     <item>
+      <widget class="QLabel" name="rate_summary_label">
+       <property name="text">
+        <string>Loading...</string>
+       </property>
+      </widget>
      </item>
      <item>
       <spacer name="verticalSpacer_2">
@@ -176,7 +186,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>675</width>
+           <width>648</width>
            <height>185</height>
           </rect>
          </property>
