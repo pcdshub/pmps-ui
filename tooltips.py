@@ -46,7 +46,7 @@ def get_ev_range_tooltip(bitmask: int, range_def: Iterable[int]) -> str:
     left_width = 0
     right_width = 0
     lines = []
-    if not bad_bounds or len(ok_bounds) < len(bad_bounds):
+    if not bad_bounds or (ok_bounds and len(ok_bounds) < len(bad_bounds)):
         for left, right in ok_bounds:
             left_width = max(left_width, len(str(left)))
             right_width = max(right_width, len(str(right)))
