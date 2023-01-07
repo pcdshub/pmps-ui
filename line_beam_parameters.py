@@ -402,7 +402,7 @@ class LineBeamParametersControl(Display):
         self.update_ev_tooltip()
 
     def on_bc_range_rbv_update(self, value):
-        # Update the rbv tooltip
+        # Update the rbv tooltips
         self.ui.bc_rbv_bytes.PyDMToolTip = get_tooltip_for_bc_bitmask(value)
         # Update the max bc label
         count = 0
@@ -410,4 +410,4 @@ class LineBeamParametersControl(Display):
             count += 1
             value = value >> 1
         self.ui.max_bc_label.setText(str(count))
-        self.ui.max_bc_label.setToolTip(get_tooltip_for_bc_bitmask(value))
+        self.ui.max_bc_label.setToolTip(get_tooltip_for_bc(count))
