@@ -18,8 +18,7 @@ class PLCIOCStatus(Display):
     plc_status_ch = None
 
     def __init__(self, parent=None, args=None, macros=None):
-        super(PLCIOCStatus, self).__init__(
-            parent=parent, args=args, macros=macros)
+        super().__init__(parent=parent, args=args, macros=macros)
         self.config = macros
         self.ffs_count_map = {}
         self.ffs_label_map = {}
@@ -107,14 +106,17 @@ class PLCIOCStatus(Display):
                 'task1': {
                     'value': 0,
                     'sevr': 3,
+                    'conn': False,
                 },
                 'task2': {
                     'value': 0,
                     'sevr': 3,
+                    'conn': False,
                 },
                 'task3': {
                     'value': 0,
                     'sevr': 3,
+                    'conn': False,
                 },
             }
             self.plc_task1_vis_ch = PyDMChannel(
@@ -144,6 +146,13 @@ class PLCIOCStatus(Display):
                     value_type='sevr',
                     widget=label_plc_task_info_2,
                 ),
+                connection_slot=functools.partial(
+                    self.update_task_visibility,
+                    plc_name=plc_name,
+                    task='task2',
+                    value_type='conn',
+                    widget=label_plc_task_info_2,
+                ),
             )
             self.plc_task2_vis_ch.connect()
             self.plc_task3_vis_ch = PyDMChannel(
@@ -160,6 +169,13 @@ class PLCIOCStatus(Display):
                     plc_name=plc_name,
                     task='task3',
                     value_type='sevr',
+                    widget=label_plc_task_info_3,
+                ),
+                connection_slot=functools.partial(
+                    self.update_task_visibility,
+                    plc_name=plc_name,
+                    task='task3',
+                    value_type='conn',
                     widget=label_plc_task_info_3,
                 ),
             )
@@ -235,7 +251,8 @@ class PLCIOCStatus(Display):
         self.plc_ioc_container.setSizePolicy(QtWidgets.QSizePolicy.Maximum,
                                              QtWidgets.QSizePolicy.Preferred)
 
-    def setup_widget_size(self,
+    def setup_widget_size(
+        self,
         max_width,
         min_width,
         max_height,
@@ -297,6 +314,10 @@ class PLCIOCStatus(Display):
         Task 1 being invalid is always a bad state.
         Task 2 or 3 being nonzero and invalid is also a bad state.
         These usually means the PLC has crashed.
+
+        Task 2 or 3 being disconnected is fine- that might just mean
+        we've updated to ads-ioc R0.6.0.
+        Task 1 being disconnected is always a problem.
         """
         plc_data = self.task_vis_data[plc_name]
         task_data = plc_data[task]
@@ -308,6 +329,8 @@ class PLCIOCStatus(Display):
             task_data['value'] == 0,
             task_data['sevr'] == 3,
         )):
+            widget.hide()
+        elif task in ('task2', 'task3') and not task_data['conn']:
             widget.hide()
         else:
             widget.show()
