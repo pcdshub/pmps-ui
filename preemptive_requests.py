@@ -11,9 +11,10 @@ from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
-from beamclass_table import (get_max_bc_from_bitmask, get_tooltip_for_bc,
-                             get_tooltip_for_bc_bitmask, install_bc_setText)
+from beamclass_table import get_max_bc_from_bitmask, install_bc_setText
 from data_bounds import get_valid_rate
+from tooltips import (get_ev_range_tooltip, get_tooltip_for_bc,
+                      get_tooltip_for_bc_bitmask)
 
 logger = logging.getLogger(__name__)
 
@@ -515,44 +516,7 @@ class BCRowLogic(QtCore.QObject):
             self.last_ev_range = value
         if self.ev_ranges is None:
             return
-
-        ev_range = value
-
-        bounds = []
-        curr_bound = None
-        prev = 0
-
-        for bit, ev in enumerate(self.ev_ranges):
-            ok = (ev_range >> bit) % 2
-            if ok:
-                if curr_bound is None:
-                    curr_bound = (prev, ev)
-                else:
-                    curr_bound = (curr_bound[0], ev)
-            else:
-                if curr_bound is not None:
-                    bounds.append(curr_bound)
-                    curr_bound = None
-            prev = ev
-
-        if curr_bound is not None:
-            bounds.append(curr_bound)
-
-        if bounds:
-            left_width = 0
-            right_width = 0
-            for left, right in bounds:
-                left_width = max(left_width, len(str(left)))
-                right_width = max(right_width, len(str(right)))
-            lines = []
-            for under, over in bounds:
-                line = f'Allow {under:{left_width}}eV &lt; energy &lt; {over:{right_width}}eV'
-                lines.append(line)
-            text = '\n'.join(lines)
-        else:
-            text = 'No eV range allowed.'
-
-        self.ev_bytes.PyDMToolTip = '<pre>' + text + '</pre>'
+        self.ev_bytes.PyDMToolTip = get_ev_range_tooltip(value, self.ev_ranges)
 
 
 @dataclass(frozen=True)

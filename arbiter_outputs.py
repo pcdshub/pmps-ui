@@ -4,7 +4,8 @@ from pydm import Display
 from pydm.widgets import PyDMEmbeddedDisplay
 from pydm.widgets.channel import PyDMChannel
 
-from beamclass_table import get_tooltip_for_bc, install_bc_setText
+from beamclass_table import install_bc_setText
+from tooltips import get_tooltip_for_bc
 
 
 class ArbiterOutputs(Display):

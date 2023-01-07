@@ -1,4 +1,3 @@
-import prettytable
 from pydm import Display
 from qtpy.QtWidgets import QLabel, QTableWidgetItem
 
@@ -55,43 +54,6 @@ bc_table = """
 """.strip().split('\n')
 for index, row in enumerate(bc_table):
     bc_table[index] = row.split('\t')
-
-
-def get_full_bc_table() -> str:
-    """
-    Show the full table
-    """
-    table = prettytable.PrettyTable()
-    table.field_names = bc_header
-    for row in bc_table:
-        table.add_row(row)
-    return str(table)
-
-
-def get_tooltip_for_bc(beamclass: int) -> str:
-    """
-    Create a mini 2-row table suitable for a beam class tooltip.
-    """
-    table = prettytable.PrettyTable()
-    table.field_names = bc_header
-    table.add_row(bc_table[beamclass])
-    return '<pre>' + str(table) + '</pre>'
-
-
-def get_tooltip_for_bc_bitmask(bitmask: int) -> str:
-    """
-    Create a partial table suitable for a bitmask tooltip.
-    """
-    table = prettytable.PrettyTable()
-    table.field_names = bc_header
-    table.add_row(bc_table[0])
-    count = 0
-    while bitmask > 0:
-        count += 1
-        if bitmask % 2:
-            table.add_row(bc_table[count])
-        bitmask = bitmask >> 1
-    return '<pre>' + str(table) + '</pre>'
 
 
 def get_desc_for_bc(beamclass: int) -> str:

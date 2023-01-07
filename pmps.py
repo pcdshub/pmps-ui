@@ -10,7 +10,8 @@ from pydm.widgets import PyDMByteIndicator, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore
 
-from beamclass_table import get_tooltip_for_bc, install_bc_setText
+from beamclass_table import install_bc_setText
+from tooltips import get_ev_range_tooltip, get_tooltip_for_bc
 from utils import morph_into_vertical
 
 logger = logging.getLogger(__name__)
@@ -68,7 +69,7 @@ class PMPS(Display):
     def setup_ui(self):
         self.setup_mode_selector()
         self.setup_ev_range_labels()
-        self.setup_bc_tooltips()
+        self.setup_tooltips()
         self.setup_tabs()
 
     def setup_mode_selector(self):
@@ -121,7 +122,7 @@ class PMPS(Display):
             if child_label is not None:
                 morph_into_vertical(child_label)
 
-    def setup_bc_tooltips(self):
+    def setup_tooltips(self):
         labels = (self.ui.curr_bc_label, self.ui.req_bc_label)
         for label in labels:
             ch = PyDMChannel(
@@ -131,9 +132,37 @@ class PMPS(Display):
             ch.connect()
             self._channels.append(ch)
             install_bc_setText(label)
+        self.ev_ranges = None
+        self.last_ev_range = 0
+        ev_definition = PyDMChannel(
+            f'ca://{self.config.get("line_arbiter_prefix")}eVRangeCnst_RBV',
+            value_slot=self.new_ev_ranges,
+        )
+        ev_definition.connect()
+        self._channels.append(ev_definition)
+        ev_bytes = self.ui.ev_req_bytes
+        bytes_channel = PyDMChannel(
+            ev_bytes.channel,
+            value_slot=self.update_ev_tooltip,
+        )
+        bytes_channel.connect()
+        self._channels.append(bytes_channel)
 
     def update_bc_tooltip(self, value, label):
         label.PyDMToolTip = get_tooltip_for_bc(value)
+
+    def update_ev_tooltip(self, value=None):
+        if value is None:
+            value = self.last_ev_range
+        else:
+            self.last_ev_range = value
+        if self.ev_ranges is None:
+            return
+        self.ui.ev_req_bytes.PyDMToolTip = get_ev_range_tooltip(value, self.ev_ranges)
+
+    def new_ev_ranges(self, value):
+        self.ev_ranges = value
+        self.update_ev_tooltip()
 
     def setup_tabs(self):
         # We will do crazy things at this screen... avoid painting

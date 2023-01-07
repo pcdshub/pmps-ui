@@ -6,9 +6,10 @@ from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
-from beamclass_table import (bc_table, get_desc_for_bc, get_tooltip_for_bc,
-                             install_bc_setText)
+from beamclass_table import bc_table, get_desc_for_bc, install_bc_setText
 from data_bounds import VALID_RATES, get_valid_rate
+from tooltips import (get_ev_range_tooltip, get_tooltip_for_bc,
+                      get_tooltip_for_bc_bitmask)
 from utils import morph_into_vertical
 
 
@@ -58,6 +59,7 @@ class LineBeamParametersControl(Display):
         self.setup_rate_channel()
         self.setup_bc_bits_connections()
         self.setup_bc_range_channel()
+        self.setup_ev_rbv_channel()
         self.setup_bc_rbv_channel()
         self.setup_zero_rate()
         self.setup_rate_combo()
@@ -159,6 +161,8 @@ class LineBeamParametersControl(Display):
 
         Connect all the check boxes bits with the calc_energy_range method to
         calculate the range upon changing a bit state.
+
+        Set a tooltip on each checkbox that makes it clear what that bit controls.
         """
         self.update_beamclass_signal.connect(self.update_beamclass_bitmask_from_max)
         self.bc_range_signal.connect(self.update_beamclass_max_from_bitmask)
@@ -166,6 +170,7 @@ class LineBeamParametersControl(Display):
             cb = self.findChild(QtWidgets.QCheckBox, key)
             cb.clicked.connect(functools.partial(
                 self.calc_bc_range, key))
+            cb.setToolTip(get_tooltip_for_bc(1 + int(key.split('_')[0][3:])))
 
     def calc_bc_range(self, key, checked):
         """
@@ -228,12 +233,29 @@ class LineBeamParametersControl(Display):
             cb.setChecked(bool(status))
         self.update_beamclass_max_from_bitmask(bc_range)
 
+    def setup_ev_rbv_channel(self):
+        prefix = self.config.get('line_arbiter_prefix')
+        self.ev_ranges = None
+        self.last_ev_range = 0
+        ev_definition = PyDMChannel(
+            f'ca://{prefix}eVRangeCnst_RBV',
+            value_slot=self.new_ev_ranges,
+        )
+        ev_definition.connect()
+        self._channels.append(ev_definition)
+        self.ev_range_rbv_channel = PyDMChannel(
+            f'ca://{prefix}BeamParamCntl:ReqBP:PhotonEnergyRanges_RBV',
+            value_slot=self.on_ev_range_rbv_update,
+        )
+        self.ev_range_rbv_channel.connect()
+        self._channels.append(self.ev_range_rbv_channel)
+
     def setup_bc_rbv_channel(self):
         prefix = self.config.get('line_arbiter_prefix')
         ch = f'ca://{prefix}BeamParamCntl:ReqBP:BeamClassRanges_RBV'
         self.bc_range_rbv_channel = PyDMChannel(
             ch,
-            value_slot=self.update_beamclass_max_rbv_from_bitmask,
+            value_slot=self.on_bc_range_rbv_update,
         )
         self.bc_range_rbv_channel.connect()
         self._channels.append(self.bc_range_rbv_channel)
@@ -363,9 +385,29 @@ class LineBeamParametersControl(Display):
             value = value >> 1
         self.update_beamclass_combobox_value(count)
 
-    def update_beamclass_max_rbv_from_bitmask(self, value):
+    def on_ev_range_rbv_update(self, value):
+        self.update_ev_tooltip(value)
+
+    def update_ev_tooltip(self, value=None):
+        if value is None:
+            value = self.last_ev_range
+        else:
+            self.last_ev_range = value
+        if self.ev_ranges is None:
+            return
+        self.ui.ev_rbv_bytes.PyDMToolTip = get_ev_range_tooltip(value, self.ev_ranges)
+
+    def new_ev_ranges(self, value):
+        self.ev_ranges = value
+        self.update_ev_tooltip()
+
+    def on_bc_range_rbv_update(self, value):
+        # Update the rbv tooltip
+        self.ui.bc_rbv_bytes.PyDMToolTip = get_tooltip_for_bc_bitmask(value)
+        # Update the max bc label
         count = 0
         while value > 0:
             count += 1
             value = value >> 1
-        self.max_bc_label.setText(str(count))
+        self.ui.max_bc_label.setText(str(count))
+        self.ui.max_bc_label.setToolTip(get_tooltip_for_bc_bitmask(value))

@@ -1636,7 +1636,7 @@
            </layout>
           </item>
           <item row="2" column="1" colspan="2">
-           <widget class="PyDMByteIndicator" name="PyDMByteIndicator_3">
+           <widget class="PyDMByteIndicator" name="ev_req_bytes">
             <property name="enabled">
              <bool>false</bool>
             </property>

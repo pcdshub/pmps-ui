@@ -2493,7 +2493,7 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <number>4</number>
      </property>
      <item>
-      <widget class="PyDMByteIndicator" name="PyDMByteIndicator">
+      <widget class="PyDMByteIndicator" name="bc_rbv_bytes">
        <property name="toolTip">
         <string/>
        </property>
@@ -2572,7 +2572,7 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <number>4</number>
      </property>
      <item>
-      <widget class="PyDMByteIndicator" name="PyDMByteIndicator_2">
+      <widget class="PyDMByteIndicator" name="ev_rbv_bytes">
        <property name="toolTip">
         <string/>
        </property>
