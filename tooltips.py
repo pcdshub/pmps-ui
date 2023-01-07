@@ -12,40 +12,55 @@ def preformatted(text: str) -> str:
 
 def get_ev_range_tooltip(bitmask: int, range_def: Iterable[int]) -> str:
     """Return a suitable tooltip for an eV range bitmask."""
-    bounds = []
-    curr_bound = None
+    ok_bounds = []
+    bad_bounds = []
+    curr_ok_bound = None
+    curr_bad_bound = None
     prev = 0
 
     for bit, ev in enumerate(range_def):
         ok = (bitmask >> bit) % 2
         if ok:
-            if curr_bound is None:
-                curr_bound = (prev, ev)
+            if curr_ok_bound is None:
+                curr_ok_bound = (prev, ev)
             else:
-                curr_bound = (curr_bound[0], ev)
+                curr_ok_bound = (curr_ok_bound[0], ev)
+            if curr_bad_bound is not None:
+                bad_bounds.append(curr_bad_bound)
+                curr_bad_bound = None
         else:
-            if curr_bound is not None:
-                bounds.append(curr_bound)
-                curr_bound = None
+            if curr_bad_bound is None:
+                curr_bad_bound = (prev, ev)
+            else:
+                curr_bad_bound = (curr_bad_bound[0], ev)
+            if curr_ok_bound is not None:
+                ok_bounds.append(curr_ok_bound)
+                curr_ok_bound = None
         prev = ev
 
-    if curr_bound is not None:
-        bounds.append(curr_bound)
+    if curr_ok_bound is not None:
+        ok_bounds.append(curr_ok_bound)
+    if curr_bad_bound is not None:
+        bad_bounds.append(curr_bad_bound)
 
-    if bounds:
-        left_width = 0
-        right_width = 0
-        for left, right in bounds:
+    left_width = 0
+    right_width = 0
+    lines = []
+    if not bad_bounds or len(ok_bounds) < len(bad_bounds):
+        for left, right in ok_bounds:
             left_width = max(left_width, len(str(left)))
             right_width = max(right_width, len(str(right)))
-        lines = []
-        for under, over in bounds:
+        for under, over in ok_bounds:
             line = f'Allow {under:{left_width}}eV &lt; energy &lt; {over:{right_width}}eV'
             lines.append(line)
-        text = '\n'.join(lines)
     else:
-        text = 'No eV range allowed.'
-    return preformatted(text)
+        for left, right in bad_bounds:
+            left_width = max(left_width, len(str(left)))
+            right_width = max(right_width, len(str(right)))
+        for under, over in bad_bounds:
+            line = f'Block {under:{left_width}}eV &lt; energy &lt; {over:{right_width}}eV'
+            lines.append(line)
+    return preformatted('\n'.join(lines))
 
 
 def get_tooltip_for_bc(beamclass: int) -> str:
