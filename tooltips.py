@@ -52,14 +52,14 @@ def get_ev_range_tooltip(bitmask: int, range_def: Iterable[int]) -> str:
             left_width = max(left_width, len(str(left)))
             right_width = max(right_width, len(str(right)))
         for under, over in ok_bounds:
-            line = f'Allow {under:{left_width}} eV &lt; energy &lt; {over:{right_width}} eV'
+            line = f'Allow {under:{left_width}} eV to {over:{right_width}} eV'
             lines.append(line)
     else:
         for left, right in bad_bounds:
             left_width = max(left_width, len(str(left)))
             right_width = max(right_width, len(str(right)))
         for under, over in bad_bounds:
-            line = f'Block {under:{left_width}} eV &lt; energy &lt; {over:{right_width}} eV'
+            line = f'Block {under:{left_width}} eV to {over:{right_width}} eV'
             lines.append(line)
     return preformatted('\n'.join(lines))
 
