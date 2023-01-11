@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1206</width>
+    <width>1453</width>
     <height>40</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1206</width>
+    <width>1453</width>
     <height>40</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1206</width>
+    <width>1453</width>
     <height>40</height>
    </size>
   </property>
@@ -122,13 +122,13 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>100</width>
+       <width>50</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>100</width>
+       <width>50</width>
        <height>16777215</height>
       </size>
      </property>
@@ -137,6 +137,99 @@
      </property>
      <property name="text">
       <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="PyDMLabel" name="beamclass_label">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>120</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>120</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>loc://${P}${ARBITER}${POOL}:MaxBC?type=int&amp;init=0</string>
+     </property>
+     <property name="showUnits" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="channel" stdset="0">
+      <string>loc://${P}${ARBITER}${POOL}:MaxBC?type=int&amp;init=0</string>
+     </property>
+     <property name="displayFormat" stdset="0">
+      <enum>PyDMLabel::Default</enum>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="PyDMByteIndicator" name="beamclass_bytes">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>183</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>183</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:BeamClassRanges_RBV</string>
+     </property>
+     <property name="onColor" stdset="0">
+      <color>
+       <red>21</red>
+       <green>165</green>
+       <blue>62</blue>
+      </color>
+     </property>
+     <property name="orientation" stdset="0">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="showLabels" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="bigEndian" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="circles" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="numBits" stdset="0">
+      <number>15</number>
      </property>
     </widget>
    </item>
@@ -165,6 +258,9 @@
      </property>
      <property name="toolTip">
       <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
      <property name="showUnits" stdset="0">
       <bool>true</bool>
@@ -231,22 +327,6 @@
     </widget>
    </item>
    <item>
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Minimum</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>10</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
     <widget class="PyDMLabel" name="cohort_label">
      <property name="enabled">
       <bool>false</bool>
@@ -281,19 +361,6 @@
     </widget>
    </item>
    <item>
-    <spacer name="horizontalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item>
     <widget class="PyDMByteIndicator" name="live_byte">
      <property name="enabled">
       <bool>false</bool>
@@ -306,13 +373,13 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>80</width>
+       <width>150</width>
        <height>32</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>80</width>
+       <width>150</width>
        <height>32</height>
       </size>
      </property>

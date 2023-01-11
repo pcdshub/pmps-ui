@@ -1,15 +1,22 @@
 import functools
 import json
+import logging
 import typing
 from dataclasses import dataclass
 from string import Template
 
+import numpy as np
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
+from beamclass_table import get_max_bc_from_bitmask, install_bc_setText
 from data_bounds import get_valid_rate
+from tooltips import (get_ev_range_tooltip, get_tooltip_for_bc,
+                      get_tooltip_for_bc_bitmask)
+
+logger = logging.getLogger(__name__)
 
 
 class PreemptiveRequests(Display):
@@ -43,12 +50,16 @@ class PreemptiveRequests(Display):
         super().__init__(parent=parent, args=args, macros=macros)
         self.config = macros
         self._channels = []
+        self.mode = None
+        self.mode_index = None
+        self.mode_enum = None
         self.setup_ui()
 
     def setup_ui(self):
         """Do all steps to prepare the inner workings of the display."""
         self.setup_requests()
         self.setup_sorts_and_filters()
+        self.setup_mode()
 
     def setup_requests(self):
         """Populate the table from the config file and the item_info_list."""
@@ -68,6 +79,7 @@ class PreemptiveRequests(Display):
         if reqs_table is None:
             return
         count = 0
+        self.row_logics = []
         for req in reqs:
             prefix = req.get('prefix')
             arbiter = req.get('arbiter_instance')
@@ -107,6 +119,13 @@ class PreemptiveRequests(Display):
                 )
                 rate_channel.connect()
                 self._channels.append(rate_channel)
+
+                row_logic = BCRowLogic(
+                    widget.embedded_widget,
+                    self.config.get('line_arbiter_prefix'),
+                    parent=self,
+                )
+                self._channels.extend(row_logic.pydm_channels)
 
                 # insert the widget you see into the table
                 row_position = reqs_table.rowCount()
@@ -159,6 +178,31 @@ class PreemptiveRequests(Display):
             self.handle_item_changed,
             )
         self.update_all_filters()
+
+    def new_mode(self, value):
+        """
+        Update the display's "mode" to either NC or SC.
+
+        This will hide or show the rate and beamclass columns as appropriate
+        and re-interpret the definition of "full beam".
+        """
+        self.mode = value
+        header = self.ui.table_header.embedded_widget.ui
+        # Show both if value is None
+        header.rate_header.setVisible(self.mode != 'SC')
+        header.beamclass_header.setVisible(self.mode != 'NC')
+        header.beamclass_ranges_header.setVisible(self.mode != 'NC')
+        # Full beam filter depends on the mode
+        self.update_all_filters()
+
+    def setup_mode(self):
+        """Create a channel to react to mode changes"""
+        self._mode_channel = PyDMChannel(
+            'loc://selected_mode',
+            value_slot=self.new_mode,
+        )
+        self._mode_channel.connect()
+        self._channels.append(self._mode_channel)
 
     def sort_table(self, column, ascending):
         """
@@ -235,6 +279,9 @@ class PreemptiveRequests(Display):
         - Hide if no activate arbitration
         - Hide if PV disconnected
 
+        In addition, the rate or beamclass widget will be hidden based on the
+        mode if the mode is unambiguous.
+
         Parameters
         ----------
         row : int
@@ -247,8 +294,25 @@ class PreemptiveRequests(Display):
             item = table.item(row, column)
             values[info.name] = item.get_value()
 
+        full_rate = values['rate'] >= 120
+        full_bc = values['beamclass'] >= 13
+        if self.mode == 'NC':
+            rate_cpt = full_rate
+        elif self.mode == 'SC':
+            rate_cpt = full_bc
+        else:
+            # Ambiguous mode- use both sources
+            rate_cpt = full_rate and full_bc
+
+        # Make sure we show/hide the column elements based on mode
+        # Ambiguous mode means we show both
+        row_widget = table.cellWidget(row, 0).embedded_widget.ui
+        row_widget.rate_label.setVisible(self.mode != 'SC')
+        row_widget.beamclass_label.setVisible(self.mode != 'NC')
+        row_widget.beamclass_bytes.setVisible(self.mode != 'NC')
+
         full_beam = all((
-            values['rate'] >= 120,
+            rate_cpt,
             values['trans'] >= 1,
             values['energy'] >= 32,
             ))
@@ -378,6 +442,83 @@ def str_from_waveform(waveform_array):
     return text
 
 
+class BCRowLogic(QtCore.QObject):
+    max_bc_sig = QtCore.Signal(int)
+
+    def __init__(self, row_widget: Display, line_arbiter_prefix: str, parent=None):
+        super().__init__(parent=parent)
+        self.line_arbiter_prefix = line_arbiter_prefix
+        # Extra channel for the beamclass
+        # This lets us sub in an appropriate tooltip stub based on
+        # the beamclass value as it updates
+        self.beamclass_label = row_widget.ui.beamclass_label
+        bc_channel = PyDMChannel(
+            self.beamclass_label.channel.split('?')[0],
+            value_slot=self.update_beamclass_tooltip,
+            value_signal=self.max_bc_sig,
+        )
+        bc_channel.connect()
+        install_bc_setText(self.beamclass_label)
+
+        # Extra channels for the beamclass bitmask
+        # This lets us put a tooltip stub based on the bitmask
+        # This also lets us update the bc_channel, which is a local
+        self.beamclass_bytes = row_widget.ui.beamclass_bytes
+        bc_range_channel1 = PyDMChannel(
+            self.beamclass_bytes.channel,
+            value_slot=self.update_bc_bitmask_tooltip,
+        )
+        bc_range_channel1.connect()
+        bc_range_channel2 = PyDMChannel(
+            self.beamclass_bytes.channel,
+            value_slot=self.update_max_bc,
+        )
+        bc_range_channel2.connect()
+
+        # Extra channel for the eV range definition
+        # We need this for the eV bitmask tooltip
+        self.ev_ranges = None
+        self.last_ev_range = 0
+        ev_definition = PyDMChannel(
+            f'ca://{self.line_arbiter_prefix}eVRangeCnst_RBV',
+            value_slot=self.new_ev_ranges,
+        )
+        ev_definition.connect()
+        # Set the eV range tooltip
+        self.ev_bytes = row_widget.ui.energy_bytes
+        ev_range_channel = PyDMChannel(
+            self.ev_bytes.channel,
+            value_slot=self.update_ev_range_tooltip,
+        )
+        ev_range_channel.connect()
+
+        self.pydm_channels = [bc_channel, bc_range_channel1, bc_range_channel2, ev_definition, ev_range_channel]
+
+    def update_max_bc(self, value: int):
+        self.max_bc_sig.emit(
+            get_max_bc_from_bitmask(value)
+        )
+
+    def new_ev_ranges(self, value: np.ndarray):
+        self.ev_ranges = value
+        self.update_ev_range_tooltip()
+
+    def update_beamclass_tooltip(self, value: int):
+        self.beamclass_label.PyDMToolTip = get_tooltip_for_bc(value)
+
+    def update_bc_bitmask_tooltip(self, value: int):
+        self.beamclass_bytes.PyDMToolTip = get_tooltip_for_bc_bitmask(value)
+
+    def update_ev_range_tooltip(self, value=None):
+        if value is None:
+            value = self.last_ev_range
+        else:
+            self.last_ev_range = value
+        if self.ev_ranges is None:
+            return
+        self.ev_bytes.PyDMToolTip = get_ev_range_tooltip(value, self.ev_ranges)
+
+
 @dataclass(frozen=True)
 class ItemInfo:
     """All the data we need to set up the sorts/filters"""
@@ -401,7 +542,7 @@ item_info_list = [
         store_type=str_from_waveform,
         data_type=str,
         default='',
-        ),
+    ),
     ItemInfo(
         name='id',
         select_text='Assertion ID',
@@ -410,16 +551,34 @@ item_info_list = [
         store_type=int,
         data_type=int,
         default=0,
-        ),
+    ),
     ItemInfo(
         name='rate',
-        select_text='Rate',
+        select_text='Rate [NC]',
         widget_name='rate_label',
         widget_class=QtWidgets.QLabel,
         store_type=int,
         data_type=int,
         default=0,
-        ),
+    ),
+    ItemInfo(
+        name='beamclass',
+        select_text='Max Beam Class [SC]',
+        widget_name='beamclass_label',
+        widget_class=PyDMLabel,
+        store_type=int,
+        data_type=int,
+        default=0,
+    ),
+    ItemInfo(
+        name='beamclass ranges',
+        select_text='Beam Class Ranges [SC]',
+        widget_name='beamclass_bytes',
+        widget_class=PyDMByteIndicator,
+        store_type=bitmask_count,
+        data_type=int,
+        default=0,
+    ),
     ItemInfo(
         name='trans',
         select_text='Transmission',
@@ -428,7 +587,7 @@ item_info_list = [
         store_type=float,
         data_type=float,
         default=0.0,
-        ),
+    ),
     ItemInfo(
         name='energy',
         select_text='Photon Energy Ranges',
@@ -437,7 +596,7 @@ item_info_list = [
         store_type=bitmask_count,
         data_type=int,
         default=0,
-        ),
+    ),
     ItemInfo(
         name='cohort',
         select_text='Cohort Number',
@@ -446,7 +605,7 @@ item_info_list = [
         store_type=int,
         data_type=int,
         default=0,
-        ),
+    ),
     ItemInfo(
         name='active',
         select_text='Active Arbitration',
@@ -455,5 +614,5 @@ item_info_list = [
         store_type=int,
         data_type=int,
         default=0,
-        ),
-    ]
+    ),
+]

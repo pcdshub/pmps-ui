@@ -6,16 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1715</width>
-    <height>291</height>
+    <width>896</width>
+    <height>416</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_12">
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_16">
      <property name="font">
       <font>
        <weight>75</weight>
@@ -23,86 +23,347 @@
       </font>
      </property>
      <property name="text">
-      <string>Requested Transmission :</string>
+      <string>Requested Rate [NC]:</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="0" colspan="6">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="2">
-    <widget class="QLabel" name="label_17">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Hz</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="2">
-    <widget class="QPushButton" name="zeroRate">
+   <item row="10" column="1">
+    <widget class="QFrame" name="energy_range_frame_2">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>52</height>
+       <height>26</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>52</height>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>6</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="bit14_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit13_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit12_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit11_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit10_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit9_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit8_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit7_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit6_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit5_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit4_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit3_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit2_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit1_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="bit0_2">
+        <property name="styleSheet">
+         <string notr="true">QCheckBox::indicator:unchecked {background-color: rgb(180, 180, 180); }
+QCheckBox::indicator::checked {background-color: green;}
+QCheckBox::indicator:checked:disabled {background-color: rgb(120, 166, 142);}
+QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="PyDMLabel" name="PyDMLabel">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission_RBV</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="label_21">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Beamclass Range Select [SC]:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="7" column="2" rowspan="8">
+    <widget class="QPushButton" name="zeroRate">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>150</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>150</height>
       </size>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 85, 85);</string>
      </property>
      <property name="text">
-      <string>Zero Rate</string>
+      <string>Zero Rate
+and Zero BC</string>
      </property>
     </widget>
-   </item>
-   <item row="8" column="5" rowspan="3">
-    <widget class="QPushButton" name="placeholder">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>52</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>52</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>[placeholder]</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="6">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item row="1" column="1">
     <widget class="PyDMLineEdit" name="transEdit">
@@ -141,20 +402,220 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="0" colspan="6">
-    <spacer name="verticalSpacer">
+   <item row="2" column="0" colspan="3">
+    <widget class="Line" name="line">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
-     <property name="sizeHint" stdset="0">
+    </widget>
+   </item>
+   <item row="13" column="1">
+    <widget class="QComboBox" name="beamclassComboBox">
+     <property name="maximumSize">
       <size>
-       <width>20</width>
-       <height>40</height>
+       <width>200</width>
+       <height>16777215</height>
       </size>
      </property>
-    </spacer>
+    </widget>
    </item>
-   <item row="5" column="1" colspan="5">
+   <item row="12" column="1">
+    <widget class="QLabel" name="max_bc_label">
+     <property name="text">
+      <string>Loading...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_7">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>4</number>
+     </property>
+     <property name="rightMargin">
+      <number>4</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label_bit14_2">
+       <property name="text">
+        <string>15</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit13_2">
+       <property name="text">
+        <string>14</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit12_2">
+       <property name="text">
+        <string>13</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit11_2">
+       <property name="text">
+        <string>12</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit10_2">
+       <property name="text">
+        <string>11</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit9_2">
+       <property name="text">
+        <string>10</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit8_2">
+       <property name="text">
+        <string>9</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit7_2">
+       <property name="text">
+        <string>8</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit6_2">
+       <property name="text">
+        <string>7</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit5_2">
+       <property name="text">
+        <string>6</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit4_2">
+       <property name="text">
+        <string>5</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit3_2">
+       <property name="text">
+        <string>4</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit2_2">
+       <property name="text">
+        <string>3</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit1_2">
+       <property name="text">
+        <string>2</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_bit0_2">
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_13">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Photon Energy Range Select:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="label_20">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Beamclass Ranges [SC]:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_6">
      <property name="spacing">
       <number>0</number>
@@ -163,6 +624,12 @@
       <widget class="PyDMLabel" name="label_bit31">
        <property name="enabled">
         <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
        </property>
        <property name="font">
         <font>
@@ -177,7 +644,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[31:31]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -195,6 +662,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -208,7 +681,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[30:30]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -226,6 +699,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -239,7 +718,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[29:29]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -257,6 +736,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -270,7 +755,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[28:28]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -288,6 +773,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -301,7 +792,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[27:27]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -319,6 +810,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -332,7 +829,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[26:26]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -350,6 +847,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -363,7 +866,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[25:25]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -381,6 +884,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -394,7 +903,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[24:24]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -412,6 +921,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -425,7 +940,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[23:23]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -443,6 +958,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -456,7 +977,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[22:22]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -474,6 +995,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -487,7 +1014,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[21:21]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -505,6 +1032,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -518,7 +1051,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[20:20]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -536,6 +1069,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -549,7 +1088,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[19:19]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -567,6 +1106,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -580,7 +1125,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[18:18]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -598,6 +1143,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -611,7 +1162,7 @@
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[17:17]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -629,6 +1180,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -639,7 +1196,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[16:16]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -657,6 +1214,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -667,7 +1230,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[15:15]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -685,6 +1248,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -695,7 +1264,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[14:14]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -713,6 +1282,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -723,7 +1298,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[13:13]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -741,6 +1316,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -751,7 +1332,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[12:12]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -769,6 +1350,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -779,7 +1366,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[11:11]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -797,6 +1384,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -807,7 +1400,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[10:10]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -825,6 +1418,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -835,7 +1434,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[9:9]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -853,6 +1452,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -863,7 +1468,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[8:8]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -881,6 +1486,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -891,7 +1502,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[7:7]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -909,6 +1520,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -919,7 +1536,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[6:6]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -937,6 +1554,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -947,7 +1570,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[5:5]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -965,6 +1588,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -975,7 +1604,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[4:4]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -993,6 +1622,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1003,7 +1638,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[3:3]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -1021,6 +1656,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1031,7 +1672,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[2:2]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -1049,6 +1690,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1059,7 +1706,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[1:1]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -1077,6 +1724,12 @@
        <property name="enabled">
         <bool>false</bool>
        </property>
+       <property name="maximumSize">
+        <size>
+         <width>15</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Arial</family>
@@ -1087,7 +1740,7 @@
         <string/>
        </property>
        <property name="text">
-        <string>25000</string>
+        <string>ca://${line_arbiter_prefix}eVRangeCnst_RBV.[0:0]</string>
        </property>
        <property name="precision" stdset="0">
         <number>0</number>
@@ -1102,7 +1755,102 @@
      </item>
     </layout>
    </item>
-   <item row="10" column="1">
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_15">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Rate Select [NC]:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_12">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Requested Transmission :</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_11">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Transmission Select:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="0">
+    <widget class="QLabel" name="label_19">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Beamclass Simple Select [SC]:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QComboBox" name="rateComboBox">
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="3">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="6" column="0" colspan="3">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="1">
     <widget class="PyDMPushButton" name="applyButton">
      <property name="enabled">
       <bool>false</bool>
@@ -1139,102 +1887,7 @@
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
-    <widget class="PyDMLabel" name="PyDMLabel_3">
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Rate_RBV</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="6">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_11">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Transmission:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_13">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Photon Energy Ranges:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="label_16">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Requested Rate:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0" colspan="6">
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="1">
-    <widget class="QComboBox" name="rateComboBox"/>
-   </item>
-   <item row="8" column="0" rowspan="2">
-    <widget class="QLabel" name="label_15">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Rate:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="PyDMLabel" name="PyDMLabel">
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission_RBV</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1" colspan="5">
+   <item row="4" column="1" colspan="2">
     <widget class="QFrame" name="energy_range_frame">
      <property name="minimumSize">
       <size>
@@ -1785,6 +2438,260 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
      </layout>
     </widget>
    </item>
+   <item row="12" column="0">
+    <widget class="QLabel" name="label_18">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Requested Max [SC]:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="PyDMLabel" name="PyDMLabel_3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Rate_RBV</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_17">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Hz</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_14">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Photon Energy Ranges:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QFrame" name="frame">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>4</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>4</number>
+      </property>
+      <item>
+       <widget class="PyDMByteIndicator" name="bc_rbv_bytes">
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="alarmSensitiveContent" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="alarmSensitiveBorder" stdset="0">
+         <bool>true</bool>
+        </property>
+        <property name="PyDMToolTip" stdset="0">
+         <string/>
+        </property>
+        <property name="channel" stdset="0">
+         <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:BeamClassRanges_RBV</string>
+        </property>
+        <property name="orientation" stdset="0">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="showLabels" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="bigEndian" stdset="0">
+         <bool>true</bool>
+        </property>
+        <property name="circles" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="numBits" stdset="0">
+         <number>15</number>
+        </property>
+        <property name="shift" stdset="0">
+         <number>0</number>
+        </property>
+        <property name="labels" stdset="0">
+         <stringlist>
+          <string>Bit 0</string>
+          <string>Bit 1</string>
+          <string>Bit 2</string>
+          <string>Bit 3</string>
+          <string>Bit 4</string>
+          <string>Bit 5</string>
+          <string>Bit 6</string>
+          <string>Bit 7</string>
+          <string>Bit 8</string>
+          <string>Bit 9</string>
+          <string>Bit 10</string>
+          <string>Bit 11</string>
+          <string>Bit 12</string>
+          <string>Bit 13</string>
+          <string>Bit 14</string>
+         </stringlist>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="3" column="1" colspan="2">
+    <widget class="QFrame" name="frame_2">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Panel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>4</number>
+      </property>
+      <property name="topMargin">
+       <number>4</number>
+      </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
+      <property name="bottomMargin">
+       <number>4</number>
+      </property>
+      <item>
+       <widget class="PyDMByteIndicator" name="ev_rbv_bytes">
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="alarmSensitiveContent" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="alarmSensitiveBorder" stdset="0">
+         <bool>true</bool>
+        </property>
+        <property name="PyDMToolTip" stdset="0">
+         <string/>
+        </property>
+        <property name="channel" stdset="0">
+         <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:PhotonEnergyRanges_RBV</string>
+        </property>
+        <property name="orientation" stdset="0">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="showLabels" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="bigEndian" stdset="0">
+         <bool>true</bool>
+        </property>
+        <property name="circles" stdset="0">
+         <bool>false</bool>
+        </property>
+        <property name="numBits" stdset="0">
+         <number>32</number>
+        </property>
+        <property name="shift" stdset="0">
+         <number>0</number>
+        </property>
+        <property name="labels" stdset="0">
+         <stringlist>
+          <string>Bit 0</string>
+          <string>Bit 1</string>
+          <string>Bit 2</string>
+          <string>Bit 3</string>
+          <string>Bit 4</string>
+          <string>Bit 5</string>
+          <string>Bit 6</string>
+          <string>Bit 7</string>
+          <string>Bit 8</string>
+          <string>Bit 9</string>
+          <string>Bit 10</string>
+          <string>Bit 11</string>
+          <string>Bit 12</string>
+          <string>Bit 13</string>
+          <string>Bit 14</string>
+          <string>Bit 15</string>
+          <string>Bit 16</string>
+          <string>Bit 17</string>
+          <string>Bit 18</string>
+          <string>Bit 19</string>
+          <string>Bit 20</string>
+          <string>Bit 21</string>
+          <string>Bit 22</string>
+          <string>Bit 23</string>
+          <string>Bit 24</string>
+          <string>Bit 25</string>
+          <string>Bit 26</string>
+          <string>Bit 27</string>
+          <string>Bit 28</string>
+          <string>Bit 29</string>
+          <string>Bit 30</string>
+          <string>Bit 31</string>
+         </stringlist>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -1792,6 +2699,11 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
    <class>PyDMLabel</class>
    <extends>QLabel</extends>
    <header>pydm.widgets.label</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMByteIndicator</class>
+   <extends>QWidget</extends>
+   <header>pydm.widgets.byte</header>
   </customwidget>
   <customwidget>
    <class>PyDMLineEdit</class>

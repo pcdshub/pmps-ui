@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1767</width>
+    <width>1200</width>
     <height>742</height>
    </rect>
   </property>
@@ -50,6 +50,44 @@
         <string>${CFG}</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Mode:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="PyDMLabel_2">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {color: rgb(0, 0, 153);}</string>
+       </property>
+       <property name="text">
+        <string>ca://${accelerator_mode_pv}</string>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${accelerator_mode_pv}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="mode_combo"/>
      </item>
      <item>
       <spacer name="horizontalSpacer">
@@ -123,93 +161,59 @@
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <layout class="QGridLayout" name="gridLayout_2">
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_6">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Rate</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0" colspan="3">
-           <widget class="QLabel" name="label_2">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Beam Parameter Status</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="PyDMLabel" name="PyDMLabel">
+          <item row="3" column="1">
+           <widget class="PyDMLabel" name="curr_bc_label">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
             </property>
             <property name="toolTip">
              <string/>
             </property>
+            <property name="text">
+             <string>ca://${line_arbiter_prefix}CurrentBP:BeamClass_RBV</string>
+            </property>
+            <property name="rules" stdset="0">
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;NC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;loc://selected_mode&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
+            </property>
+            <property name="precision" stdset="0">
+             <number>0</number>
+            </property>
             <property name="showUnits" stdset="0">
              <bool>true</bool>
             </property>
-            <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}CurrentBP:Rate_RBV</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_7">
-            <property name="enabled">
+            <property name="precisionFromPV" stdset="0">
              <bool>true</bool>
             </property>
-            <property name="font">
-             <font>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Transmission</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="PyDMLabel" name="PyDMLabel_4">
-            <property name="enabled">
+            <property name="alarmSensitiveContent" stdset="0">
              <bool>false</bool>
             </property>
-            <property name="toolTip">
-             <string/>
-            </property>
-            <property name="showUnits" stdset="0">
+            <property name="alarmSensitiveBorder" stdset="0">
              <bool>true</bool>
             </property>
+            <property name="PyDMToolTip" stdset="0">
+             <string/>
+            </property>
             <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}RequestedBP:Rate_RBV</string>
+             <string>ca://${line_arbiter_prefix}CurrentBP:BeamClass_RBV</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
+          <item row="4" column="2">
            <widget class="PyDMLabel" name="PyDMLabel_6">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
             </property>
             <property name="toolTip">
              <string/>
@@ -250,6 +254,179 @@
             </property>
            </widget>
           </item>
+          <item row="2" column="1">
+           <widget class="PyDMLabel" name="PyDMLabel">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="rules" stdset="0">
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;SC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;loc://selected_mode&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
+            </property>
+            <property name="precision" stdset="0">
+             <number>0</number>
+            </property>
+            <property name="showUnits" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="precisionFromPV" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="alarmSensitiveContent" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="alarmSensitiveBorder" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="PyDMToolTip" stdset="0">
+             <string/>
+            </property>
+            <property name="channel" stdset="0">
+             <string>ca://${line_arbiter_prefix}CurrentBP:Rate_RBV</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="PyDMLabel" name="PyDMLabel_3">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="precision" stdset="0">
+             <number>0</number>
+            </property>
+            <property name="showUnits" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="precisionFromPV" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="channel" stdset="0">
+             <string>ca://${line_arbiter_prefix}CurrentBP:Transmission_RBV</string>
+            </property>
+            <property name="displayFormat" stdset="0">
+             <enum>PyDMLabel::Exponential</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0" colspan="3">
+           <widget class="QLabel" name="label_2">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Beam Parameter Status</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="PyDMLabel" name="PyDMLabel_4">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="rules" stdset="0">
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;SC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;loc://selected_mode&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
+            </property>
+            <property name="precision" stdset="0">
+             <number>0</number>
+            </property>
+            <property name="showUnits" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="precisionFromPV" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="alarmSensitiveContent" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="alarmSensitiveBorder" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="PyDMToolTip" stdset="0">
+             <string/>
+            </property>
+            <property name="channel" stdset="0">
+             <string>ca://${line_arbiter_prefix}RequestedBP:Rate_RBV</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="PyDMLabel" name="req_bc_label">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>200</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="text">
+             <string>ca://${line_arbiter_prefix}RequestedBP:BeamClass_RBV</string>
+            </property>
+            <property name="rules" stdset="0">
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;NC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;loc://selected_mode&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
+            </property>
+            <property name="precision" stdset="0">
+             <number>0</number>
+            </property>
+            <property name="showUnits" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="precisionFromPV" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="alarmSensitiveContent" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="alarmSensitiveBorder" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="PyDMToolTip" stdset="0">
+             <string/>
+            </property>
+            <property name="channel" stdset="0">
+             <string>ca://${line_arbiter_prefix}RequestedBP:BeamClass_RBV</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="2">
            <widget class="QLabel" name="label_4">
             <property name="enabled">
@@ -269,28 +446,99 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="PyDMLabel" name="PyDMLabel_3">
-            <property name="enabled">
-             <bool>false</bool>
+          <item row="2" column="0">
+           <widget class="PyDMLabel" name="PyDMLabel_41">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
             </property>
             <property name="toolTip">
              <string/>
+            </property>
+            <property name="text">
+             <string>NC Rate</string>
+            </property>
+            <property name="rules" stdset="0">
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;SC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;loc://selected_mode&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
             </property>
             <property name="precision" stdset="0">
              <number>0</number>
             </property>
             <property name="showUnits" stdset="0">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
             <property name="precisionFromPV" stdset="0">
              <bool>true</bool>
             </property>
-            <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}CurrentBP:Transmission_RBV</string>
+            <property name="alarmSensitiveContent" stdset="0">
+             <bool>false</bool>
             </property>
-            <property name="displayFormat" stdset="0">
-             <enum>PyDMLabel::Exponential</enum>
+            <property name="alarmSensitiveBorder" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="PyDMToolTip" stdset="0">
+             <string/>
+            </property>
+            <property name="channel" stdset="0">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="PyDMLabel" name="PyDMLabel_42">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="text">
+             <string>SC Beam Class</string>
+            </property>
+            <property name="rules" stdset="0">
+             <string>[{&quot;name&quot;: &quot;Mode Visibility&quot;, &quot;property&quot;: &quot;Visible&quot;, &quot;initial_value&quot;: &quot;1&quot;, &quot;expression&quot;: &quot;ch[0]!=\&quot;NC\&quot;&quot;, &quot;channels&quot;: [{&quot;channel&quot;: &quot;loc://selected_mode&quot;, &quot;trigger&quot;: true, &quot;use_enum&quot;: true}]}]</string>
+            </property>
+            <property name="precision" stdset="0">
+             <number>0</number>
+            </property>
+            <property name="showUnits" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="precisionFromPV" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="alarmSensitiveContent" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="alarmSensitiveBorder" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="PyDMToolTip" stdset="0">
+             <string/>
+            </property>
+            <property name="channel" stdset="0">
+             <string/>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="PyDMLabel" name="PyDMLabel_43">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string/>
+            </property>
+            <property name="text">
+             <string>Transmission</string>
             </property>
            </widget>
           </item>
@@ -398,6 +646,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -422,6 +676,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_38">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -448,6 +708,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -472,6 +738,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_36">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -498,6 +770,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -522,6 +800,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_34">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -548,6 +832,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -572,6 +862,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_32">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -598,6 +894,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -622,6 +924,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_30">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -648,6 +956,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -672,6 +986,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_28">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -698,6 +1018,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -722,6 +1048,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_26">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -748,6 +1080,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -772,6 +1110,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_24">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -798,6 +1142,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -822,6 +1172,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_11">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -848,6 +1204,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -872,6 +1234,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_9">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -898,6 +1266,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -922,6 +1296,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_13">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -948,6 +1328,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -972,6 +1358,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_15">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -998,6 +1390,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1022,6 +1420,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_16">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -1048,6 +1452,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1072,6 +1482,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_21">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -1098,6 +1514,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1122,6 +1544,12 @@
              <widget class="PyDMLabel" name="PyDMLabel_18">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -1148,6 +1576,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1173,6 +1607,12 @@
               <property name="enabled">
                <bool>false</bool>
               </property>
+              <property name="maximumSize">
+               <size>
+                <width>15</width>
+                <height>16777215</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Arial</family>
@@ -1196,7 +1636,7 @@
            </layout>
           </item>
           <item row="2" column="1" colspan="2">
-           <widget class="PyDMByteIndicator" name="PyDMByteIndicator_3">
+           <widget class="PyDMByteIndicator" name="ev_req_bytes">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1386,11 +1826,17 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7"/>
      </widget>
+     <widget class="QWidget" name="tb_beamclass_table">
+      <attribute name="title">
+       <string>Beamclass Table</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_11"/>
+     </widget>
      <widget class="QWidget" name="tb_grafana_log_display">
       <attribute name="title">
        <string>Grafana Log Display</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_9" stretch=""/>
+      <layout class="QVBoxLayout" name="verticalLayout_9"/>
      </widget>
     </widget>
    </item>
