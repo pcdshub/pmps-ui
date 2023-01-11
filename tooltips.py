@@ -1,6 +1,7 @@
 from typing import Iterable
 
 import prettytable
+from qtpy import QtCore, QtWidgets
 
 from beamclass_table import bc_header, bc_table
 
@@ -88,3 +89,27 @@ def get_tooltip_for_bc_bitmask(bitmask: int) -> str:
             table.add_row(bc_table[count])
         bitmask = bitmask >> 1
     return preformatted(str(table))
+
+
+def get_mode_tooltip_lines() -> list[str]:
+    """
+    Get the individual lines that make up the mode tooltip.
+    """
+    return [
+        'Auto: show NC or SC fields based on the mode PV',
+        'NC: show only the NC fields',
+        'SC: show only the SC fields',
+        'Both: show all fields'
+    ]
+
+
+def setup_combobox_tooltip(widget: QtWidgets.QComboBox, lines: list[str]):
+    """
+    Set up a standard tooltip on a combobox.
+
+    The full widget will show all the lines as a tooltip
+    and each item will show its individual tooltip when selected.
+    """
+    widget.setToolTip('\n'.join(lines))
+    for index, line in enumerate(lines):
+        widget.setItemData(index, line, QtCore.Qt.ToolTipRole)

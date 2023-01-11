@@ -2,7 +2,7 @@ import argparse
 import logging
 from functools import partial
 from os import path
-from typing import Optional
+from typing import Optional, Union
 
 import yaml
 from pydm import Display
@@ -11,7 +11,8 @@ from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore
 
 from beamclass_table import install_bc_setText
-from tooltips import get_ev_range_tooltip, get_tooltip_for_bc
+from tooltips import (get_ev_range_tooltip, get_mode_tooltip_lines,
+                      get_tooltip_for_bc, setup_combobox_tooltip)
 from utils import morph_into_vertical
 
 logger = logging.getLogger(__name__)
@@ -76,6 +77,7 @@ class PMPS(Display):
         self.ui.mode_combo.addItems(
             ['Auto', 'NC', 'SC', 'Both']
         )
+        setup_combobox_tooltip(self.ui.mode_combo, get_mode_tooltip_lines())
         self.last_mode_index = 0
         loc = PyDMChannel(
             'loc://selected_mode?type=str&init=Both',
@@ -85,11 +87,14 @@ class PMPS(Display):
         self._channels.append(loc)
         pvname = self.config.get('accelerator_mode_pv')
         self.last_pv_mode = None
+        self.last_mode_enum = None
         if pvname is not None:
             pv = PyDMChannel(
                 f'ca://{pvname}',
                 value_slot=self.new_mode_from_pv,
+                enum_strings_slot=self.new_mode_enum_from_pv,
             )
+            pv.connect()
             self._channels.append(pv)
         self.ui.mode_combo.activated.connect(self.new_mode_activated)
 
@@ -102,7 +107,7 @@ class PMPS(Display):
             if self.last_pv_mode is None:
                 self.new_mode_signal.emit('Both')
             else:
-                self.new_mode_signal.emit(self.last_pv_mode)
+                self.new_mode_signal.emit(str(self.last_pv_mode))
         elif index == 1:
             self.new_mode_signal.emit('NC')
         elif index == 2:
@@ -110,9 +115,24 @@ class PMPS(Display):
         elif index == 3:
             self.new_mode_signal.emit('Both')
 
-    def new_mode_from_pv(self, value: str):
+    def new_mode_from_pv(self, value: Union[int, str]):
         self.last_pv_mode = value
-        self.new_mode_activated()
+        self.update_accl_mode()
+
+    def new_mode_enum_from_pv(self, value: list[str]):
+        self.last_mode_enum = value
+        self.update_accl_mode()
+
+    def update_accl_mode(self):
+        if isinstance(self.last_pv_mode, int) and self.last_mode_enum is not None:
+            try:
+                self.last_pv_mode = self.last_mode_enum[self.last_pv_mode]
+            except IndexError:
+                # We can only get here if the enum strs change
+                # Skip and wait for the next update
+                pass
+        if isinstance(self.last_pv_mode, str):
+            self.new_mode_activated()
 
     def setup_ev_range_labels(self):
         labels = list(range(7, 40))
