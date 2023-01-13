@@ -49,8 +49,8 @@ bc_table = """
 11	50% MAP	2e-1	-	3000	-	15000	60000	12	100 pC x 150 kHz
 12	100% MAP	2e-4	-	6000	-	30000	120000	24	100 pC x 300 kHz
 13	Unlimited	-	-	-	-	-	-	-	-
-14	Spare	-	-	-	-	-	-	-	-
-15	Spare	-	-	-	-	-	-	-	-
+14	Unlimited	-	-	-	-	-	-	-	-
+15	Unlimited	-	-	-	-	-	-	-	-
 """.strip().split('\n')
 for index, row in enumerate(bc_table):
     bc_table[index] = row.split('\t')
@@ -85,12 +85,10 @@ def install_bc_setText(widget: QLabel):
 
 def get_max_bc_from_bitmask(bitmask: int) -> int:
     """
-    Given a beamclass bitmask, get the highest non-spare beamclass.
+    Given a beamclass bitmask, get the highest beamclass.
     """
     max_bc = 0
     while bitmask > 0:
         bitmask = bitmask >> 1
         max_bc += 1
-    while bc_table[max_bc][1] == 'Spare':
-        max_bc -= 1
     return max_bc

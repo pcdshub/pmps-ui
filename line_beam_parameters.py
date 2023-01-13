@@ -338,8 +338,6 @@ class LineBeamParametersControl(Display):
         """
         for beamclass_index in range(len(bc_table)):
             desc = get_desc_for_bc(beamclass_index)
-            if desc == 'Spare':
-                continue
             self.ui.beamclassComboBox.addItem(f'{beamclass_index}: {desc}')
         self.update_beamclass_combobox_tooltip(0)
         self.ui.beamclassComboBox.activated.connect(self.select_new_beamclass)
