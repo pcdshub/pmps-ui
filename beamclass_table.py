@@ -56,11 +56,21 @@ for index, row in enumerate(bc_table):
     bc_table[index] = row.split('\t')
 
 
+def get_table_row(row: int) -> list[str]:
+    """
+    Grab a row from the table, or invalid if out of range.
+    """
+    try:
+        return bc_table[row]
+    except IndexError:
+        return [row, 'Invalid'] + (['?'] * 8)
+
+
 def get_desc_for_bc(beamclass: int) -> str:
     """
     Get just the short description of a beamclass.
     """
-    return bc_table[beamclass][1]
+    return get_table_row(beamclass)[1]
 
 
 def install_bc_setText(widget: QLabel):

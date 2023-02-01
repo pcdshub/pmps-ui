@@ -3,7 +3,7 @@ from typing import Iterable
 import prettytable
 from qtpy import QtCore, QtWidgets
 
-from beamclass_table import bc_header, bc_table
+from beamclass_table import bc_header, get_table_row
 
 
 def preformatted(text: str) -> str:
@@ -71,7 +71,7 @@ def get_tooltip_for_bc(beamclass: int) -> str:
     """
     table = prettytable.PrettyTable()
     table.field_names = bc_header
-    table.add_row(bc_table[beamclass])
+    table.add_row(get_table_row(beamclass))
     return preformatted(str(table))
 
 
@@ -81,12 +81,12 @@ def get_tooltip_for_bc_bitmask(bitmask: int) -> str:
     """
     table = prettytable.PrettyTable()
     table.field_names = bc_header
-    table.add_row(bc_table[0])
+    table.add_row(get_table_row(0))
     count = 0
     while bitmask > 0:
         count += 1
         if bitmask % 2:
-            table.add_row(bc_table[count])
+            table.add_row(get_table_row(count))
         bitmask = bitmask >> 1
     return preformatted(str(table))
 
