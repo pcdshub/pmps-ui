@@ -300,7 +300,7 @@
       <string/>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:PhotonEnergyRanges_RBV</string>
+      <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:eVRanges_RBV</string>
      </property>
      <property name="onColor" stdset="0">
       <color>

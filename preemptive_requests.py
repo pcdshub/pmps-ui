@@ -15,6 +15,7 @@ from beamclass_table import get_max_bc_from_bitmask, install_bc_setText
 from data_bounds import get_valid_rate
 from tooltips import (get_ev_range_tooltip, get_tooltip_for_bc,
                       get_tooltip_for_bc_bitmask)
+from utils import BackCompat
 
 logger = logging.getLogger(__name__)
 
@@ -80,6 +81,7 @@ class PreemptiveRequests(Display):
             return
         count = 0
         self.row_logics = []
+        self.backcompat = BackCompat(parent=self)
         for req in reqs:
             prefix = req.get('prefix')
             arbiter = req.get('arbiter_instance')
@@ -126,6 +128,12 @@ class PreemptiveRequests(Display):
                     parent=self,
                 )
                 self._channels.extend(row_logic.pydm_channels)
+
+                row_ev_bytes = widget.findChild(
+                    PyDMByteIndicator,
+                    'energy_bytes',
+                )
+                self.backcompat.add_ev_ranges_alternate(row_ev_bytes)
 
                 # insert the widget you see into the table
                 row_position = reqs_table.rowCount()

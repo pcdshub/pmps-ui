@@ -1650,7 +1650,7 @@
              <string/>
             </property>
             <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}RequestedBP:PhotonEnergyRanges_RBV</string>
+             <string>ca://${line_arbiter_prefix}RequestedBP:eVRanges_RBV</string>
             </property>
             <property name="onColor" stdset="0">
              <color>
@@ -1703,7 +1703,7 @@
            </widget>
           </item>
           <item row="1" column="1" colspan="2">
-           <widget class="PyDMByteIndicator" name="PyDMByteIndicator_2">
+           <widget class="PyDMByteIndicator" name="ev_curr_bytes">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1717,7 +1717,7 @@
              <string/>
             </property>
             <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}CurrentBP:PhotonEnergyRanges_RBV</string>
+             <string>ca://${line_arbiter_prefix}CurrentBP:eVRanges_RBV</string>
             </property>
             <property name="onColor" stdset="0">
              <color>

@@ -13,7 +13,7 @@ from qtpy import QtCore
 from beamclass_table import install_bc_setText
 from tooltips import (get_ev_range_tooltip, get_mode_tooltip_lines,
                       get_tooltip_for_bc, setup_combobox_tooltip)
-from utils import morph_into_vertical
+from utils import BackCompat, morph_into_vertical
 
 logger = logging.getLogger(__name__)
 
@@ -71,6 +71,7 @@ class PMPS(Display):
         self.setup_mode_selector()
         self.setup_ev_range_labels()
         self.setup_tooltips()
+        self.setup_backcompat()
         self.setup_tabs()
 
     def setup_mode_selector(self):
@@ -183,6 +184,11 @@ class PMPS(Display):
     def new_ev_ranges(self, value):
         self.ev_ranges = value
         self.update_ev_tooltip()
+
+    def setup_backcompat(self):
+        self.backcompat = BackCompat(parent=self)
+        self.backcompat.add_ev_ranges_alternate(self.ui.ev_req_bytes)
+        self.backcompat.add_ev_ranges_alternate(self.ui.ev_curr_bytes)
 
     def setup_tabs(self):
         # We will do crazy things at this screen... avoid painting
