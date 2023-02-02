@@ -152,13 +152,15 @@ class PreemptiveRequests(Display):
                     inner_widget = widget.findChild(
                         info.widget_class,
                         info.widget_name,
-                        )
+                    )
                     item = PMPSTableWidgetItem(
                         store_type=info.store_type,
                         data_type=info.data_type,
                         default=info.default,
                         channel=inner_widget.channel,
-                        )
+                    )
+                    if info.widget_name == 'energy_bytes':
+                        self.backcompat.add_ev_ranges_alternate(item)
                     item.setSizeHint(widget.size())
                     reqs_table.setItem(row_position, num + 2, item)
                     self._channels.append(item.pydm_channel)
@@ -392,15 +394,26 @@ class PMPSTableWidgetItem(QtWidgets.QTableWidgetItem):
         self.store_type = store_type
         self.data_type = data_type
         self.setText(str(default))
+        self.pydm_channel = None
         self.channel = channel
         self.connected = False
-        if channel is not None:
+
+    @property
+    def channel(self) -> str:
+        return self._channel_addr
+
+    @channel.setter
+    def channel(self, addr: str) -> None:
+        if self.pydm_channel is not None:
+            self.pydm_channel.disconnect()
+        if addr is not None:
             self.pydm_channel = PyDMChannel(
-                channel,
+                addr,
                 value_slot=self.update_value,
                 connection_slot=self.update_connection,
                 )
             self.pydm_channel.connect()
+        self._channel_addr = addr
 
     def update_value(self, value):
         """
