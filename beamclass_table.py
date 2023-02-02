@@ -72,16 +72,47 @@ for index, row in enumerate(bc_table):
     bc_table[index] = row.split('\t')
 
 bc_header_full_descriptions = [
-    'Index is the beamclass number. When we say "beamclass 10", we are referring to index 10 on this table.',
-    'Display name is a short, human-readable name that is a minimal description of how the beamclass behaves.',
-    '∆T (s) is the integration time window used for the Q (pC) charge measurement. A beamclass limits the amount of integrated electron charge during a time interval.',
-    'dt (s) is the the minimum bunch spacing (including non-periodic bunch patterns). This effectively limits the rep rate of the beam for periodic bunch patterns.',
-    'Q (pC) is the the maximum beam charge integrated in ∆T (s). A beamclass limits the amount of integrated electron charge during a time interval.',
-    'Rate max (Hz) is a field calculated from dt (s) if present and is the effective rep rate limit of the beam.',
-    'Current (nA) is a calculated field and is the equivalent maximum electron beam current at the beamclass.',
-    'Power @ 4 GeV (W) is a calculated field and is the equivalent maximum electron beam wattage at 4 GeV at the beamclass.',
-    'Int. Energy @ 4 GeV (J) is a calculated field and is the equivalent maximum integrated electron energy at 4 GeV during the ∆T (s) integration window.',
-    'Notes is an advisory field that gives an example of what this beam class might look like at a particular bunch charge or rep rate.',
+    (
+        'Index is the beamclass number. '
+        'When we say "beamclass 10", we are referring to index 10 on this table.'
+    ),
+    (
+        'Display name is a short, human-readable name '
+        'that is a minimal description of how the beamclass behaves.'
+    ),
+    (
+        '∆T (s) is the integration time window used for the Q (pC) charge measurement. '
+        'A beamclass limits the amount of integrated electron charge during a time interval.'
+    ),
+    (
+        'dt (s) is the the minimum bunch spacing (including non-periodic bunch patterns). '
+        'When included, this effectively limits the rep rate of the beam for periodic bunch patterns. '
+        'When omitted, any rep rate could be allowed if it passes the integrated electron charge measurement.'
+    ),
+    (
+        'Q (pC) is the the maximum beam charge integrated in ∆T (s). '
+        'A beamclass limits the amount of integrated electron charge during a time interval.'
+    ),
+    (
+        'Rate max (Hz) is a field calculated from dt (s) if present '
+        'and is the effective rep rate limit of the beam.'
+    ),
+    (
+        'Current (nA) is a calculated field and is the equivalent '
+        'maximum electron beam current at the beamclass.'
+    ),
+    (
+        'Power @ 4 GeV (W) is a calculated field and is the equivalent '
+        'maximum electron beam wattage at 4 GeV at the beamclass.'
+    ),
+    (
+        'Int. Energy @ 4 GeV (J) is a calculated field and is the equivalent '
+        'maximum integrated electron energy at 4 GeV during the ∆T (s) integration window.'
+    ),
+    (
+        'Notes is an advisory field that gives an example of '
+        'what this beam class might look like at a particular bunch charge or rep rate.'
+    ),
 ]
 
 
