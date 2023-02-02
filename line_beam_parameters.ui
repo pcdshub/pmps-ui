@@ -2528,7 +2528,7 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <number>4</number>
       </property>
       <item>
-       <widget class="PyDMByteIndicator" name="bc_rbv_bytes">
+       <widget class="BCByteIndicator" name="bc_rbv_bytes">
         <property name="toolTip">
          <string/>
         </property>
@@ -2617,7 +2617,7 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
        <number>4</number>
       </property>
       <item>
-       <widget class="PyDMByteIndicator" name="ev_rbv_bytes">
+       <widget class="EvByteIndicator" name="ev_rbv_bytes">
         <property name="toolTip">
          <string/>
         </property>
@@ -2714,6 +2714,16 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
    <class>PyDMPushButton</class>
    <extends>QPushButton</extends>
    <header>pydm.widgets.pushbutton</header>
+  </customwidget>
+  <customwidget>
+   <class>BCByteIndicator</class>
+   <extends>PyDMByteIndicator</extends>
+   <header>widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>EvByteIndicator</class>
+   <extends>PyDMByteIndicator</extends>
+   <header>widgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

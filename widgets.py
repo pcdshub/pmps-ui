@@ -1,10 +1,14 @@
 import functools
 import weakref
+from typing import Iterable
 
 from pydm.widgets.base import PyDMPrimitiveWidget, widget_destroyed
+from pydm.widgets.byte import PyDMByteIndicator
 from pydm.widgets.channel import PyDMChannel
 from pydm.widgets.label import PyDMLabel
 from qtpy import QtCore, QtGui, QtWidgets
+
+from tooltips import get_ev_range_tooltip, get_tooltip_for_bc_bitmask
 
 
 class UndulatorWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
@@ -368,3 +372,115 @@ class UndulatorListWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
         layout.setStretch(2, 0)
 
         return layout
+
+
+class FixNegBitmaskByteIndicator(PyDMByteIndicator):
+    """
+    Fix negative bitmask values.
+
+    We use a signed 32-bit int to transfer an unsigned 32 bit int,
+    causing discrepencies.
+
+    Hold this in a separate class as there might be a solution
+    in the PyDM library at some point.
+    """
+    _pmps_ui_value = None
+
+    @property
+    def value(self):
+        return self._pmps_ui_value
+
+    @value.setter
+    def value(self, value):
+        if isinstance(value, int) and value < 0:
+            value = 2**32 + value
+        self._pmps_ui_value = value
+
+
+class ValueTooltipByteIndicator(FixNegBitmaskByteIndicator):
+    """
+    Byte indicator that can set its tooltip when the value updates.
+
+    This should be subclassed to override the "tooltip_function" method.
+    """
+    def tooltip_function(self, value: int) -> str:
+        raise NotImplementedError()
+
+    def update_indicators(self):
+        rval = super().update_indicators()
+        self.PyDMToolTip = self.tooltip_function(self.value)
+        return rval
+
+
+class BCByteIndicator(ValueTooltipByteIndicator):
+    """
+    Update the tooltip for beamclass bitmasks.
+    """
+    def tooltip_function(self, value: int) -> str:
+        return get_tooltip_for_bc_bitmask(value)
+
+
+class EvByteIndicator(ValueTooltipByteIndicator):
+    """
+    Update the tooltip for ev bitmasks.
+
+    This refers to the line's global eV range definitions as
+    reported by the IOC.
+
+    It implements some logic so that it displays the
+    correct tooltip whether the eV range definition values
+    come in before or after the first value.
+    """
+    _ev_bytes = []
+    _range_address = None
+
+    def __init__(self, parent=None, init_channel=None):
+        self._range_ch = None
+        self._range_def = []
+        self._ev_bytes.append(self)
+        super().__init__(parent, init_channel)
+        if self._range_address is not None:
+            self.apply_range_ch()
+
+    @classmethod
+    def set_range_address(cls, range_address: str):
+        """
+        Call to set the source for range addresses.
+
+        Updates all previously created widgets of this type.
+        """
+        cls._range_address = range_address
+        for evbt in cls._ev_bytes:
+            evbt.apply_range_ch()
+
+    def apply_range_ch(self):
+        """
+        Causes this widget's tooltip to update when the ranges change.
+        """
+        if self._range_ch is not None:
+            self._range_ch.disconnect()
+            self._channels.remove(self._range_ch)
+        self._range_ch = PyDMChannel(
+            address=self._range_address,
+            value_slot=self.new_range_def,
+        )
+        self._range_ch.connect()
+        self._channels.append(self._range_ch)
+
+    def tooltip_function(self, value: int) -> str:
+        """
+        If we have ranges, give a good tooltip, otherwise apologize.
+        """
+        if self._range_def:
+            return get_ev_range_tooltip(value, self._range_def)
+        return 'eV ranges have not loaded'
+
+    def new_range_def(self, range_def: Iterable[int]):
+        """
+        Make this widget aware of the eV ranges.
+
+        This is expected to be called exactly once.
+        """
+        self._range_def = list(range_def)
+        if isinstance(self.value, int):
+            self.PyDMToolTip = self.tooltip_function(self.value)

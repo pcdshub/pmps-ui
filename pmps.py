@@ -6,14 +6,15 @@ from typing import Optional, Union
 
 import yaml
 from pydm import Display
-from pydm.widgets import PyDMByteIndicator, PyDMLabel
+from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore
 
 from beamclass_table import install_bc_setText
-from tooltips import (get_ev_range_tooltip, get_mode_tooltip_lines,
-                      get_tooltip_for_bc, setup_combobox_tooltip)
+from tooltips import (get_mode_tooltip_lines, get_tooltip_for_bc,
+                      setup_combobox_tooltip)
 from utils import BackCompat, morph_into_vertical
+from widgets import EvByteIndicator
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +65,9 @@ class PMPS(Display):
         super(PMPS, self).__init__(parent=parent, args=args, macros=macros)
 
         self.config = config
+        line_arbiter_prefix = self.config.get('line_arbiter_prefix')
+        if line_arbiter_prefix is not None:
+            EvByteIndicator.set_range_address(f'ca://{line_arbiter_prefix}eVRangeCnst_RBV')
         self._channels = []
         self.setup_ui()
 
@@ -153,37 +157,9 @@ class PMPS(Display):
             ch.connect()
             self._channels.append(ch)
             install_bc_setText(label)
-        self.ev_ranges = None
-        self.last_ev_range = 0
-        ev_definition = PyDMChannel(
-            f'ca://{self.config.get("line_arbiter_prefix")}eVRangeCnst_RBV',
-            value_slot=self.new_ev_ranges,
-        )
-        ev_definition.connect()
-        self._channels.append(ev_definition)
-        ev_bytes = self.ui.ev_req_bytes
-        bytes_channel = PyDMChannel(
-            ev_bytes.channel,
-            value_slot=self.update_ev_tooltip,
-        )
-        bytes_channel.connect()
-        self._channels.append(bytes_channel)
 
     def update_bc_tooltip(self, value, label):
         label.PyDMToolTip = get_tooltip_for_bc(value)
-
-    def update_ev_tooltip(self, value=None):
-        if value is None:
-            value = self.last_ev_range
-        else:
-            self.last_ev_range = value
-        if self.ev_ranges is None:
-            return
-        self.ui.ev_req_bytes.PyDMToolTip = get_ev_range_tooltip(value, self.ev_ranges)
-
-    def new_ev_ranges(self, value):
-        self.ev_ranges = value
-        self.update_ev_tooltip()
 
     def setup_backcompat(self):
         self.backcompat = BackCompat(parent=self)
@@ -270,28 +246,3 @@ class PMPS(Display):
     def channels(self):
         """Make sure PyDM can find the channels we set up for cleanup."""
         return self._channels
-
-
-# Hack for negative bitmasks
-def update_indicators(self):
-    """
-    Update the inner bit indicators accordingly with the new value.
-    """
-    if self._shift < 0:
-        value = int(self.value) << abs(self._shift)
-    else:
-        value = int(self.value) >> self._shift
-    if value < 0:
-        value = 2**32 + value
-
-    bits = [(value >> i) & 1
-            for i in range(self._num_bits)]
-    for bit, indicator in zip(bits, self._indicators):
-        if self._connected:
-            c = self._on_color if bit else self._off_color
-        else:
-            c = self._disconnected_color
-        indicator.setColor(c)
-
-
-PyDMByteIndicator.update_indicators = update_indicators

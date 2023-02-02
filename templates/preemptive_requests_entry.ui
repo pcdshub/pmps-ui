@@ -181,7 +181,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMByteIndicator" name="beamclass_bytes">
+    <widget class="BCByteIndicator" name="beamclass_bytes">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -274,7 +274,7 @@
     </widget>
    </item>
    <item>
-    <widget class="PyDMByteIndicator" name="energy_bytes">
+    <widget class="EvByteIndicator" name="energy_bytes">
      <property name="enabled">
       <bool>false</bool>
      </property>
@@ -422,6 +422,16 @@
    <class>PyDMByteIndicator</class>
    <extends>QWidget</extends>
    <header>pydm.widgets.byte</header>
+  </customwidget>
+  <customwidget>
+   <class>BCByteIndicator</class>
+   <extends>PyDMByteIndicator</extends>
+   <header>widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>EvByteIndicator</class>
+   <extends>PyDMByteIndicator</extends>
+   <header>widgets</header>
   </customwidget>
  </customwidgets>
  <resources/>
