@@ -1,3 +1,5 @@
+import textwrap
+
 from pydm import Display
 from qtpy.QtWidgets import QLabel, QTableWidgetItem
 
@@ -17,6 +19,13 @@ class BeamclassTable(Display):
         self.ui.table.setColumnCount(len(bc_header))
         self.ui.table.setRowCount(len(bc_table))
         self.ui.table.setHorizontalHeaderLabels(bc_header)
+        for col_index, description in enumerate(bc_header_full_descriptions):
+            self.ui.table.horizontalHeaderItem(col_index).setToolTip(
+                textwrap.fill(
+                    description,
+                    width=40,
+                )
+            )
         for row_index, row_list in enumerate(bc_table):
             for col_index, text in enumerate(row_list):
                 self.ui.table.setItem(
@@ -25,6 +34,13 @@ class BeamclassTable(Display):
                     QTableWidgetItem(text),
                 )
         self.ui.table.resizeColumnsToContents()
+        self.ui.table.setFixedSize(
+            self.ui.table.horizontalHeader().length()
+            + self.ui.table.verticalHeader().width(),
+            self.ui.table.verticalHeader().length()
+            + self.ui.table.horizontalHeader().height(),
+        )
+        self.ui.source_links_text.setFixedWidth(self.ui.table.width())
 
     def ui_filename(self):
         return 'beamclass_table.ui'
@@ -54,6 +70,19 @@ bc_table = """
 """.strip().split('\n')
 for index, row in enumerate(bc_table):
     bc_table[index] = row.split('\t')
+
+bc_header_full_descriptions = [
+    'Index is the beamclass number. When we say "beamclass 10", we are referring to index 10 on this table.',
+    'Display name is a short, human-readable name that is a minimal description of how the beamclass behaves.',
+    '∆T (s) is the integration time window used for the Q (pC) charge measurement. A beamclass limits the amount of integrated electron charge during a time interval.',
+    'dt (s) is the the minimum bunch spacing (including non-periodic bunch patterns). This effectively limits the rep rate of the beam for periodic bunch patterns.',
+    'Q (pC) is the the maximum beam charge integrated in ∆T (s). A beamclass limits the amount of integrated electron charge during a time interval.',
+    'Rate max (Hz) is a field calculated from dt (s) if present and is the effective rep rate limit of the beam.',
+    'Current (nA) is a calculated field and is the equivalent maximum electron beam current at the beamclass.',
+    'Power @ 4 GeV (W) is a calculated field and is the equivalent maximum electron beam wattage at 4 GeV at the beamclass.',
+    'Int. Energy @ 4 GeV (J) is a calculated field and is the equivalent maximum integrated electron energy at 4 GeV during the ∆T (s) integration window.',
+    'Notes is an advisory field that gives an example of what this beam class might look like at a particular bunch charge or rep rate.',
+]
 
 
 def get_table_row(row: int) -> list[str]:

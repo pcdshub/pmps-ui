@@ -484,3 +484,36 @@ class EvByteIndicator(ValueTooltipByteIndicator):
         self._range_def = list(range_def)
         if isinstance(self.value, int):
             self.PyDMToolTip = self.tooltip_function(self.value)
+
+
+class ResizingTextEdit(QtWidgets.QTextEdit):
+    """
+    A QTextEdit that resizes it's height to match its contents.
+    """
+    def set_height_to_text(self) -> None:
+        """
+        Set the height to match the current height of the enclosed text.
+        """
+        self.setFixedHeight(
+            self.document().size().toSize().height()
+        )
+
+    def showEvent(self, ev: QtGui.QShowEvent) -> None:
+        """
+        On show, set the height appropriately.
+
+        This handles the case where we switch to a tab with this
+        widget included.
+        """
+        self.set_height_to_text()
+        return super().showEvent(ev)
+
+    def resizeEvent(self, ev: QtGui.QResizeEvent) -> None:
+        """
+        On resize, set the height appropriately.
+
+        This handles the case where we resize the widget to the point
+        that the line wrap increases or decreases the text height.
+        """
+        self.set_height_to_text()
+        return super().resizeEvent(ev)
