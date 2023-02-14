@@ -101,11 +101,17 @@
      <property name="toolTip">
       <string/>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="indent">
+      <number>50</number>
+     </property>
      <property name="channel" stdset="0">
       <string>ca://${P}${ARBITER}:AP:Entry:${POOL}:ID_RBV</string>
      </property>
      <property name="displayFormat" stdset="0">
-      <enum>PyDMLabel::Hex</enum>
+      <enum>PyDMLabel::Decimal</enum>
      </property>
     </widget>
    </item>
