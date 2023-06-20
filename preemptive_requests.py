@@ -5,7 +5,6 @@ import typing
 from dataclasses import dataclass
 from string import Template
 
-import numpy as np
 from pydm import Display
 from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
@@ -13,8 +12,8 @@ from qtpy import QtCore, QtWidgets
 
 from beamclass_table import get_max_bc_from_bitmask, install_bc_setText
 from data_bounds import get_valid_rate
-from tooltips import (get_ev_range_tooltip, get_tooltip_for_bc,
-                      get_tooltip_for_bc_bitmask)
+from tooltips import get_tooltip_for_bc
+from utils import BackCompat
 
 logger = logging.getLogger(__name__)
 
@@ -80,6 +79,7 @@ class PreemptiveRequests(Display):
             return
         count = 0
         self.row_logics = []
+        self.backcompat = BackCompat(parent=self)
         for req in reqs:
             prefix = req.get('prefix')
             arbiter = req.get('arbiter_instance')
@@ -127,6 +127,12 @@ class PreemptiveRequests(Display):
                 )
                 self._channels.extend(row_logic.pydm_channels)
 
+                row_ev_bytes = widget.findChild(
+                    PyDMByteIndicator,
+                    'energy_bytes',
+                )
+                self.backcompat.add_ev_ranges_alternate(row_ev_bytes)
+
                 # insert the widget you see into the table
                 row_position = reqs_table.rowCount()
                 reqs_table.insertRow(row_position)
@@ -146,13 +152,15 @@ class PreemptiveRequests(Display):
                     inner_widget = widget.findChild(
                         info.widget_class,
                         info.widget_name,
-                        )
+                    )
                     item = PMPSTableWidgetItem(
                         store_type=info.store_type,
                         data_type=info.data_type,
                         default=info.default,
                         channel=inner_widget.channel,
-                        )
+                    )
+                    if info.widget_name == 'energy_bytes':
+                        self.backcompat.add_ev_ranges_alternate(item)
                     item.setSizeHint(widget.size())
                     reqs_table.setItem(row_position, num + 2, item)
                     self._channels.append(item.pydm_channel)
@@ -386,15 +394,26 @@ class PMPSTableWidgetItem(QtWidgets.QTableWidgetItem):
         self.store_type = store_type
         self.data_type = data_type
         self.setText(str(default))
+        self.pydm_channel = None
         self.channel = channel
         self.connected = False
-        if channel is not None:
+
+    @property
+    def channel(self) -> str:
+        return self._channel_addr
+
+    @channel.setter
+    def channel(self, addr: str) -> None:
+        if self.pydm_channel is not None:
+            self.pydm_channel.disconnect()
+        if addr is not None:
             self.pydm_channel = PyDMChannel(
-                channel,
+                addr,
                 value_slot=self.update_value,
                 connection_slot=self.update_connection,
                 )
             self.pydm_channel.connect()
+        self._channel_addr = addr
 
     def update_value(self, value):
         """
@@ -461,62 +480,23 @@ class BCRowLogic(QtCore.QObject):
         install_bc_setText(self.beamclass_label)
 
         # Extra channels for the beamclass bitmask
-        # This lets us put a tooltip stub based on the bitmask
-        # This also lets us update the bc_channel, which is a local
+        # This lets us update the bc_channel, which is a local
         self.beamclass_bytes = row_widget.ui.beamclass_bytes
-        bc_range_channel1 = PyDMChannel(
-            self.beamclass_bytes.channel,
-            value_slot=self.update_bc_bitmask_tooltip,
-        )
-        bc_range_channel1.connect()
-        bc_range_channel2 = PyDMChannel(
+        bc_range_channel = PyDMChannel(
             self.beamclass_bytes.channel,
             value_slot=self.update_max_bc,
         )
-        bc_range_channel2.connect()
+        bc_range_channel.connect()
 
-        # Extra channel for the eV range definition
-        # We need this for the eV bitmask tooltip
-        self.ev_ranges = None
-        self.last_ev_range = 0
-        ev_definition = PyDMChannel(
-            f'ca://{self.line_arbiter_prefix}eVRangeCnst_RBV',
-            value_slot=self.new_ev_ranges,
-        )
-        ev_definition.connect()
-        # Set the eV range tooltip
-        self.ev_bytes = row_widget.ui.energy_bytes
-        ev_range_channel = PyDMChannel(
-            self.ev_bytes.channel,
-            value_slot=self.update_ev_range_tooltip,
-        )
-        ev_range_channel.connect()
-
-        self.pydm_channels = [bc_channel, bc_range_channel1, bc_range_channel2, ev_definition, ev_range_channel]
+        self.pydm_channels = [bc_channel, bc_range_channel]
 
     def update_max_bc(self, value: int):
         self.max_bc_sig.emit(
             get_max_bc_from_bitmask(value)
         )
 
-    def new_ev_ranges(self, value: np.ndarray):
-        self.ev_ranges = value
-        self.update_ev_range_tooltip()
-
     def update_beamclass_tooltip(self, value: int):
         self.beamclass_label.PyDMToolTip = get_tooltip_for_bc(value)
-
-    def update_bc_bitmask_tooltip(self, value: int):
-        self.beamclass_bytes.PyDMToolTip = get_tooltip_for_bc_bitmask(value)
-
-    def update_ev_range_tooltip(self, value=None):
-        if value is None:
-            value = self.last_ev_range
-        else:
-            self.last_ev_range = value
-        if self.ev_ranges is None:
-            return
-        self.ev_bytes.PyDMToolTip = get_ev_range_tooltip(value, self.ev_ranges)
 
 
 @dataclass(frozen=True)

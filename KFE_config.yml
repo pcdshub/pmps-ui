@@ -1,6 +1,6 @@
 line_arbiter_prefix: "PMPS:KFE:"
 undulator_kicker_rate_pv: "IOC:BSY0:MP01:BYKIKS_RATE"
-accelerator_mode_pv: "SIOC:FEES:MP01:LCLSMODE_RBV"
+accelerator_mode_pv: "SIOC:FEES:MP01:FACMODE_RBV"
 
 dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PRr2cuGGz/k-pmps-events?viewPanel=2&orgId=1&refresh=10s&kiosk"
 
@@ -100,6 +100,16 @@ preemptive_requests:
     assertion_pool_end: 20
 
   - prefix: "PLC:KFE:GATT:"
+    arbiter_instance: "ARB:02"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:TMO:OPTICS:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:TMO:OPTICS:"
     arbiter_instance: "ARB:02"
     assertion_pool_start: 1
     assertion_pool_end: 20

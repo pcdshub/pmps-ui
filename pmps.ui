@@ -586,7 +586,7 @@
         <item>
          <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,1">
           <item row="3" column="1" colspan="2">
-           <widget class="PyDMByteIndicator" name="PyDMByteIndicator_4">
+           <widget class="FixNegBitmaskByteIndicator" name="PyDMByteIndicator_4">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1636,7 +1636,7 @@
            </layout>
           </item>
           <item row="2" column="1" colspan="2">
-           <widget class="PyDMByteIndicator" name="ev_req_bytes">
+           <widget class="EvByteIndicator" name="ev_req_bytes">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1650,7 +1650,7 @@
              <string/>
             </property>
             <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}RequestedBP:PhotonEnergyRanges_RBV</string>
+             <string>ca://${line_arbiter_prefix}RequestedBP:eVRanges_RBV</string>
             </property>
             <property name="onColor" stdset="0">
              <color>
@@ -1703,7 +1703,7 @@
            </widget>
           </item>
           <item row="1" column="1" colspan="2">
-           <widget class="PyDMByteIndicator" name="PyDMByteIndicator_2">
+           <widget class="EvByteIndicator" name="ev_curr_bytes">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1717,7 +1717,7 @@
              <string/>
             </property>
             <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}CurrentBP:PhotonEnergyRanges_RBV</string>
+             <string>ca://${line_arbiter_prefix}CurrentBP:eVRanges_RBV</string>
             </property>
             <property name="onColor" stdset="0">
              <color>
@@ -1857,6 +1857,16 @@
    <class>PyDMByteIndicator</class>
    <extends>QWidget</extends>
    <header>pydm.widgets.byte</header>
+  </customwidget>
+  <customwidget>
+   <class>FixNegBitmaskByteIndicator</class>
+   <extends>PyDMByteIndicator</extends>
+   <header>widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>EvByteIndicator</class>
+   <extends>PyDMByteIndicator</extends>
+   <header>widgets</header>
   </customwidget>
  </customwidgets>
  <resources/>
