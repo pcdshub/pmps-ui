@@ -1,8 +1,8 @@
-line_arbiter_prefix: "PMPS:LFE:"
-undulator_kicker_rate_pv: "IOC:BSY0:MP01:BYKIK_RATE"
-accelerator_mode_pv: "SIOC:FEEH:MP01:LCLSMODE_RBV"
+line_arbiter_prefix: "PMPS:TST:"
+undulator_kicker_rate_pv: "PMPS:TST:BYKIK_RATE"
+accelerator_mode_pv: "PMPS:TST:LCLSMODE_RBV"
 
-dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PQBzCnmMz/l-pmps-events?refresh=10s&kiosk"
+dashboard_url: "about:new"
 
 
 fastfaults:
@@ -13,7 +13,7 @@ fastfaults:
     ff_end: 50
 
 preemptive_requests:
-  - prefix: "PMPS:LFE:"
-    arbiter_instance: "Arbiter:01"
+  - prefix: "PLC:TST:MOT:"
+    arbiter_instance: "ARB"
     assertion_pool_start: 1
     assertion_pool_end: 20
