@@ -39,7 +39,7 @@ fastfaults:
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
-    ff_end: 55
+    ff_end: 100
 
   - prefix: "PLC:KFE:MOTION:"
     ffo_start: 1
