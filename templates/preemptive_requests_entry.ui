@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1453</width>
+    <width>1555</width>
     <height>40</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1453</width>
+    <width>1555</width>
     <height>40</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1453</width>
+    <width>1555</width>
     <height>40</height>
    </size>
   </property>
@@ -236,6 +236,28 @@
      </property>
      <property name="numBits" stdset="0">
       <number>15</number>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="jf_trans_label">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </item>

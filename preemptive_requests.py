@@ -52,6 +52,9 @@ class PreemptiveRequests(Display):
         self.mode = None
         self.mode_index = None
         self.mode_enum = None
+        self.jf_trans_cache = {}
+        self.jf_value_cache = 5
+        self.jf_on_cache = False
         self.setup_ui()
 
     def setup_ui(self):
@@ -65,7 +68,10 @@ class PreemptiveRequests(Display):
         if not self.config:
             return
         reqs = self.config.get('preemptive_requests')
-        if not reqs:
+        if reqs is None:
+            return
+        line_arbiter_prefix = self.config.get("line_arbiter_prefix")
+        if line_arbiter_prefix is None:
             return
         reqs_table = self.ui.reqs_table_widget
         # setup table
@@ -122,7 +128,7 @@ class PreemptiveRequests(Display):
 
                 row_logic = BCRowLogic(
                     widget.embedded_widget,
-                    self.config.get('line_arbiter_prefix'),
+                    line_arbiter_prefix,
                     parent=self,
                 )
                 self._channels.extend(row_logic.pydm_channels)
@@ -132,6 +138,48 @@ class PreemptiveRequests(Display):
                     'energy_bytes',
                 )
                 self.backcompat.add_ev_ranges_alternate(row_ev_bytes)
+
+                # Special handling for showing scaled transmission requests
+                # from maximum credible energy judgement factor
+                trans_label = widget.findChild(
+                    PyDMLabel,
+                    "transmission_label"
+                )
+                jf_trans_label = widget.findChild(
+                    QtWidgets.QLabel,
+                    "jf_trans_label",
+                )
+                # Make it easy to look up past values in callbacks without
+                # holding extra references and mucking up gc
+                # Also makes the table widget items work
+                jf_trans_label.channel = trans_label.channel
+                jf_trans_channel = PyDMChannel(
+                    trans_label.channel,
+                    value_slot=functools.partial(
+                        self.update_jf_from_raw_trans,
+                        label=jf_trans_label,
+                    )
+                )
+                jf_value_channel = PyDMChannel(
+                    f"ca://{line_arbiter_prefix}IntensityJF_RBV",
+                    value_slot=functools.partial(
+                        self.update_jf_from_jf,
+                        label=jf_trans_label,
+                    )
+                )
+                jf_on_channel = PyDMChannel(
+                    f"ca://{line_arbiter_prefix}ApplyJF_RBV",
+                    value_slot=functools.partial(
+                        self.update_jf_from_on,
+                        label=jf_trans_label,
+                    )
+                )
+                jf_trans_channel.connect()
+                jf_value_channel.connect()
+                jf_on_channel.connect()
+                self._channels.append(jf_trans_channel)
+                self._channels.append(jf_value_channel)
+                self._channels.append(jf_on_channel)
 
                 # insert the widget you see into the table
                 row_position = reqs_table.rowCount()
@@ -351,6 +399,40 @@ class PreemptiveRequests(Display):
         valid_rate = get_valid_rate(value)
         label.setText(f'{valid_rate} Hz')
 
+    def update_jf_from_raw_trans(self, value, label):
+        self.update_jf_trans_for_label(label, raw_trans=value)
+
+    def update_jf_from_jf(self, value, label):
+        self.update_jf_trans_for_label(label, judgement_factor=value)
+
+    def update_jf_from_on(self, value, label):
+        self.update_jf_trans_for_label(label, is_on=value)
+
+    def update_jf_trans_for_label(self, label, raw_trans=None, judgement_factor=None, is_on=None):
+        if judgement_factor is None:
+            judgement_factor = self.jf_value_cache
+        else:
+            self.jf_value_cache = judgement_factor
+        if is_on is None:
+            is_on = self.jf_on_cache
+        else:
+            self.jf_on_cache = is_on
+        if raw_trans is None:
+            try:
+                raw_trans = self.jf_trans_cache[label.channel]
+            except KeyError:
+                # No transmission reading in cache, don't update the label yet
+                return
+        else:
+            self.jf_trans_cache[label.channel] = raw_trans
+        if is_on:
+            if judgement_factor == 0:
+                judgement_factor = 5
+            scaled = min(raw_trans * 5 / judgement_factor, 1)
+        else:
+            scaled = raw_trans
+        label.setText(f"{scaled:.2e}")
+
     def ui_filename(self):
         return 'preemptive_requests.ui'
 
@@ -562,8 +644,8 @@ item_info_list = [
     ItemInfo(
         name='trans',
         select_text='Transmission',
-        widget_name='transmission_label',
-        widget_class=PyDMLabel,
+        widget_name='jf_trans_label',
+        widget_class=QtWidgets.QLabel,
         store_type=float,
         data_type=float,
         default=0.0,
