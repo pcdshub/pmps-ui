@@ -126,7 +126,7 @@
    <item row="6" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_10">
      <item>
-      <widget class="PyDMPushButton" name="applyButton_2">
+      <widget class="PyDMPushButton" name="jf_cancel">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -193,7 +193,7 @@
       </widget>
      </item>
      <item>
-      <widget class="PyDMPushButton" name="applyButton_3">
+      <widget class="PyDMPushButton" name="jf_apply">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -1654,7 +1654,7 @@ and Zero BC</string>
       <number>0</number>
      </property>
      <item>
-      <widget class="PyDMLabel" name="PyDMLabel_4">
+      <widget class="PyDMLabel" name="jf_duration">
        <property name="minimumSize">
         <size>
          <width>50</width>
@@ -1735,7 +1735,7 @@ and Zero BC</string>
       </spacer>
      </item>
      <item>
-      <widget class="PyDMLineEdit" name="PyDMLineEdit_3">
+      <widget class="PyDMLineEdit" name="jf_duration_set">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -2258,7 +2258,7 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <number>0</number>
      </property>
      <item>
-      <widget class="PyDMLabel" name="PyDMLabel_2">
+      <widget class="PyDMLabel" name="jf_cred_energy">
        <property name="minimumSize">
         <size>
          <width>50</width>
@@ -2339,7 +2339,7 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       </spacer>
      </item>
      <item>
-      <widget class="PyDMLineEdit" name="PyDMLineEdit">
+      <widget class="PyDMLineEdit" name="jf_cred_energy_set">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -3147,7 +3147,7 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
    <item row="4" column="2">
     <layout class="QHBoxLayout" name="horizontalLayout_11">
      <item>
-      <widget class="PyDMByteIndicator" name="JFActiveByte">
+      <widget class="PyDMByteIndicator" name="jf_active_byte">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -3204,7 +3204,7 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       </widget>
      </item>
      <item>
-      <widget class="PyDMLabel" name="PyDMLabel_5">
+      <widget class="PyDMLabel" name="jf_time_remaining">
        <property name="minimumSize">
         <size>
          <width>50</width>
