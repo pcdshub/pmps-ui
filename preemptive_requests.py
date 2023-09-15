@@ -52,9 +52,6 @@ class PreemptiveRequests(Display):
         self.mode = None
         self.mode_index = None
         self.mode_enum = None
-        self.jf_trans_cache = {}
-        self.jf_value_cache = 5
-        self.jf_on_cache = False
         self.setup_ui()
 
     def setup_ui(self):
@@ -67,11 +64,10 @@ class PreemptiveRequests(Display):
         """Populate the table from the config file and the item_info_list."""
         if not self.config:
             return
-        reqs = self.config.get('preemptive_requests')
-        if reqs is None:
-            return
-        line_arbiter_prefix = self.config.get("line_arbiter_prefix")
-        if line_arbiter_prefix is None:
+        try:
+            reqs = self.config["preemptive_requests"]
+            line_arbiter_prefix = self.config["line_arbiter_prefix"]
+        except KeyError:
             return
         reqs_table = self.ui.reqs_table_widget
         # setup table
@@ -81,11 +77,12 @@ class PreemptiveRequests(Display):
         for col in range(1, ncols):
             reqs_table.hideColumn(col)
 
-        if reqs_table is None:
-            return
         count = 0
         self.row_logics = []
         self.backcompat = BackCompat(parent=self)
+        self.jf_trans_cache = {}
+        self.jf_value_cache = 5
+        self.jf_on_cache = False
         for req in reqs:
             prefix = req.get('prefix')
             arbiter = req.get('arbiter_instance')
@@ -400,35 +397,25 @@ class PreemptiveRequests(Display):
         label.setText(f'{valid_rate} Hz')
 
     def update_jf_from_raw_trans(self, value, label):
-        self.update_jf_trans_for_label(label, raw_trans=value)
+        self.jf_trans_cache[label.channel] = value
+        self.update_jf_trans_for_label(label)
 
     def update_jf_from_jf(self, value, label):
-        self.update_jf_trans_for_label(label, judgement_factor=value)
+        self.jf_value_cache = value or 5
+        self.update_jf_trans_for_label(label)
 
     def update_jf_from_on(self, value, label):
-        self.update_jf_trans_for_label(label, is_on=value)
+        self.jf_on_cache = value
+        self.update_jf_trans_for_label(label)
 
-    def update_jf_trans_for_label(self, label, raw_trans=None, judgement_factor=None, is_on=None):
-        if judgement_factor is None:
-            judgement_factor = self.jf_value_cache
-        else:
-            self.jf_value_cache = judgement_factor
-        if is_on is None:
-            is_on = self.jf_on_cache
-        else:
-            self.jf_on_cache = is_on
-        if raw_trans is None:
-            try:
-                raw_trans = self.jf_trans_cache[label.channel]
-            except KeyError:
-                # No transmission reading in cache, don't update the label yet
-                return
-        else:
-            self.jf_trans_cache[label.channel] = raw_trans
-        if is_on:
-            if judgement_factor == 0:
-                judgement_factor = 5
-            scaled = min(raw_trans * 5 / judgement_factor, 1)
+    def update_jf_trans_for_label(self, label):
+        try:
+            raw_trans = self.jf_trans_cache[label.channel]
+        except KeyError:
+            # No transmission reading in cache, don't update the label yet
+            return
+        if self.jf_on_cache:
+            scaled = min(raw_trans * 5 / self.jf_value_cache, 1)
         else:
             scaled = raw_trans
         label.setText(f"{scaled:.2e}")
