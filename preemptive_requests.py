@@ -396,19 +396,41 @@ class PreemptiveRequests(Display):
         valid_rate = get_valid_rate(value)
         label.setText(f'{valid_rate} Hz')
 
-    def update_jf_from_raw_trans(self, value, label):
+    def update_jf_from_raw_trans(self, value: float, label: QtWidgets.QLabel) -> None:
+        """
+        Slot to recieve and use a new transmission readback.
+
+        This is combined with the incoming jf data to update
+        the effective transmission readback.
+        """
         self.jf_trans_cache[label.channel] = value
         self.update_jf_trans_for_label(label)
 
-    def update_jf_from_jf(self, value, label):
+    def update_jf_from_jf(self, value: float , label: QtWidgets.QLabel) -> None:
+        """
+        Slot to recieve and use a new judgement factor readback.
+
+        This is used to adjust the raw transmission to
+        update the effective transmission readback.
+        """
         self.jf_value_cache = value or 5
         self.update_jf_trans_for_label(label)
 
-    def update_jf_from_on(self, value, label):
+    def update_jf_from_on(self, value: bool, label: QtWidgets.QLabel) -> None:
+        """
+        Slot to recieve and use a new jugement factor on/off readback.
+
+        Ths value is True if the judgement factor is active, and
+        False otherwise. We can use this to know whether or not to
+        consider the judgement factor value.
+        """
         self.jf_on_cache = value
         self.update_jf_trans_for_label(label)
 
-    def update_jf_trans_for_label(self, label):
+    def update_jf_trans_for_label(self, label: QtWidgets.QLabel) -> None:
+        """
+        Update one label's transmission readback based on the judgement factor.
+        """
         try:
             raw_trans = self.jf_trans_cache[label.channel]
         except KeyError:

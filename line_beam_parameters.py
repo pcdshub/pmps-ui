@@ -377,7 +377,30 @@ class LineBeamParametersControl(Display):
         self.ui.max_bc_label.setText(str(count))
         self.ui.max_bc_label.setToolTip(get_tooltip_for_bc(count))
 
-    def setup_transmission_jf(self):
+    def setup_transmission_jf(self) -> None:
+        """
+        PyDMChannel and signal/slot setup for the transmission values.
+
+        This has special handling due to the introduction of the
+        "jugement factor" transmission override. The line beam parameter
+        transmission values are also subject to rescaling due to the
+        judgement factor, but it is convenient for the user to be able
+        to express their line beam parameter transmission request
+        in terms of an absolute number instead of as a pre-override
+        number.
+
+        This intercepts the user's desired transmission before sending
+        it to the IOC, and acts as a multiplier on the incoming
+        transmission rbv so things work as expected.
+
+        Note: this only applies when the user selects a new
+        transmission, if a transmission is already applied then
+        the judgement factor cannot be changed immediately. The user
+        will need to supply a new transmission value. In these cases,
+        the readback will always reflect the reality of the "effective"
+        transmission for the current maximum credible beam energy
+        judgement factor.
+        """
         try:
             line_arbiter_prefix = self.config["line_arbiter_prefix"]
         except KeyError:
@@ -423,28 +446,65 @@ class LineBeamParametersControl(Display):
         self._channels.append(self.new_jf_channel)
         self._channels.append(self.jf_on_off_channel)
 
-    def new_trans_value(self, value):
+    def new_trans_value(self, value: float) -> None:
+        """
+        Slot to recieve and use a new transmission readback.
+
+        This is combined with the incoming jf data to update
+        the effective transmission readback.
+        """
         self.cached_transmission_rbv = value
         self.update_trans_rbv()
 
-    def new_jf_value(self, value):
+    def new_jf_value(self, value: float) -> None:
+        """
+        Slot to recieve and use a new judgement factor readback.
+
+        This is used to adjust the raw transmission to
+        update the effective transmission readback.
+        """
         self.cached_jf_setting = value
         self.update_trans_rbv()
 
-    def new_jf_on_off(self, value):
+    def new_jf_on_off(self, value: bool) -> None:
+        """
+        Slot to recieve and use a new jugement factor on/off readback.
+
+        Ths value is True if the judgement factor is active, and
+        False otherwise. We can use this to know whether or not to
+        consider the judgement factor value.
+        """
         self.cached_jf_on_off = value
         self.update_trans_rbv()
 
-    def get_jf(self):
+    def get_jf(self) -> float:
+        """
+        Helper function to get the current effective judgement factor.
+
+        This is a quantity less than or equal to 5mJ.
+        """
         if self.cached_jf_on_off:
             return self.cached_jf_setting or 5
         else:
             return 5
 
-    def update_trans_rbv(self):
+    def update_trans_rbv(self) -> None:
+        """
+        Use the cached values to update the displayed transmission RBV.
+
+        The displayed RBV will be adjusted based on the current
+        effective judgement factor.
+        """
         value = min(self.cached_transmission_rbv * 5 / self.get_jf(), 1)
         self.ui.trans_get.setText(f"{value:.2e}")
 
-    def gui_trans_set(self, value):
+    def gui_trans_set(self, value: float) -> None:
+        """
+        Set a new transmission.
+
+        This recieved a value from the user's input and does a calculation
+        to write the correct value to the transmission setter based on
+        the current judgement factor.
+        """
         setpoint = value * self.get_jf() / 5
         self.new_transmission_signal.emit(setpoint)
