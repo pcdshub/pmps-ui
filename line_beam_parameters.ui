@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>884</width>
-    <height>782</height>
+    <height>630</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -888,16 +888,6 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
      <property name="text">
       <string>Zero Rate
 and Zero BC</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="PyDMLabel" name="PyDMLabel">
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission_RBV</string>
      </property>
     </widget>
    </item>
@@ -3169,43 +3159,6 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
      </layout>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="PyDMLineEdit" name="transEdit">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>200</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="precision" stdset="0">
-      <number>2</number>
-     </property>
-     <property name="showUnits" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="precisionFromPV" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission</string>
-     </property>
-     <property name="displayFormat" stdset="0">
-      <enum>PyDMLineEdit::Exponential</enum>
-     </property>
-    </widget>
-   </item>
    <item row="33" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_10">
      <item>
@@ -3390,6 +3343,56 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
      </property>
      <property name="text">
       <string>Transmission Override</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLabel" name="trans_get">
+     <property name="text">
+      <string>Loading...</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="PyDMLineEdit" name="PyDMLineEdit">
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>23</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>23</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="precision" stdset="0">
+      <number>2</number>
+     </property>
+     <property name="showUnits" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="precisionFromPV" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="alarmSensitiveContent" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="alarmSensitiveBorder" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="PyDMToolTip" stdset="0">
+      <string/>
+     </property>
+     <property name="channel" stdset="0">
+      <string>loc://trans_set?type=float&amp;init=1&amp;precision=2</string>
+     </property>
+     <property name="displayFormat" stdset="0">
+      <enum>PyDMLineEdit::Exponential</enum>
      </property>
     </widget>
    </item>

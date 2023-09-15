@@ -38,6 +38,9 @@ class LineBeamParametersControl(Display):
     # Signal to set a new beamclass from the combobox or from zero rate button
     update_beamclass_signal = QtCore.Signal(int)
 
+    # Signal to set a new transmission, adjusted by the jf
+    new_transmission_signal = QtCore.Signal(float)
+
     def __init__(self, parent=None, args=None, macros=None):
         super().__init__(parent=parent, args=args, macros=macros)
         self.config = macros
@@ -64,6 +67,7 @@ class LineBeamParametersControl(Display):
         install_bc_setText(self.ui.max_bc_label)
         self.setup_beamclass_combo()
         self.rate_channel.connect()
+        self.setup_transmission_jf()
 
     def setup_bits_connections(self):
         """
@@ -372,3 +376,72 @@ class LineBeamParametersControl(Display):
             value = value >> 1
         self.ui.max_bc_label.setText(str(count))
         self.ui.max_bc_label.setToolTip(get_tooltip_for_bc(count))
+
+    def setup_transmission_jf(self):
+        line_arbiter_prefix = self.config.get('line_arbiter_prefix')
+        if line_arbiter_prefix is None:
+            return
+        # Values to use prior to various PV connections
+        self.cached_transmission_rbv = 1
+        self.cached_jf_setting = 5
+        self.cached_jf_on_off = False
+        # If we emit from self.new_transmission_signal, put to the real PV
+        self.trans_set_channel = PyDMChannel(
+            f"ca://{line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission",
+            value_signal=self.new_transmission_signal,
+        )
+        # We get inputs from the user via a local channel
+        # I do this to take advantage of PyDMLineEdit's input handling
+        self.gui_trans_set_channel = PyDMChannel(
+            "loc://trans_set",
+            value_slot=self.gui_trans_set,
+        )
+        # If we get a new value, show the scaled value
+        self.trans_get_channel = PyDMChannel(
+            f"ca://{line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission_RBV",
+            value_slot=self.new_trans_value,
+        )
+        # If we get a new JF, cache it and show the scaled value
+        self.new_jf_channel = PyDMChannel(
+            f"ca://{line_arbiter_prefix}IntensityJF_RBV",
+            value_slot=self.new_jf_value,
+        )
+        # If JF starts/expires, cache it and show the scaled value
+        self.jf_on_off_channel = PyDMChannel(
+            f"ca://{line_arbiter_prefix}ApplyJF_RBV",
+            value_slot=self.new_jf_on_off,
+        )
+        self.trans_set_channel.connect()
+        self.trans_get_channel.connect()
+        self.new_jf_channel.connect()
+        self.jf_on_off_channel.connect()
+        self._channels.append(self.trans_set_channel)
+        self._channels.append(self.trans_get_channel)
+        self._channels.append(self.new_jf_channel)
+        self._channels.append(self.jf_on_off_channel)
+
+    def new_trans_value(self, value):
+        self.cached_transmission_rbv = value
+        self.update_trans_rbv()
+
+    def new_jf_value(self, value):
+        self.cached_jf_setting = value
+        self.update_trans_rbv()
+
+    def new_jf_on_off(self, value):
+        self.cached_jf_on_off = value
+        self.update_trans_rbv()
+
+    def get_jf(self):
+        if self.cached_jf_on_off:
+            return self.cached_jf_setting or 5
+        else:
+            return 5
+
+    def update_trans_rbv(self):
+        value = min(self.cached_transmission_rbv * 5 / self.get_jf(), 1)
+        self.ui.trans_get.setText(f"{value:.2e}")
+
+    def gui_trans_set(self, value):
+        setpoint = value * self.get_jf() / 5
+        self.new_transmission_signal.emit(setpoint)
