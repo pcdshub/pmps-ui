@@ -378,8 +378,9 @@ class LineBeamParametersControl(Display):
         self.ui.max_bc_label.setToolTip(get_tooltip_for_bc(count))
 
     def setup_transmission_jf(self):
-        line_arbiter_prefix = self.config.get('line_arbiter_prefix')
-        if line_arbiter_prefix is None:
+        try:
+            line_arbiter_prefix = self.config["line_arbiter_prefix"]
+        except KeyError:
             return
         # Values to use prior to various PV connections
         self.cached_transmission_rbv = 1
