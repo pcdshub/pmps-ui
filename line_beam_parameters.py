@@ -393,7 +393,7 @@ class LineBeamParametersControl(Display):
         # We get inputs from the user via a local channel
         # I do this to take advantage of PyDMLineEdit's input handling
         self.gui_trans_set_channel = PyDMChannel(
-            "loc://trans_set",
+            "loc://trans_set?type=float&init=1&precision=2",
             value_slot=self.gui_trans_set,
         )
         # If we get a new value, show the scaled value
@@ -412,10 +412,12 @@ class LineBeamParametersControl(Display):
             value_slot=self.new_jf_on_off,
         )
         self.trans_set_channel.connect()
+        self.gui_trans_set_channel.connect()
         self.trans_get_channel.connect()
         self.new_jf_channel.connect()
         self.jf_on_off_channel.connect()
         self._channels.append(self.trans_set_channel)
+        self._channels.append(self.gui_trans_set_channel)
         self._channels.append(self.trans_get_channel)
         self._channels.append(self.new_jf_channel)
         self._channels.append(self.jf_on_off_channel)

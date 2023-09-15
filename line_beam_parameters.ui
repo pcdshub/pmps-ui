@@ -3389,7 +3389,7 @@ QCheckBox::indicator:unchecked:disabled {background-color: rgb(224, 224, 224);}<
       <string/>
      </property>
      <property name="channel" stdset="0">
-      <string>loc://trans_set?type=float&amp;init=1&amp;precision=2</string>
+      <string>loc://trans_set</string>
      </property>
      <property name="displayFormat" stdset="0">
       <enum>PyDMLineEdit::Exponential</enum>
