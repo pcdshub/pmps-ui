@@ -53,6 +53,8 @@ class PMPS(Display):
             'line_arbiter_prefix',
             'undulator_kicker_rate_pv',
             'accelerator_mode_pv',
+            'trans_req_pv',
+            'trans_rbv_pv',
         ]
 
         for m in macros_from_config:

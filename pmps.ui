@@ -227,8 +227,17 @@
             <property name="precisionFromPV" stdset="0">
              <bool>true</bool>
             </property>
+            <property name="alarmSensitiveContent" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="alarmSensitiveBorder" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="PyDMToolTip" stdset="0">
+             <string/>
+            </property>
             <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}RequestedBP:Transmission_RBV</string>
+             <string>ca://${trans_req_pv}</string>
             </property>
             <property name="displayFormat" stdset="0">
              <enum>PyDMLabel::Exponential</enum>
@@ -317,8 +326,17 @@
             <property name="precisionFromPV" stdset="0">
              <bool>true</bool>
             </property>
+            <property name="alarmSensitiveContent" stdset="0">
+             <bool>false</bool>
+            </property>
+            <property name="alarmSensitiveBorder" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="PyDMToolTip" stdset="0">
+             <string/>
+            </property>
             <property name="channel" stdset="0">
-             <string>ca://${line_arbiter_prefix}CurrentBP:Transmission_RBV</string>
+             <string>ca://${trans_rbv_pv}</string>
             </property>
             <property name="displayFormat" stdset="0">
              <enum>PyDMLabel::Exponential</enum>
