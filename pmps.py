@@ -187,6 +187,10 @@ class PMPS(Display):
         else:
             self.setup_grafana_log_display()
 
+        line_arbiter_prefix = self.config.get("line_arbiter_prefix", "")
+        if "LFE" in line_arbiter_prefix:
+            self.ui.tab_arbiter_outputs.removeTab(6)
+
         # We are done... re-enable painting
         self.setUpdatesEnabled(True)
 
