@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1200</width>
-    <height>742</height>
+    <height>375</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1843,6 +1843,12 @@
        <string>Line Beam Parameters Control</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_7"/>
+     </widget>
+     <widget class="QWidget" name="tb_trans_override">
+      <attribute name="title">
+       <string>Transmission Override</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_12"/>
      </widget>
      <widget class="QWidget" name="tb_beamclass_table">
       <attribute name="title">
