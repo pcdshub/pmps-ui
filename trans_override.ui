@@ -350,73 +350,6 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="2">
-    <widget class="PyDMPushButton" name="jf_apply">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>200</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>200</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton { background-color: rgb(148, 255, 85) }</string>
-     </property>
-     <property name="text">
-      <string>Apply</string>
-     </property>
-     <property name="alarmSensitiveContent" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="alarmSensitiveBorder" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="PyDMToolTip" stdset="0">
-      <string/>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}ApplyJF</string>
-     </property>
-     <property name="passwordProtected" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="password" stdset="0">
-      <string/>
-     </property>
-     <property name="protectedPassword" stdset="0">
-      <string/>
-     </property>
-     <property name="showConfirmDialog" stdset="0">
-      <bool>true</bool>
-     </property>
-     <property name="confirmMessage" stdset="0">
-      <string>Warning: this override will unilaterally relax the transmission requirements for all devices, increasing the effective beam intensity. It should only be used when the beam is abnormally weak compared to the assumptions made when establishing the PMPS requirements (5mJ beam). You will also need to reapply the &quot;Line Beam Parameters&quot; configuration for transmission to keep everything consistent. Are you sure you wish to proceed?</string>
-     </property>
-     <property name="pressValue" stdset="0">
-      <string>1</string>
-     </property>
-     <property name="releaseValue" stdset="0">
-      <string>None</string>
-     </property>
-     <property name="relativeChange" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="writeWhenRelease" stdset="0">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
    <item row="6" column="0">
     <widget class="QLabel" name="label_31">
      <property name="font">
@@ -688,6 +621,73 @@
 - You should reset and reapply the line beam parameter transmission select after performing this override if you need it for your shift.
   This override will adjust any active line beam parameter transmission requests in-place in an unintuitive way.
   Once overriden, new line beam parameter transmission requests will be scaled appropriately.</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="PyDMPushButton" name="jf_apply_2">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton { background-color: rgb(148, 255, 85) }</string>
+     </property>
+     <property name="text">
+      <string>Apply</string>
+     </property>
+     <property name="alarmSensitiveContent" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="alarmSensitiveBorder" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="PyDMToolTip" stdset="0">
+      <string/>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${line_arbiter_prefix}ApplyJF</string>
+     </property>
+     <property name="passwordProtected" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="password" stdset="0">
+      <string/>
+     </property>
+     <property name="protectedPassword" stdset="0">
+      <string/>
+     </property>
+     <property name="showConfirmDialog" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="confirmMessage" stdset="0">
+      <string>Warning: this override will adjust transmission requirements globally, making the beam much stronger. Are you sure you wish to proceed?</string>
+     </property>
+     <property name="pressValue" stdset="0">
+      <string>1</string>
+     </property>
+     <property name="releaseValue" stdset="0">
+      <string>None</string>
+     </property>
+     <property name="relativeChange" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="writeWhenRelease" stdset="0">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
