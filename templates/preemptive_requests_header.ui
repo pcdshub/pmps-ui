@@ -256,7 +256,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_13">
+          <widget class="QLabel" name="trans_header">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -290,7 +290,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_12">
+          <widget class="QLabel" name="trans_5mj_header">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>

@@ -77,6 +77,11 @@ class PreemptiveRequests(Display):
         for col in range(1, ncols):
             reqs_table.hideColumn(col)
 
+        # LFE doesn't have the jf override mechanisms, hide it for clarity
+        if "LFE" in line_arbiter_prefix:
+            # This is the header text that contains "5mJ"
+            self.ui.table_header.embedded_widget.trans_5mj_header.hide()
+
         count = 0
         self.row_logics = []
         self.backcompat = BackCompat(parent=self)
@@ -177,6 +182,12 @@ class PreemptiveRequests(Display):
                 self._channels.append(jf_trans_channel)
                 self._channels.append(jf_value_channel)
                 self._channels.append(jf_on_channel)
+
+                # LFE doesn't have the jf override mechanisms, hide it for clarity
+                if "LFE" in line_arbiter_prefix:
+                    # Hide the raw value that goes under the 5mJ header
+                    # Keep the calculated value under the "Transmission" header
+                    widget.embedded_widget.transmission_label.hide()
 
                 # insert the widget you see into the table
                 row_position = reqs_table.rowCount()
