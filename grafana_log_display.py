@@ -16,7 +16,7 @@ class GrafanaLogDisplay(Display):
         self.ui.btn_open_browser.clicked.connect(self.handle_open_browser)
 
     def open_webpage_if_tab(self, tab_index):
-        if tab_index == 7 and not self.web_open:
+        if tab_index == 8 and not self.web_open:
             self.ui.webbrowser.load(QtCore.QUrl(self.dash_url))
             self.web_open = True
         elif self.web_open:

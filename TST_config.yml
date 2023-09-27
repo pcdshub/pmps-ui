@@ -1,6 +1,8 @@
 line_arbiter_prefix: "PMPS:TST:"
 undulator_kicker_rate_pv: "PMPS:TST:BYKIK_RATE"
 accelerator_mode_pv: "PMPS:TST:LCLSMODE_RBV"
+trans_req_pv: "AT1K0:GAS:TRANS_REQ_RBV"
+trans_rbv_pv: "AT1K0:GAS:TRANS_RBV"
 
 dashboard_url: "about:new"
 

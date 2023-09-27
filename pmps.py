@@ -53,6 +53,8 @@ class PMPS(Display):
             'line_arbiter_prefix',
             'undulator_kicker_rate_pv',
             'accelerator_mode_pv',
+            'trans_req_pv',
+            'trans_rbv_pv',
         ]
 
         for m in macros_from_config:
@@ -175,14 +177,19 @@ class PMPS(Display):
         self.setup_arbiter_outputs()
         self.setup_ev_calculation()
         self.setup_line_parameters_control()
+        self.setup_trans_override()
         self.setup_plc_ioc_status()
         self.setup_beam_class_table()
 
         dash_url = self.config.get('dashboard_url')
         if self.user_args.no_web or dash_url is None:
-            self.ui.tab_arbiter_outputs.removeTab(7)
+            self.ui.tab_arbiter_outputs.removeTab(8)
         else:
             self.setup_grafana_log_display()
+
+        line_arbiter_prefix = self.config.get("line_arbiter_prefix", "")
+        if "LFE" in line_arbiter_prefix:
+            self.ui.tab_arbiter_outputs.removeTab(6)
 
         # We are done... re-enable painting
         self.setUpdatesEnabled(True)
@@ -218,6 +225,12 @@ class PMPS(Display):
         tab = self.ui.tb_line_beam_param_ctrl
         beam_widget = LineBeamParametersControl(macros=self.config)
         tab.layout().addWidget(beam_widget)
+
+    def setup_trans_override(self):
+        from trans_override import TransOverride
+        tab = self.ui.tb_trans_override
+        jf_widget = TransOverride(macros=self.config)
+        tab.layout().addWidget(jf_widget)
 
     def setup_plc_ioc_status(self):
         from plc_ioc_status import PLCIOCStatus

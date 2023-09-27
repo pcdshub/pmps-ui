@@ -1,6 +1,5 @@
 import argparse
 import os.path
-import sys
 
 import yaml
 from pcdsutils.profile import profiler_context
@@ -15,6 +14,7 @@ from grafana_log_display import GrafanaLogDisplay
 from line_beam_parameters import LineBeamParametersControl
 from plc_ioc_status import PLCIOCStatus
 from preemptive_requests import PreemptiveRequests
+from trans_override import TransOverride
 
 options = {
     'fast_faults': FastFaults,
@@ -22,6 +22,7 @@ options = {
     'arbiter_outputs': ArbiterOutputs,
     'ev_calculation': EVCalculation,
     'line_beam_parameters': LineBeamParametersControl,
+    'trans_override': TransOverride,
     'plc_ioc_status': PLCIOCStatus,
     'grafana_log_dispaly': GrafanaLogDisplay,
 }

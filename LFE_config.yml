@@ -1,6 +1,8 @@
 line_arbiter_prefix: "PMPS:LFE:"
 undulator_kicker_rate_pv: "IOC:BSY0:MP01:BYKIK_RATE"
 accelerator_mode_pv: "SIOC:FEEH:MP01:FACMODE_RBV"
+trans_req_pv: "PMPS:LFE:RequestedBP:Transmission_RBV"
+trans_rbv_pv: "PMPS:LFE:CurrentBP:Transmission_RBV"
 
 dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PQBzCnmMz/l-pmps-events?refresh=10s&kiosk"
 

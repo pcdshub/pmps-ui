@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1453</width>
+    <width>1555</width>
     <height>47</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1453</width>
+    <width>1555</width>
     <height>47</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1459</width>
+    <width>1559</width>
     <height>47</height>
    </size>
   </property>
@@ -256,7 +256,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_12">
+          <widget class="QLabel" name="trans_header">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -283,6 +283,40 @@
            </property>
            <property name="text">
             <string>Transmission</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="trans_5mj_header">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Trans at 5mJ</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -432,7 +466,7 @@
      </property>
      <property name="maximumSize">
       <size>
-       <width>1453</width>
+       <width>1555</width>
        <height>16777215</height>
       </size>
      </property>
