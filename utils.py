@@ -54,15 +54,16 @@ class BackCompat(QtCore.QObject):
         # This otherwise requires a full "widget" and is annoying
         # I'm not 100% sure if this works or not or if that matters
         self._channels = []
-        self.destroyed.connect(
-            functools.partial(_backcompat_destroyed, self.channels)
-        )
+        self.destroyed.connect(self.on_destroyed)
+
+    def on_destroyed(self):
+        _backcompat_destroyed(self.channels)
 
     def channels(self) -> list[PyDMChannel]:
         """
         Helper for proper channel cleanup.
         """
-        return self._channels()
+        return self._channels
 
     def add_alternate_channel(self, widget: PyDMWidget, channel: str) -> None:
         """
@@ -82,13 +83,16 @@ class BackCompat(QtCore.QObject):
             A channel address to use as the alternate channel.
         """
         # Assign the alt channel somewhere so it doesn't get garbage collected
-        ch = PyDMChannel(
-            address=channel,
-            connection_slot=functools.partial(
-                self.apply_alt_channel,
+        def on_connect(connected: bool):
+            self.apply_alt_channel(
+                connected=connected,
                 widget=widget,
                 channel=channel,
-            ),
+            )
+
+        ch = PyDMChannel(
+            address=channel,
+            connection_slot=on_connect,
         )
         ch.connect()
         self._channels.append(ch)
