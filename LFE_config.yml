@@ -44,6 +44,31 @@ fastfaults:
     ff_start: 1
     ff_end: 50
 
+  - prefix: "PLC:TXI:MOTION:"
+    ffo_start: 1
+    ffo_end: 1
+    ff_start: 1
+    ff_end: 50
+
+  - prefix: "PLC:TXI:HXR:VAC:"
+    ffo_start: 1
+    ffo_end: 1
+    ff_start: 1
+    ff_end: 50
+
+  - prefix: "PLC:TXI:HXR:VAC:L1"
+    ffo_start: 1
+    ffo_end: 1
+    ff_start: 1
+    ff_end: 50
+
+  - prefix: "PLC:TXI:LFE:OPTICS:"
+    ffo_start: 1
+    ffo_end: 1
+    ff_start: 1
+    ff_end: 50
+
+
 preemptive_requests:
   - prefix: "PMPS:LFE:"
     arbiter_instance: "Arbiter:01"
@@ -61,6 +86,16 @@ preemptive_requests:
     assertion_pool_end: 20
 
   - prefix: "PLC:XRT:OPTICS:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:TXI:MOTION:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:TXI:VAC:"
     arbiter_instance: "ARB:01"
     assertion_pool_start: 1
     assertion_pool_end: 20
