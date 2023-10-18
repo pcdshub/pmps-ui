@@ -21,7 +21,7 @@ fastfaults:
 
   - prefix: "PLC:KFE:VAC:K0:"
     ffo_start: 1
-    ffo_end: 4
+    ffo_end: 5
     ff_start: 1
     ff_end: 20
 
