@@ -65,7 +65,7 @@ fastfaults:
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
-    ff_end: 100
+    ff_end: 200
 
   - prefix: "PLC:CRIXS:VAC:"
     ffo_start: 1
