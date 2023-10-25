@@ -8,61 +8,71 @@ dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PQBzCnmMz/l-pmps-events?r
 
 
 fastfaults:
-  - prefix: "PMPS:LFE:"
+  - name: "LFE Arbiter"
+    prefix: "PMPS:LFE:"
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
     ff_end: 50
 
-  - prefix: "PLC:LFE:VAC:"
+  - name: "LFE Vacuum"
+    prefix: "PLC:LFE:VAC:"
     ffo_start: 1
     ffo_end: 3
     ff_start: 1
     ff_end: 50
 
-  - prefix: "PLC:LFE:GEM:"
+  - name: "LFE GEM"
+    prefix: "PLC:LFE:GEM:"
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
     ff_end: 50
 
-  - prefix: "PLC:LFE:MOTION:"
+  - name: "LFE CC Motion"
+    prefix: "PLC:LFE:MOTION:"
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
     ff_end: 50
 
-  - prefix: "PLC:LFE:OPTICS:"
+  - name: "LFE Optics"
+    prefix: "PLC:LFE:OPTICS:"
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
     ff_end: 50
 
-  - prefix: "PLC:XRT:OPTICS:"
+  - name: "XRT Optics"
+    prefix: "PLC:XRT:OPTICS:"
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
     ff_end: 50
 
-  - prefix: "PLC:TXI:MOTION:"
+  - name: "TXI CC Motion"
+    prefix: "PLC:TXI:MOTION:"
     ffo_start: 1
     ffo_end: 1
     ff_start: 1
     ff_end: 50
 
-  - prefix: "PLC:TXI:HXR:VAC:"
+  - name: "TXI LFE VAC"
+    prefix: "PLC:TXI:HXR:VAC:"
     ffo_start: 1
     ffo_end: 1
     ff_start: 1
     ff_end: 50
 
-  - prefix: "PLC:TXI:HXR:VAC:L1"
+  - name: "TXI L1 VAC"
+    prefix: "PLC:TXI:HXR:VAC:L1"
     ffo_start: 1
     ffo_end: 1
     ff_start: 1
     ff_end: 50
 
-  - prefix: "PLC:TXI:LFE:OPTICS:"
+  - name: "TXI LFE Optics"
+    prefix: "PLC:TXI:LFE:OPTICS:"
     ffo_start: 1
     ffo_end: 1
     ff_start: 1
