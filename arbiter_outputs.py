@@ -63,24 +63,32 @@ class ArbiterOutputs(Display):
             prefix = ff.get('prefix')
             ffo_start = ff.get('ffo_start')
             ffo_end = ff.get('ffo_end')
+            ff_start = ff.get('ff_start')
+            ff_end = ff.get('ff_end')
             ff_count = ff.get('ff_end', -1) - ff.get('ff_start', 0) + 1
 
             ffos_zfill = len(str(ffo_end)) + 1
 
             entries = range(ffo_start, ffo_end+1)
 
-            template = 'templates/arbiter_outputs_entry.ui'
+            template = 'templates/arbiter_outputs_entry.py'
             for _ffo in entries:
                 s_ffo = str(_ffo).zfill(ffos_zfill)
-                macros = dict(index=count, P=prefix, FFO=s_ffo, NAME=name, FFO_INDEX=_ffo, FF_COUNT=ff_count)
+                macros = dict(
+                    index=count,
+                    ff_start=ff_start,
+                    ff_end=ff_end,
+                    P=prefix,
+                    FFO=s_ffo,
+                    NAME=name,
+                    FFO_INDEX=_ffo,
+                    FF_COUNT=ff_count,
+                )
                 widget = PyDMEmbeddedDisplay(parent=outs_container)
                 widget.macros = json.dumps(macros)
                 widget.filename = template
                 widget.disconnectWhenHidden = False
                 widget.setMinimumHeight(40)
-                #widget.loadWhenShown = False
-                #widget.embedded_widget.ui.name_label.setText(f"{name} FFO #{_ffo}")
-                #widget.embedded_widget.ui.conf_count_label.setText(str(ff_count))
                 outs_container.layout().addWidget(widget)
                 count += 1
 
