@@ -59,7 +59,7 @@ class BackCompat(QtCore.QObject):
         """
         Helper for proper channel cleanup.
         """
-        return self._channels()
+        return self._channels
 
     def add_alternate_channel(self, widget: PyDMWidget, channel: str) -> None:
         """
