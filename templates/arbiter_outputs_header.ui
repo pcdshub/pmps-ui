@@ -107,7 +107,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Fault</string>
+        <string>Beam Ok</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
