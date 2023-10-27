@@ -88,6 +88,7 @@ class ArbiterOutputs(Display):
                 widget.macros = json.dumps(macros)
                 widget.filename = template
                 widget.disconnectWhenHidden = False
+                widget.loadWhenShown = False
                 widget.setMinimumHeight(40)
                 outs_container.layout().addWidget(widget)
                 count += 1
