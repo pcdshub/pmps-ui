@@ -2,7 +2,7 @@ import functools
 import weakref
 from typing import Iterable
 
-from pydm.widgets.base import PyDMPrimitiveWidget, widget_destroyed
+from pydm.widgets.base import PyDMPrimitiveWidget
 from pydm.widgets.byte import PyDMByteIndicator
 from pydm.widgets.channel import PyDMChannel
 from pydm.widgets.label import PyDMLabel
@@ -53,10 +53,6 @@ class UndulatorWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
         self._connections = dict()
         self._forward_texture = None
         self._backward_texture = None
-        self.destroyed.connect(
-            functools.partial(widget_destroyed, self.channels,
-                              weakref.ref(self))
-        )
 
     @QtCore.Property(str)
     def prefix(self):
@@ -251,11 +247,6 @@ class UndulatorListWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):
         self._backward_texture = None
         self._first_segment = 0
         self._last_segment = 0
-
-        self.destroyed.connect(
-            functools.partial(widget_destroyed, self.channels,
-                              weakref.ref(self))
-        )
 
         self.setLayout(QtWidgets.QVBoxLayout())
         self.scroll_area = QtWidgets.QScrollArea()
