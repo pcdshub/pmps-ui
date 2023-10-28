@@ -10,6 +10,8 @@ dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PQBzCnmMz/l-pmps-events?r
 fastfaults:
   - name: "LFE Arbiter"
     prefix: "PMPS:LFE:"
+    ffo_desc: ["PMPS System", "Spare"]
+    ffo_veto: ["None", "None"]
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
@@ -17,6 +19,8 @@ fastfaults:
 
   - name: "LFE Vacuum"
     prefix: "PLC:LFE:VAC:"
+    ffo_desc: ["Upstream of ST1L0", "Downstream of ST1L0", "Fast shutter"]
+    ffo_veto: ["None", "ST1L0 IN", "None"]
     ffo_start: 1
     ffo_end: 3
     ff_start: 1
@@ -24,6 +28,8 @@ fastfaults:
 
   - name: "LFE GEM"
     prefix: "PLC:LFE:GEM:"
+    ffo_desc: ["GEM Valves", "AT1L0"]
+    ffo_veto: ["None", "None"]
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
@@ -31,6 +37,8 @@ fastfaults:
 
   - name: "LFE CC Motion"
     prefix: "PLC:LFE:MOTION:"
+    ffo_desc: ["LFE States", "AT2L0"]
+    ffo_veto: ["None", "None"]
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
@@ -38,6 +46,8 @@ fastfaults:
 
   - name: "LFE Optics"
     prefix: "PLC:LFE:OPTICS:"
+    ffo_desc: ["All LFE Optics", "Spare"]
+    ffo_veto: ["None", "None"]
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
@@ -45,6 +55,8 @@ fastfaults:
 
   - name: "XRT Optics"
     prefix: "PLC:XRT:OPTICS:"
+    ffo_desc: ["Coating Checks", "MR1L3 States"]
+    ffo_veto: ["ST1L0 IN", "MR1L3 OUT"]
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
@@ -52,6 +64,8 @@ fastfaults:
 
   - name: "TXI CC Motion"
     prefix: "PLC:TXI:MOTION:"
+    ffo_desc: ["ALL TXI HXR Motion"]
+    ffo_veto: ["ST1L1 IN"]
     ffo_start: 1
     ffo_end: 1
     ff_start: 1
@@ -59,6 +73,8 @@ fastfaults:
 
   - name: "TXI LFE VAC"
     prefix: "PLC:TXI:HXR:VAC:"
+    ffo_desc: ["ALL TXI HXR Vac"]
+    ffo_veto: ["ST1L1 IN"]
     ffo_start: 1
     ffo_end: 1
     ff_start: 1
@@ -66,6 +82,8 @@ fastfaults:
 
   - name: "TXI L1 VAC"
     prefix: "PLC:TXI:HXR:VAC:L1"
+    ffo_desc: ["Planned"]
+    ffo_veto: ["None"]
     ffo_start: 1
     ffo_end: 1
     ff_start: 1
@@ -73,6 +91,8 @@ fastfaults:
 
   - name: "TXI LFE Optics"
     prefix: "PLC:TXI:LFE:OPTICS:"
+    ffo_desc: ["All TXI HXR Optics"]
+    ffo_veto: ["None"]
     ffo_start: 1
     ffo_end: 1
     ff_start: 1

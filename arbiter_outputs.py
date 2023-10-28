@@ -70,9 +70,11 @@ class ArbiterOutputs(Display):
             ffos_zfill = len(str(ffo_end)) + 1
 
             entries = range(ffo_start, ffo_end+1)
+            ffo_desc = ff.get('ffo_desc', ['']*len(entries))
+            ffo_veto = ff.get('ffo_veto', ['']*len(entries))
 
             template = 'templates/arbiter_outputs_entry.py'
-            for _ffo in entries:
+            for _ffo, desc, veto in zip(entries, ffo_desc, ffo_veto):
                 s_ffo = str(_ffo).zfill(ffos_zfill)
                 macros = dict(
                     index=count,
@@ -83,6 +85,8 @@ class ArbiterOutputs(Display):
                     NAME=name,
                     FFO_INDEX=_ffo,
                     FF_COUNT=ff_count,
+                    DESC=desc,
+                    VETO=veto,
                 )
                 widget = PyDMEmbeddedDisplay(parent=outs_container)
                 widget.macros = json.dumps(macros)
