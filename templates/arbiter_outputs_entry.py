@@ -106,7 +106,7 @@ class ArbiterRow(Display):
         fault_num_str = str(self.fault_num).zfill(self.zfill)
         # Use the bypass channel to get the bypass counts
         bypass_counter = CounterElement(
-            pvname=f"ca://{self.prefix}FFO:{self.ffo}:FF:{fault_num_str}:Ovrd:Active_RBV",
+            address=f"ca://{self.prefix}FFO:{self.ffo}:FF:{fault_num_str}:Ovrd:Active_RBV",
             index=self.loop_count,
             value_cache=self.bypasses,
             parent=self,
@@ -126,7 +126,7 @@ class ArbiterRow(Display):
 
         # Use the in_use channel to get the registered and connected counts
         in_use_counter = CounterElement(
-            pvname=f"ca://{self.prefix}FFO:{self.ffo}:FF:{fault_num_str}:Info:InUse_RBV",
+            address=f"ca://{self.prefix}FFO:{self.ffo}:FF:{fault_num_str}:Info:InUse_RBV",
             index=self.loop_count,
             value_cache=self.in_uses,
             conn_cache=self.is_connected,
@@ -134,12 +134,12 @@ class ArbiterRow(Display):
         )
         in_use_dest = PyDMChannel(
             address=f"loc://{self.prefix}{self.ffo}:RegCount?type=int&init=0",
-            value_slot=self.show_loc_connected,
+            value_slot=show_loc_connected,
             value_signal=in_use_counter.value_sig,
         )
         in_use_conn_dest = PyDMChannel(
             address=f"loc://{self.prefix}{self.ffo}:ConnCount?type=int&init=0",
-            value_slot=self.show_loc_connected,
+            value_slot=show_loc_connected,
             value_signal=in_use_counter.conn_sig,
         )
         self.in_use_counters.append(in_use_counter)
@@ -157,18 +157,14 @@ class ArbiterRow(Display):
         # We are faulting if ok=False and in_use=True
         # Summarize this as a combined local channel
         fault_summary = FaultSummary(
-            ok_pvname=f"ca://{self.prefix}FFO:{self.ffo}:FF:{fault_num_str}:OK_RBV",
-            in_use_pvname=f"ca://{self.prefix}FFO:{self.ffo}:FF:{fault_num_str}:Info:InUse_RBV",
+            ok_address=f"ca://{self.prefix}FFO:{self.ffo}:FF:{fault_num_str}:OK_RBV",
+            in_use_address=f"ca://{self.prefix}FFO:{self.ffo}:FF:{fault_num_str}:Info:InUse_RBV",
+            dest_address=f"loc://{self.prefix}{self.ffo}{fault_num_str}:SUMMARY?type=int&init=0",
             parent=self,
         )
-        fault_summary_ch1, fault_summary_ch2 = fault_summary.create_channels()
-        fault_summary_ch3 = PyDMChannel(
-            address=f"loc://{self.prefix}{self.ffo}{fault_num_str}:SUMMARY?type=int&init=0",
-            value_signal=fault_summary.value_sig,
-            value_slot=self.show_loc_connected,
-        )
+        fault_summary_ch1, fault_summary_ch2, fault_summary_ch3 = fault_summary.create_channels()
         fault_counter = CounterElement(
-            pvname=f"loc://{self.prefix}{self.ffo}{fault_num_str}:SUMMARY?type=int&init=0",
+            address=fault_summary.dest_address,
             index=self.loop_count,
             value_cache=self.faults,
             parent=self,
@@ -199,34 +195,37 @@ class ArbiterRow(Display):
         if self.fault_num <= self.ff_end:
             self.next_counter_soon()
 
-    def show_loc_connected(self, *args, **kwargs):
+    def new_fault_count(self, count: int) -> None:
         """
-        No-op slot to put on loc:// channels so that they show as connected.
+        Slot for all actions to take when we get a new fault count.
+        """
+        self.update_fault_label_severity(count)
 
-        Otherwise, they can show as disconnected even if the value updates
-        properly.
+    def update_fault_label_severity(self, count: int) -> None:
         """
-        ...
-
-    def new_fault_count(self, count: int):
-        """
-        Slot to show a "major" alarm when the total fault count is nonzero.
+        Show a "major" alarm when the total fault count is nonzero.
         """
         if count:
             self.ui.fault_label.alarm_severity_changed(2)
         else:
             self.ui.fault_label.alarm_severity_changed(0)
 
-    def new_bypass_count(self, count: int):
+    def new_bypass_count(self, count: int) -> None:
         """
-        Slot to show a "minor" alarm when the total bypass count is nonzero.
+        Slot for all actions to take when we get a new bypass count.
+        """
+        self.update_bypass_label_severity(count)
+
+    def update_bypass_label_severity(self, count: int) -> None:
+        """
+        Show a "minor" alarm when the total bypass count is nonzero.
         """
         if count:
             self.ui.bypass_label.alarm_severity_changed(1)
         else:
             self.ui.bypass_label.alarm_severity_changed(0)
 
-    def channels(self):
+    def channels(self) -> list[PyDMChannel]:
         """
         Callable method to return a list of open PyDMChannel instances.
 
@@ -234,7 +233,7 @@ class ArbiterRow(Display):
         """
         return self._channels
 
-    def ui_filename(self):
+    def ui_filename(self) -> str:
         """
         Return the name of the ui file to load for PyDM.
         """
@@ -261,7 +260,7 @@ class CounterElement(QObject):
 
     Parameters
     ----------
-    pvname : str
+    address : str
         The PyDM channel address to use as the source of data.
     index : int
         The index in the various caches that this counter should write
@@ -281,14 +280,14 @@ class CounterElement(QObject):
 
     def __init__(
         self,
-        pvname: str,
+        address: str,
         index: int,
         value_cache: list[int],
         conn_cache: list[int] | None = None,
         parent: QObject | None = None,
     ):
         super().__init__(parent=parent)
-        self.pvname = pvname
+        self.address = address
         self.index = index
         self.value_cache = value_cache
         self.conn_cache = conn_cache
@@ -307,12 +306,12 @@ class CounterElement(QObject):
         """
         if self.conn_cache is None:
             return PyDMChannel(
-                address=self.pvname,
+                address=self.address,
                 value_slot=self.new_value,
             )
         else:
             return PyDMChannel(
-                address=self.pvname,
+                address=self.address,
                 value_slot=self.new_value,
                 connection_slot=self.new_conn,
             )
@@ -345,13 +344,17 @@ class FaultSummary(QObject):
 
     Parameters
     ----------
-    ok_pvname : str
+    ok_address : str
         The PyDM channel associated with the "OK" fault signal, which is
         1 when the condition is OK and 0 when we are faulting.
-    in_use_pvname : str
+    in_use_address : str
         The PyDM channel associated with the "IN_USE" fault signal,
         which is 1 when the fault's OK state is valid and is 0 when the
         fault's OK state is invalid.
+    dest_address : str
+        The PyDM channel that our values should be output to.
+        This channel address can then be re-used for other PyDMChannel
+        instances that are expecting values.
     parent : QObject, optional
         Standard qt parent argument. If provided, it makes this object
         a child object of the parent.
@@ -362,29 +365,39 @@ class FaultSummary(QObject):
 
     def __init__(
         self,
-        ok_pvname: str,
-        in_use_pvname: str,
+        ok_address: str,
+        in_use_address: str,
+        dest_address: str,
         parent: QObject | None,
     ):
         super().__init__(parent=parent)
-        self.ok_pvname = ok_pvname
-        self.in_use_pvname = in_use_pvname
+        self.ok_address = ok_address
+        self.in_use_address = in_use_address
+        self.dest_address = dest_address
         self.is_ok = 0
         self.is_in_use = 0
 
-    def create_channels(self) -> tuple[PyDMChannel, PyDMChannel]:
+    def create_channels(self) -> tuple[PyDMChannel, PyDMChannel, PyDMChannel]:
         """
-        Return two channels for the OK and IN_USE signals respectively.
+        Create and return the channels associated with the fault summary.
 
-        Once connected, these channels will start collecting values
-        to combine for the aggregate value_sig output.
+        The first channel is the intake channel for the OK signal.
+        The second channel is the intake channel for the IN_USE signal.
+        The third channel is the output channel for the fault state.
+
+        You should connect the output channel first, so that it is ready
+        to consume the outputs of the intake channels.
         """
         return PyDMChannel(
-            address=self.ok_pvname,
+            address=self.ok_address,
             value_slot=self.new_ok,
         ), PyDMChannel(
-            address=self.in_use_pvname,
+            address=self.in_use_address,
             value_slot=self.new_in_use,
+        ), PyDMChannel(
+            address=self.dest_address,
+            value_signal=self.value_sig,
+            value_slot=show_loc_connected,
         )
 
     def new_ok(self, value: int):
@@ -409,3 +422,13 @@ class FaultSummary(QObject):
             self.value_sig.emit(1 - self.is_ok)
         else:
             self.value_sig.emit(0)
+
+
+def show_loc_connected(*args, **kwargs):
+    """
+    No-op slot to put on loc:// channels so that they show as connected.
+
+    Otherwise, they can show as disconnected even if the value updates
+    properly.
+    """
+    ...
