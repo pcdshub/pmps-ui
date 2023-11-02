@@ -9,8 +9,6 @@ from pydm.widgets.channel import PyDMChannel
 from qtpy import QtWidgets
 from qtpy.QtGui import QColor
 
-from fast_faults import clear_channel
-
 
 class PLCIOCStatus(Display):
     _on_color = QColor(0, 255, 0)
@@ -23,13 +21,6 @@ class PLCIOCStatus(Display):
         self.ffs_count_map = {}
         self.ffs_label_map = {}
         self.setup_ui()
-        for ch in (
-            self.plc_status_ch,
-            self.plc_task1_vis_ch,
-            self.plc_task2_vis_ch,
-            self.plc_task3_vis_ch,
-        ):
-            self.destroyed.connect(functools.partial(clear_channel, ch))
 
     def setup_ui(self):
         self.setup_plc_ioc_status()

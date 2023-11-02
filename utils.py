@@ -54,15 +54,12 @@ class BackCompat(QtCore.QObject):
         # This otherwise requires a full "widget" and is annoying
         # I'm not 100% sure if this works or not or if that matters
         self._channels = []
-        self.destroyed.connect(
-            functools.partial(_backcompat_destroyed, self.channels)
-        )
 
     def channels(self) -> list[PyDMChannel]:
         """
         Helper for proper channel cleanup.
         """
-        return self._channels()
+        return self._channels
 
     def add_alternate_channel(self, widget: PyDMWidget, channel: str) -> None:
         """
@@ -132,14 +129,3 @@ class BackCompat(QtCore.QObject):
             widget=widget,
             channel=widget.channel.replace("eVRanges", "PhotonEnergyRanges")
         )
-
-
-def _backcompat_destroyed(channels: Callable[[], list[PyDMChannel]]) -> None:
-    """
-    Some cleanup stolen from PyDM
-
-    See PyDM.widgets.base.widget_destroyed
-    """
-    for ch in channels():
-        if ch:
-            ch.disconnect(destroying=True)

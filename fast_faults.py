@@ -10,14 +10,6 @@ from pydm.widgets.datetime import PyDMDateTimeEdit, PyDMDateTimeLabel
 from qtpy import QtCore, QtWidgets
 
 
-def clear_channel(ch):
-    if ch:
-        try:
-            ch.disconnect()
-        except:
-            pass
-
-
 class VisibilityEmbedded(PyDMEmbeddedDisplay):
 
     def __init__(self, channel=None, *args, **kwargs):
@@ -27,7 +19,6 @@ class VisibilityEmbedded(PyDMEmbeddedDisplay):
         self.channel = None
         if channel:
             self.channel = PyDMChannel(channel, connection_slot=self.connection_changed)
-        self.destroyed.connect(functools.partial(clear_channel, channel))
 
     def connection_changed(self, status):
         self._connected = status
@@ -128,6 +119,7 @@ class FastFaults(Display):
         options = [
             {'name': 'ok', 'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:OK_RBV'},
             {'name': 'beampermitted', 'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:BeamPermitted_RBV'},
+            {'name': 'vetoed', 'channel': 'ca://${P}FFO:${FFO}:EnableVeto_RBV'},
             {'name': 'bypassed', 'channel': 'ca://${P}FFO:${FFO}:FF:${FF}:Ovrd:Active_RBV'}
         ]
         filters = []
@@ -151,12 +143,6 @@ class FastFaults(Display):
             value_slot=self.update_time_delta,
         )
         self.dt_channel.connect()
-        self.destroyed.connect(
-            functools.partial(
-                clear_channel,
-                self.dt_channel,
-            )
-        )
 
     def update_min_times(self):
         current_time = QtCore.QDateTime.currentSecsSinceEpoch()

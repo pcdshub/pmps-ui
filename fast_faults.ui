@@ -198,6 +198,50 @@
           </widget>
          </item>
          <item>
+          <widget class="QGroupBox" name="ff_filter_gb_vetoed">
+           <property name="title">
+            <string>Filter By: Veto State</string>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QComboBox" name="ff_filter_cb_vetoed">
+              <item>
+               <property name="text">
+                <string>False</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>True</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
           <widget class="QGroupBox" name="ff_filter_gb_bypassed">
            <property name="title">
             <string>Filter By: Bypassed State</string>

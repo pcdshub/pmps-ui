@@ -59,25 +59,44 @@ class ArbiterOutputs(Display):
             return
         count = 0
         for ff in ffs:
+            name = ff.get('name')
             prefix = ff.get('prefix')
             ffo_start = ff.get('ffo_start')
             ffo_end = ff.get('ffo_end')
+            ff_start = ff.get('ff_start')
+            ff_end = ff.get('ff_end')
+            ff_count = ff.get('ff_end', -1) - ff.get('ff_start', 0) + 1
 
             ffos_zfill = len(str(ffo_end)) + 1
 
             entries = range(ffo_start, ffo_end+1)
+            ffo_desc = ff.get('ffo_desc', ['']*len(entries))
+            ffo_veto = ff.get('ffo_veto', ['']*len(entries))
 
-            template = 'templates/arbiter_outputs_entry.ui'
-            for _ffo in entries:
+            template = 'templates/arbiter_outputs_entry.py'
+            for _ffo, desc, veto in zip(entries, ffo_desc, ffo_veto):
                 s_ffo = str(_ffo).zfill(ffos_zfill)
-                macros = dict(index=count, P=prefix, FFO=s_ffo)
+                macros = dict(
+                    index=count,
+                    ff_start=ff_start,
+                    ff_end=ff_end,
+                    P=prefix,
+                    FFO=s_ffo,
+                    NAME=name,
+                    FFO_INDEX=_ffo,
+                    FF_COUNT=ff_count,
+                    DESC=desc,
+                    VETO=veto,
+                )
                 widget = PyDMEmbeddedDisplay(parent=outs_container)
                 widget.macros = json.dumps(macros)
                 widget.filename = template
                 widget.disconnectWhenHidden = False
+                widget.loadWhenShown = False
                 widget.setMinimumHeight(40)
                 outs_container.layout().addWidget(widget)
                 count += 1
+
         print(f'Added {count} arbiter outputs')
 
     def channels(self):
