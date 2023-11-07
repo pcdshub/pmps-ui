@@ -416,6 +416,7 @@ class LineBeamParametersControl(Display):
         )
         # We get inputs from the user via a local channel
         # I do this to take advantage of PyDMLineEdit's input handling
+        self._remaining_init_trans_sets = 2
         self.gui_trans_set_channel = PyDMChannel(
             "loc://trans_set?type=float&init=1&precision=2",
             value_slot=self.gui_trans_set,
@@ -506,5 +507,17 @@ class LineBeamParametersControl(Display):
         to write the correct value to the transmission setter based on
         the current judgement factor.
         """
-        setpoint = value * self.get_jf() / 5
+        # On init: avoid writes. This gets called twice before user input.
+        # These come from the loc initialization, which is done twice:
+        # - once, here
+        # - another, from the loc:// channel in the ui xml
+        if self._remaining_init_trans_sets > 0:
+            self._remaining_init_trans_sets -= 1
+            return
+        if value == 1.0:
+            # Special case: no attenuation requested, request none
+            setpoint = 1.0
+        else:
+            # Normal case: specific attenuation requested, modify it
+            setpoint = value * self.get_jf() / 5
         self.new_transmission_signal.emit(setpoint)
