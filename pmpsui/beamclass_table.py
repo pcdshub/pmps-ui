@@ -43,7 +43,7 @@ class BeamclassTable(Display):
         self.ui.source_links_text.setFixedWidth(self.ui.table.width())
 
     def ui_filename(self):
-        return 'beamclass_table.ui'
+        return 'ui/beamclass_table.ui'
 
 
 # Copied from https://confluence.slac.stanford.edu/pages/viewpage.action?pageId=341246543 and tweaked

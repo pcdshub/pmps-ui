@@ -10,40 +10,30 @@ from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore
 
-from beamclass_table import install_bc_setText
-from tooltips import (get_mode_tooltip_lines, get_tooltip_for_bc,
+from pmpsui.beamclass_table import install_bc_setText
+from pmpsui.tooltips import (get_mode_tooltip_lines, get_tooltip_for_bc,
                       setup_combobox_tooltip)
-from utils import BackCompat, morph_into_vertical
-from widgets import EvByteIndicator
+from pmpsui.utils import BackCompat, morph_into_vertical
+from pmpsui.widgets import EvByteIndicator
 
 logger = logging.getLogger(__name__)
-
-
-def make_parser():
-    parser = argparse.ArgumentParser(
-        description='Display the PMPS diagnostic tool inside of PyDM.',
-        prog='pydm pmps.py',
-    )
-    parser.add_argument(
-        '--no-web',
-        action='store_true',
-        help='Disable the grafana web view tab.',
-    )
-    return parser
 
 
 class PMPS(Display):
     new_mode_signal = QtCore.Signal(str)
 
     def __init__(self, parent=None, args=None, macros=None):
-        parser = make_parser()
-        self.user_args = parser.parse_args(args=args or [])
+        # self.user_args = args
+        # TODO: Figure out how we want to pass pmps arguments, while possibly
+        # keeping pydm invocation
+        self.user_args = argparse.Namespace(no_web=True)
         if not macros:
             macros = {}
         # Fallback for old start without macros
         config_name = macros.get('CFG', 'LFE')
         # Read definitions from db file.
         c_file = path.join(path.dirname(path.realpath(__file__)),
+                           "configs",
                            f"{config_name}_config.yml")
         config = {}
         with open(c_file, 'r') as f:
@@ -197,55 +187,55 @@ class PMPS(Display):
     def setup_fastfaults(self):
         # Do not import Display subclasses at the top-level, this breaks PyDM
         # if using PyDMApplication + pydm as a launcher script
-        from fast_faults import FastFaults
+        from pmpsui.fast_faults import FastFaults
         tab = self.ui.tb_fast_faults
         ff_widget = FastFaults(macros=self.config)
         tab.layout().addWidget(ff_widget)
 
     def setup_preemptive_requests(self):
-        from preemptive_requests import PreemptiveRequests
+        from pmpsui.preemptive_requests import PreemptiveRequests
         tab = self.ui.tb_preemptive_requests
         pr_widget = PreemptiveRequests(macros=self.config)
         tab.layout().addWidget(pr_widget)
 
     def setup_arbiter_outputs(self):
-        from arbiter_outputs import ArbiterOutputs
+        from pmpsui.arbiter_outputs import ArbiterOutputs
         tab = self.ui.tb_arbiter_outputs
         ao_widget = ArbiterOutputs(macros=self.config)
         tab.layout().addWidget(ao_widget)
 
     def setup_ev_calculation(self):
-        from ev_calculation import EVCalculation
+        from pmpsui.ev_calculation import EVCalculation
         tab = self.ui.tb_ev_calculation
         ev_widget = EVCalculation(macros=self.config)
         tab.layout().addWidget(ev_widget)
 
     def setup_line_parameters_control(self):
-        from line_beam_parameters import LineBeamParametersControl
+        from pmpsui.line_beam_parameters import LineBeamParametersControl
         tab = self.ui.tb_line_beam_param_ctrl
         beam_widget = LineBeamParametersControl(macros=self.config)
         tab.layout().addWidget(beam_widget)
 
     def setup_trans_override(self):
-        from trans_override import TransOverride
+        from pmpsui.trans_override import TransOverride
         tab = self.ui.tb_trans_override
         jf_widget = TransOverride(macros=self.config)
         tab.layout().addWidget(jf_widget)
 
     def setup_plc_ioc_status(self):
-        from plc_ioc_status import PLCIOCStatus
+        from pmpsui.plc_ioc_status import PLCIOCStatus
         tab = self.ui.tb_plc_ioc_status
         plc_widget = PLCIOCStatus(macros=self.config)
         tab.layout().addWidget(plc_widget)
 
     def setup_beam_class_table(self):
-        from beamclass_table import BeamclassTable
+        from pmpsui.beamclass_table import BeamclassTable
         tab = self.ui.tb_beamclass_table
         beamclass_widget = BeamclassTable(macros=self.config)
         tab.layout().addWidget(beamclass_widget)
 
     def setup_grafana_log_display(self):
-        from grafana_log_display import GrafanaLogDisplay
+        from pmpsui.grafana_log_display import GrafanaLogDisplay
         tab = self.ui.tb_grafana_log_display
         grafana_widget = GrafanaLogDisplay(macros=self.config)
         self.ui.tab_arbiter_outputs.currentChanged.connect(
@@ -254,7 +244,7 @@ class PMPS(Display):
         tab.layout().addWidget(grafana_widget)
 
     def ui_filename(self):
-        return 'pmps.ui'
+        return 'ui/pmps.ui'
 
     def channels(self):
         """Make sure PyDM can find the channels we set up for cleanup."""

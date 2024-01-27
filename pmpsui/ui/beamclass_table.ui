@@ -140,7 +140,7 @@ p, li { white-space: pre-wrap; }
   <customwidget>
    <class>ResizingTextEdit</class>
    <extends>QTextEdit</extends>
-   <header>widgets</header>
+   <header>pmpsui.widgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

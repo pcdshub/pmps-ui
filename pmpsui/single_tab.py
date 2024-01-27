@@ -7,14 +7,14 @@ from pydm import PyDMApplication
 from pydm.utilities import setup_renderer
 from qtpy.QtCore import QTimer
 
-from arbiter_outputs import ArbiterOutputs
-from ev_calculation import EVCalculation
-from fast_faults import FastFaults
-from grafana_log_display import GrafanaLogDisplay
-from line_beam_parameters import LineBeamParametersControl
-from plc_ioc_status import PLCIOCStatus
-from preemptive_requests import PreemptiveRequests
-from trans_override import TransOverride
+from .arbiter_outputs import ArbiterOutputs
+from .ev_calculation import EVCalculation
+from .fast_faults import FastFaults
+from .grafana_log_display import GrafanaLogDisplay
+from .line_beam_parameters import LineBeamParametersControl
+from .plc_ioc_status import PLCIOCStatus
+from .preemptive_requests import PreemptiveRequests
+from .trans_override import TransOverride
 
 options = {
     'fast_faults': FastFaults,

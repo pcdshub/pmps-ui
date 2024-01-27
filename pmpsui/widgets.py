@@ -8,7 +8,7 @@ from pydm.widgets.channel import PyDMChannel
 from pydm.widgets.label import PyDMLabel
 from qtpy import QtCore, QtGui, QtWidgets
 
-from tooltips import get_ev_range_tooltip, get_tooltip_for_bc_bitmask
+from .tooltips import get_ev_range_tooltip, get_tooltip_for_bc_bitmask
 
 
 class UndulatorWidget(QtWidgets.QWidget, PyDMPrimitiveWidget):

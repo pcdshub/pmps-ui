@@ -452,14 +452,14 @@
    <header>pydm.widgets.byte</header>
   </customwidget>
   <customwidget>
-   <class>BCByteIndicator</class>
-   <extends>PyDMByteIndicator</extends>
-   <header>widgets</header>
-  </customwidget>
-  <customwidget>
    <class>EvByteIndicator</class>
    <extends>PyDMByteIndicator</extends>
-   <header>widgets</header>
+   <header>pmpsui.widgets</header>
+  </customwidget>
+  <customwidget>
+   <class>BCByteIndicator</class>
+   <extends>PyDMByteIndicator</extends>
+   <header>pmpsui.widgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

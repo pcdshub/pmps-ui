@@ -29,4 +29,4 @@ class GrafanaLogDisplay(Display):
             webbrowser.open(url, new=2, autoraise=True)
 
     def ui_filename(self):
-        return 'grafana_log_display.ui'
+        return 'ui/grafana_log_display.ui'

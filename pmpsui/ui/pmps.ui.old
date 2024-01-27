@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
+    <width>1275</width>
     <height>375</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
   <property name="windowTitle">
    <string>${CFG} PMPS - Diagnostics</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,1">
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0">
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
@@ -601,6 +601,79 @@
         <number>3</number>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="PyDMTabWidget" name="tab_arbiter_outputs">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tb_fast_faults">
+           <attribute name="title">
+            <string>Fast Faults</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_4"/>
+          </widget>
+          <widget class="QWidget" name="tb_preemptive_requests">
+           <attribute name="title">
+            <string>Preemptive Requests</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_6"/>
+          </widget>
+          <widget class="QWidget" name="tb_arbiter_outputs">
+           <attribute name="title">
+            <string>Arbiter Outputs</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_5"/>
+          </widget>
+          <widget class="QWidget" name="tb_ev_calculation">
+           <attribute name="title">
+            <string>eV Calculation</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_8"/>
+          </widget>
+          <widget class="QWidget" name="tb_plc_ioc_status">
+           <attribute name="title">
+            <string>PLC IOC Status</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_10"/>
+          </widget>
+          <widget class="QWidget" name="tb_line_beam_param_ctrl">
+           <attribute name="title">
+            <string>Line Beam Parameters Control</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_7"/>
+          </widget>
+          <widget class="QWidget" name="tb_trans_override">
+           <attribute name="title">
+            <string>Transmission Override</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_12"/>
+          </widget>
+          <widget class="QWidget" name="tb_beamclass_table">
+           <attribute name="title">
+            <string>Beamclass Table</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_11"/>
+          </widget>
+          <widget class="QWidget" name="tb_grafana_log_display">
+           <attribute name="title">
+            <string>Grafana Log Display</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_9"/>
+          </widget>
+         </widget>
+        </item>
         <item>
          <layout class="QGridLayout" name="gridLayout" columnstretch="0,1,1">
           <item row="3" column="1" colspan="2">
@@ -1791,79 +1864,6 @@
      </item>
     </layout>
    </item>
-   <item>
-    <widget class="PyDMTabWidget" name="tab_arbiter_outputs">
-     <property name="enabled">
-      <bool>true</bool>
-     </property>
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="tb_fast_faults">
-      <attribute name="title">
-       <string>Fast Faults</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4"/>
-     </widget>
-     <widget class="QWidget" name="tb_preemptive_requests">
-      <attribute name="title">
-       <string>Preemptive Requests</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_6"/>
-     </widget>
-     <widget class="QWidget" name="tb_arbiter_outputs">
-      <attribute name="title">
-       <string>Arbiter Outputs</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_5"/>
-     </widget>
-     <widget class="QWidget" name="tb_ev_calculation">
-      <attribute name="title">
-       <string>eV Calculation</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_8"/>
-     </widget>
-     <widget class="QWidget" name="tb_plc_ioc_status">
-      <attribute name="title">
-       <string>PLC IOC Status</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_10"/>
-     </widget>
-     <widget class="QWidget" name="tb_line_beam_param_ctrl">
-      <attribute name="title">
-       <string>Line Beam Parameters Control</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_7"/>
-     </widget>
-     <widget class="QWidget" name="tb_trans_override">
-      <attribute name="title">
-       <string>Transmission Override</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_12"/>
-     </widget>
-     <widget class="QWidget" name="tb_beamclass_table">
-      <attribute name="title">
-       <string>Beamclass Table</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_11"/>
-     </widget>
-     <widget class="QWidget" name="tb_grafana_log_display">
-      <attribute name="title">
-       <string>Grafana Log Display</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_9"/>
-     </widget>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -1885,12 +1885,12 @@
   <customwidget>
    <class>FixNegBitmaskByteIndicator</class>
    <extends>PyDMByteIndicator</extends>
-   <header>widgets</header>
+   <header>pmpsui.widgets</header>
   </customwidget>
   <customwidget>
    <class>EvByteIndicator</class>
    <extends>PyDMByteIndicator</extends>
-   <header>widgets</header>
+   <header>pmpsui.widgets</header>
   </customwidget>
  </customwidgets>
  <resources/>

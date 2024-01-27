@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1471</width>
+    <width>1571</width>
     <height>242</height>
    </rect>
   </property>
@@ -215,13 +215,19 @@
      <property name="lineWidth">
       <number>0</number>
      </property>
+     <property name="macros" stdset="0">
+      <string>{}</string>
+     </property>
      <property name="filename" stdset="0">
-      <string>templates/preemptive_requests_header.ui</string>
+      <string>../templates/preemptive_requests_header.ui</string>
      </property>
      <property name="loadWhenShown" stdset="0">
       <bool>false</bool>
      </property>
      <property name="disconnectWhenHidden" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="followSymlinks" stdset="0">
       <bool>false</bool>
      </property>
     </widget>

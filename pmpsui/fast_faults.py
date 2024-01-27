@@ -84,7 +84,7 @@ class FastFaults(Display):
                 range(ffo_start, ffo_end+1),
                 range(ff_start, ff_end+1)
             )
-            template = 'templates/fastfaults_entry.ui'
+            template = '../templates/fastfaults_entry.ui'
             for _ffo, _ff in entries:
                 s_ffo = str(_ffo).zfill(ffos_zfill)
                 s_ff = str(_ff).zfill(ffs_zfill)
@@ -106,7 +106,7 @@ class FastFaults(Display):
         print(f'Added {count} fast faults')
 
     def ui_filename(self):
-        return 'fast_faults.ui'
+        return 'ui/fast_faults.ui'
 
     def update_filters(self):
         default_options = [

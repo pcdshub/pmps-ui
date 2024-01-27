@@ -496,7 +496,7 @@
       <number>0</number>
      </property>
      <property name="filename" stdset="0">
-      <string>templates/fastfaults_header.ui</string>
+      <string>../templates/fastfaults_header.ui</string>
      </property>
      <property name="disconnectWhenHidden" stdset="0">
       <bool>false</bool>

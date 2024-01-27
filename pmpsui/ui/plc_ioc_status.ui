@@ -32,7 +32,7 @@
       <string/>
      </property>
      <property name="filename" stdset="0">
-      <string>templates/plc_ioc_header.ui</string>
+      <string>../templates/plc_ioc_header.ui</string>
      </property>
     </widget>
    </item>

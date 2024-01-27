@@ -17,7 +17,7 @@ class TransOverride(Display):
         return self._channels
 
     def ui_filename(self):
-        return 'trans_override.ui'
+        return 'ui/trans_override.ui'
 
     def setup_ui(self):
         # There's no special setup for this tab yet

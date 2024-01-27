@@ -10,10 +10,10 @@ from pydm.widgets import PyDMByteIndicator, PyDMEmbeddedDisplay, PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
-from beamclass_table import get_max_bc_from_bitmask, install_bc_setText
-from data_bounds import get_valid_rate
-from tooltips import get_tooltip_for_bc
-from utils import BackCompat
+from .beamclass_table import get_max_bc_from_bitmask, install_bc_setText
+from .data_bounds import get_valid_rate
+from .tooltips import get_tooltip_for_bc
+from .utils import BackCompat
 
 logger = logging.getLogger(__name__)
 
@@ -96,7 +96,7 @@ class PreemptiveRequests(Display):
 
             pool_zfill = len(str(pool_end)) + 1
 
-            template = 'templates/preemptive_requests_entry.ui'
+            template = '../templates/preemptive_requests_entry.ui'
             for pool_id in range(pool_start, pool_end+1):
                 pool = str(pool_id).zfill(pool_zfill)
                 macros = dict(index=count, P=prefix,
@@ -454,7 +454,7 @@ class PreemptiveRequests(Display):
         label.setText(f"{scaled:.2e}")
 
     def ui_filename(self):
-        return 'preemptive_requests.ui'
+        return 'ui/preemptive_requests.ui'
 
     def channels(self):
         """

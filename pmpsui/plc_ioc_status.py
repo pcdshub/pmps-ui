@@ -372,4 +372,4 @@ class PLCIOCStatus(Display):
             labels['plc_status'].setColor(self._off_color)
 
     def ui_filename(self):
-        return 'plc_ioc_status.ui'
+        return 'ui/plc_ioc_status.ui'

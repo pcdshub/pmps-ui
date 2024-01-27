@@ -6,10 +6,10 @@ from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
-from beamclass_table import bc_table, get_desc_for_bc, install_bc_setText
-from data_bounds import VALID_RATES, get_valid_rate
-from tooltips import get_tooltip_for_bc
-from utils import morph_into_vertical
+from .beamclass_table import bc_table, get_desc_for_bc, install_bc_setText
+from .data_bounds import VALID_RATES, get_valid_rate
+from .tooltips import get_tooltip_for_bc
+from .utils import morph_into_vertical
 
 
 class LineBeamParametersControl(Display):
@@ -52,7 +52,7 @@ class LineBeamParametersControl(Display):
         return self._channels
 
     def ui_filename(self):
-        return 'line_beam_parameters.ui'
+        return 'ui/line_beam_parameters.ui'
 
     def setup_ui(self):
         self.setup_bits_connections()

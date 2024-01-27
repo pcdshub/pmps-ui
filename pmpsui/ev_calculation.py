@@ -1,6 +1,6 @@
 from pydm import Display
 
-from widgets import UndulatorListWidget
+from .widgets import UndulatorListWidget
 
 
 class EVCalculation(Display):
@@ -15,4 +15,4 @@ class EVCalculation(Display):
         und_list.prefix = self.config.get('line_arbiter_prefix')
 
     def ui_filename(self):
-        return 'ev_calculation.ui'
+        return 'ui/ev_calculation.ui'

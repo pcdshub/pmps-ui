@@ -3,7 +3,7 @@ from typing import Iterable
 import prettytable
 from qtpy import QtCore, QtWidgets
 
-from beamclass_table import bc_header, get_table_row
+from .beamclass_table import bc_header, get_table_row
 
 
 def preformatted(text: str) -> str:

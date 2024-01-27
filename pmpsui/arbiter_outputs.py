@@ -4,8 +4,8 @@ from pydm import Display
 from pydm.widgets import PyDMEmbeddedDisplay
 from pydm.widgets.channel import PyDMChannel
 
-from beamclass_table import install_bc_setText
-from tooltips import get_tooltip_for_bc
+from .beamclass_table import install_bc_setText
+from .tooltips import get_tooltip_for_bc
 
 
 class ArbiterOutputs(Display):
@@ -73,7 +73,7 @@ class ArbiterOutputs(Display):
             ffo_desc = ff.get('ffo_desc', ['']*len(entries))
             ffo_veto = ff.get('ffo_veto', ['']*len(entries))
 
-            template = 'templates/arbiter_outputs_entry.py'
+            template = '../templates/arbiter_outputs_entry.py'
             for _ffo, desc, veto in zip(entries, ffo_desc, ffo_veto):
                 s_ffo = str(_ffo).zfill(ffos_zfill)
                 macros = dict(
@@ -103,4 +103,4 @@ class ArbiterOutputs(Display):
         return self._channels
 
     def ui_filename(self):
-        return 'arbiter_outputs.ui'
+        return 'ui/arbiter_outputs.ui'
