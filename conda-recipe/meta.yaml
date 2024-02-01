@@ -1,0 +1,57 @@
+{% set package_name = "pmps-ui" %}
+{% set import_name = "pmpsui" %}
+{% set version = load_file_regex(load_file=os.path.join(import_name, "_version.py"), regex_pattern=".*version = '(\S+)'").group(1) %}
+
+package:
+  name: {{ package_name }}
+  version: {{ version }}
+
+source:
+  path: ..
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+
+
+requirements:
+  build:
+  - python >=3.7
+  - pip
+  - setuptools_scm
+  run:
+  - python >=3.7
+  - pcdsutils
+  - prettytable
+  - pydm
+  - qtpy
+  - textwrap
+
+
+
+
+test:
+  imports:
+  - pmps-ui
+  requires:
+  - coverage
+  - doctr
+  - docs-versions-menu
+  - numpydoc
+  - flake8
+  - pytest
+  - sphinx
+  - sphinx-copybutton
+  - sphinx_rtd_theme
+  - sphinxcontrib-jquery
+
+
+
+about:
+  dev_url: https://github.com/pcdshub/pmps-ui
+  doc_url: https://pcdshub.github.io/pmps-ui/
+  home: https://github.com/pcdshub/pmps-ui
+  license: LicenseRef-BSD-3-Clause-SLAC
+  summary: Photon Machine Protection System UI

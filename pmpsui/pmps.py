@@ -12,7 +12,7 @@ from qtpy import QtCore
 
 from pmpsui.beamclass_table import install_bc_setText
 from pmpsui.tooltips import (get_mode_tooltip_lines, get_tooltip_for_bc,
-                      setup_combobox_tooltip)
+                             setup_combobox_tooltip)
 from pmpsui.utils import BackCompat, morph_into_vertical
 from pmpsui.widgets import EvByteIndicator
 

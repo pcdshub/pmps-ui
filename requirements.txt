@@ -1,0 +1,6 @@
+pcdsutils
+prettytable
+pydm
+qtpy
+pyqt
+textwrap

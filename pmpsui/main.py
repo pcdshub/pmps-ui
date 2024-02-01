@@ -1,7 +1,10 @@
 import argparse
+import sys
 
-import pydm
+from qtpy.QtWidgets import QApplication
+
 from .pmps import PMPS
+
 
 def make_parser():
     parser = argparse.ArgumentParser(
@@ -20,4 +23,8 @@ def main():
     parser = make_parser()
     args = parser.parse_args()
 
-    app = PMPS(args=args)
+    qapp = QApplication(sys.argv)
+    pmps = PMPS(args=args)
+
+    pmps.show()
+    qapp.exec()
