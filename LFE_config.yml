@@ -62,42 +62,6 @@ fastfaults:
     ff_start: 1
     ff_end: 50
 
-  - name: "TXI CC Motion"
-    prefix: "PLC:TXI:MOTION:"
-    ffo_desc: ["ALL TXI HXR Motion"]
-    ffo_veto: ["ST1L1 IN"]
-    ffo_start: 1
-    ffo_end: 1
-    ff_start: 1
-    ff_end: 50
-
-  - name: "TXI LFE VAC"
-    prefix: "PLC:TXI:HXR:VAC:"
-    ffo_desc: ["ALL TXI HXR Vac"]
-    ffo_veto: ["ST1L1 IN"]
-    ffo_start: 1
-    ffo_end: 1
-    ff_start: 1
-    ff_end: 50
-
-  - name: "TXI L1 VAC"
-    prefix: "PLC:TXI:HXR:VAC:L1"
-    ffo_desc: ["Planned"]
-    ffo_veto: ["None"]
-    ffo_start: 1
-    ffo_end: 1
-    ff_start: 1
-    ff_end: 50
-
-  - name: "TXI LFE Optics"
-    prefix: "PLC:TXI:LFE:OPTICS:"
-    ffo_desc: ["All TXI HXR Optics"]
-    ffo_veto: ["None"]
-    ffo_start: 1
-    ffo_end: 1
-    ff_start: 1
-    ff_end: 50
-
 
 preemptive_requests:
   - prefix: "PMPS:LFE:"
@@ -120,12 +84,3 @@ preemptive_requests:
     assertion_pool_start: 1
     assertion_pool_end: 20
 
-  - prefix: "PLC:TXI:MOTION:"
-    arbiter_instance: "ARB:01"
-    assertion_pool_start: 1
-    assertion_pool_end: 20
-
-  - prefix: "PLC:TXI:VAC:"
-    arbiter_instance: "ARB:01"
-    assertion_pool_start: 1
-    assertion_pool_end: 20
