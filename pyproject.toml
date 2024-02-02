@@ -20,7 +20,7 @@ include_package_data = true
 file = "LICENSE"
 
 [project.scripts]
-pmps-ui = "pmpsui.main:main"
+pmpsui = "pmpsui.main:main"
 
 [tool.setuptools_scm]
 write_to = "pmpsui/_version.py"
