@@ -1,10 +1,11 @@
 import argparse
-import sys
+import logging
+from pathlib import Path
 
-from qtpy.QtWidgets import QApplication
+from pydm import PyDMApplication
+from pydm.utilities.macro import parse_macro_string
 
-from .pmps import PMPS
-
+logger = logging.getLogger(__name__)
 
 def make_parser():
     parser = argparse.ArgumentParser(
@@ -16,15 +17,64 @@ def make_parser():
         action='store_true',
         help='Disable the grafana web view tab.',
     )
+
+    parser.add_argument(
+        '--macro',
+        help=("Macro subsitution to use, in JSON object format.  Same as PyDM"
+              "macro substitution")
+    )
+
+    parser.add_argument(
+        '--log_level',
+        help='Configure logging level',
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        default="INFO"
+    )
+
     return parser
 
 
 def main():
+    """
+    Mimics relevant portions of pydm_launcher.main, for bundling into pmpsui entrypoint
+    """
     parser = make_parser()
     args = parser.parse_args()
 
-    qapp = QApplication(sys.argv)
-    pmps = PMPS(args=args)
+    # Beginning of pydm launcher vendoring
+    logger = logging.getLogger("")
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter("[%(asctime)s] [%(levelname)-8s] - %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel("INFO")
+    handler.setLevel("INFO")
 
-    pmps.show()
-    qapp.exec()
+    try:
+        """
+        We must import QtWebEngineWidgets before creating a QApplication
+        otherwise we get the following error if someone adds a WebView at Designer:
+        ImportError: QtWebEngineWidgets must be imported before a QCoreApplication instance is created
+        """
+        from qtpy import QtWebEngineWidgets  # noqa: F401
+    except ImportError:
+        logger.debug("QtWebEngine is not supported.")
+    # end of pydm launcher vendoring
+
+    macros = None
+    if args.macro is not None:
+        macros = parse_macro_string(args.macro)
+
+    cli_args = [args.no_web, args.log_level]
+
+    # Here we supply the path to PyDMApplication, without doing this teardown
+    # results in channel connection errors.  (create QApp, create display, exec)
+    qapp = PyDMApplication(
+        ui_file=Path(__file__).parent / 'pmps.py',
+        command_line_args=cli_args,
+        macros=macros,
+        use_main_window=False,
+        hide_nav_bar=True,
+    )
+
+    qapp.exec_()
