@@ -34,7 +34,7 @@ requirements:
 
 test:
   imports:
-  - pmps-ui
+  - pmpsui
   requires:
   - coverage
   - doctr
