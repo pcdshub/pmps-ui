@@ -24,9 +24,17 @@ class PMPS(Display):
 
     def __init__(self, parent=None, args=None, macros=None):
         # self.user_args = args
-        # TODO: Figure out how we want to pass pmps arguments, while possibly
-        # keeping pydm invocation
-        self.user_args = argparse.Namespace(no_web=True)
+        # Assumes args are passed as list of [no_web, log_level] as in main.py
+        self.user_args = argparse.Namespace(no_web=args[0], log_level=args[1])
+
+        logger = logging.getLogger("")
+        handler = logging.StreamHandler()
+        formatter = logging.Formatter("[%(asctime)s] [%(levelname)-8s] - %(message)s")
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
+        logger.setLevel(self.user_args.log_level)
+        handler.setLevel(self.user_args.log_level)
+
         if not macros:
             macros = {}
         # Fallback for old start without macros
