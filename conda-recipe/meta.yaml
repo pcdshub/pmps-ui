@@ -27,6 +27,7 @@ requirements:
   - prettytable
   - pydm
   - pyqt
+  - pyqtwebengine
   - qtpy
 
 

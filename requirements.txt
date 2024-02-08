@@ -3,3 +3,4 @@ prettytable
 pydm
 qtpy
 PyQt5
+PyQtWebEngine
