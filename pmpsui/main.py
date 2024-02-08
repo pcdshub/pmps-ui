@@ -41,15 +41,6 @@ def main():
     parser = make_parser()
     args = parser.parse_args()
 
-    # Beginning of pydm launcher vendoring
-    logger = logging.getLogger("")
-    handler = logging.StreamHandler()
-    formatter = logging.Formatter("[%(asctime)s] [%(levelname)-8s] - %(message)s")
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    logger.setLevel("INFO")
-    handler.setLevel("INFO")
-
     try:
         """
         We must import QtWebEngineWidgets before creating a QApplication
