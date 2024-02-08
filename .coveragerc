@@ -1,0 +1,11 @@
+[run]
+source =
+    pmps-ui
+[report]
+omit =
+    #versioning
+    .*version.*
+    *_version.py
+    #tests
+    *test*
+    pmps-ui/tests/*

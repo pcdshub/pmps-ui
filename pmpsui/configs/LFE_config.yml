@@ -1,0 +1,85 @@
+line_arbiter_prefix: "PMPS:LFE:"
+undulator_kicker_rate_pv: "IOC:BSY0:MP01:BYKIK_RATE"
+accelerator_mode_pv: "SIOC:FEEH:MP01:FACMODE_RBV"
+trans_req_pv: "PMPS:LFE:RequestedBP:Transmission_RBV"
+trans_rbv_pv: "PMPS:LFE:CurrentBP:Transmission_RBV"
+
+dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PQBzCnmMz/l-pmps-events?refresh=10s&kiosk"
+
+
+fastfaults:
+  - name: "LFE Arbiter"
+    prefix: "PMPS:LFE:"
+    ffo_desc: ["PMPS System", "Spare"]
+    ffo_veto: ["None", "None"]
+    ffo_start: 1
+    ffo_end: 2
+    ff_start: 1
+    ff_end: 50
+
+  - name: "LFE Vacuum"
+    prefix: "PLC:LFE:VAC:"
+    ffo_desc: ["Upstream of ST1L0", "Downstream of ST1L0", "Fast shutter"]
+    ffo_veto: ["None", "ST1L0 IN", "None"]
+    ffo_start: 1
+    ffo_end: 3
+    ff_start: 1
+    ff_end: 50
+
+  - name: "LFE GEM"
+    prefix: "PLC:LFE:GEM:"
+    ffo_desc: ["GEM Valves", "AT1L0"]
+    ffo_veto: ["None", "None"]
+    ffo_start: 1
+    ffo_end: 2
+    ff_start: 1
+    ff_end: 50
+
+  - name: "LFE CC Motion"
+    prefix: "PLC:LFE:MOTION:"
+    ffo_desc: ["LFE States", "AT2L0"]
+    ffo_veto: ["None", "None"]
+    ffo_start: 1
+    ffo_end: 2
+    ff_start: 1
+    ff_end: 50
+
+  - name: "LFE Optics"
+    prefix: "PLC:LFE:OPTICS:"
+    ffo_desc: ["All LFE Optics", "Spare"]
+    ffo_veto: ["None", "None"]
+    ffo_start: 1
+    ffo_end: 2
+    ff_start: 1
+    ff_end: 50
+
+  - name: "XRT Optics"
+    prefix: "PLC:XRT:OPTICS:"
+    ffo_desc: ["Coating Checks", "MR1L3 States"]
+    ffo_veto: ["ST1L0 IN", "MR1L3 OUT"]
+    ffo_start: 1
+    ffo_end: 2
+    ff_start: 1
+    ff_end: 50
+
+
+preemptive_requests:
+  - prefix: "PMPS:LFE:"
+    arbiter_instance: "Arbiter:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:LFE:MOTION:"
+    arbiter_instance: "ARB"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:LFE:OPTICS:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:XRT:OPTICS:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
