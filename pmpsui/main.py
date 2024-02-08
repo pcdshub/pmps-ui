@@ -56,7 +56,9 @@ def main():
     if args.macro is not None:
         macros = parse_macro_string(args.macro)
 
-    cli_args = [args.no_web, args.log_level]
+    cli_args = ['--log_level', args.log_level]
+    if args.no_web:
+        cli_args = ['--no_web'] + cli_args
 
     # Here we supply the path to PyDMApplication, without doing this teardown
     # results in channel connection errors.  (create QApp, create display, exec)

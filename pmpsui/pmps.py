@@ -19,13 +19,36 @@ from pmpsui.widgets import EvByteIndicator
 logger = logging.getLogger(__name__)
 
 
+def make_parser():
+    parser = argparse.ArgumentParser(
+        description='Display the PMPS diagnostic tool inside of PyDM.',
+        prog='pydm pmps.py',
+    )
+    parser.add_argument(
+        '--no-web',
+        action='store_true',
+        help='Disable the grafana web view tab.',
+    )
+    parser.add_argument(
+        '--log_level',
+        help='Configure logging level',
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        default="INFO"
+    )
+    return parser
+
+
 class PMPS(Display):
     new_mode_signal = QtCore.Signal(str)
 
     def __init__(self, parent=None, args=None, macros=None):
         # self.user_args = args
         # Assumes args are passed as list of [no_web, log_level] as in main.py
-        self.user_args = argparse.Namespace(no_web=args[0], log_level=args[1])
+        if not args:
+            args = []
+
+        parser = make_parser()
+        self.user_args = parser.parse_args(args=args)
 
         logger = logging.getLogger("")
         handler = logging.StreamHandler()
