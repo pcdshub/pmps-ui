@@ -2,15 +2,19 @@ import argparse
 import logging
 from functools import partial
 from os import path
+from pathlib import Path
 from typing import Optional, Union
 
 import yaml
 from pydm import Display
 from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
-from qtpy import QtCore
+from qtpy import QtCore, QtGui
+from qtpy.QtGui import QPixmap
+from qtpy.QtWidgets import QApplication
 
 from pmpsui.beamclass_table import install_bc_setText
+from pmpsui.splash import PMPSSplashScreen
 from pmpsui.tooltips import (get_mode_tooltip_lines, get_tooltip_for_bc,
                              setup_combobox_tooltip)
 from pmpsui.utils import BackCompat, morph_into_vertical
@@ -44,6 +48,9 @@ class PMPS(Display):
     def __init__(self, parent=None, args=None, macros=None):
         # self.user_args = args
         # Assumes args are passed as list of [no_web, log_level] as in main.py
+        self.splash: Optional[PMPSSplashScreen] = None
+        self.setup_splash()
+
         if not args:
             args = []
 
@@ -94,12 +101,46 @@ class PMPS(Display):
         self._channels = []
         self.setup_ui()
 
+        self.splash.finish(self)
+        self.splash = None
+
+    def setup_splash(self) -> None:
+        pixmap = QPixmap(str(Path(__file__).parent.parent / 'pmps_splash.png'))
+        self.splash = PMPSSplashScreen(pixmap)
+        self.splash.set_message_rect(QtCore.QRect(250, 100, 300, 150),
+                                     alignment=QtCore.Qt.AlignLeft)
+
+        splash_font = QtGui.QFont("Arial", 12, QtGui.QFont.Bold)
+        self.splash.setFont(splash_font)
+        self.splash.show_message('PMPS UI setup beginning...')
+        self.splash.set_progress(0)
+        self.splash.show()
+
+    def update_splash_message(
+        self,
+        msg: str,
+        progress: Optional[int]=None
+    ) -> None:
+        if self.splash is None:
+            return
+
+        self.splash.show_message(msg)
+        if progress is not None:
+            self.splash.set_progress(progress)
+        app = QApplication.instance()
+        app.processEvents()
+
     def setup_ui(self):
+        self.update_splash_message('Setting up ui...', progress=10)
         self.setup_mode_selector()
         self.setup_ev_range_labels()
         self.setup_tooltips()
+        self.update_splash_message('Set up mode selector, ev-range labels, tooltips',
+                                   progress=15)
         self.setup_backcompat()
+        self.update_splash_message('Begin setting up tabs', progress=20)
         self.setup_tabs()
+        self.update_splash_message('Finished setting up ui', progress=100)
 
     def setup_mode_selector(self):
         self.ui.mode_combo.addItems(
@@ -194,19 +235,36 @@ class PMPS(Display):
         self.setUpdatesEnabled(False)
 
         self.setup_fastfaults()
+        # TODO: maybe figure out how to give real progress quantities?
+        self.update_splash_message('Fast faults added', progress=40)
+
         self.setup_preemptive_requests()
+        self.update_splash_message('Preemptive requests added', progress=55)
+
         self.setup_arbiter_outputs()
+        self.update_splash_message('Arbiter outputs added', progress=65)
+
         self.setup_ev_calculation()
+        self.update_splash_message('eV Calculation added', progress=70)
+
         self.setup_line_parameters_control()
+        self.update_splash_message('Line parameter controls added', progress=75)
+
         self.setup_trans_override()
+        self.update_splash_message('Transmission override added', progress=80)
+
         self.setup_plc_ioc_status()
+        self.update_splash_message('PLC IOC Statuses added', progress=85)
+
         self.setup_beam_class_table()
+        self.update_splash_message('Beam class table added', progress=90)
 
         dash_url = self.config.get('dashboard_url')
         if self.user_args.no_web or dash_url is None:
             self.ui.tab_arbiter_outputs.removeTab(8)
         else:
             self.setup_grafana_log_display()
+            self.update_splash_message('Beam class table added', progress=95)
 
         line_arbiter_prefix = self.config.get("line_arbiter_prefix", "")
         if "LFE" in line_arbiter_prefix:
