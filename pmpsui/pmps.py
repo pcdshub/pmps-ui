@@ -93,6 +93,8 @@ class PMPS(Display):
         # add CFG macro to display the Line when starting without macros
         macros['CFG'] = config_name
         super(PMPS, self).__init__(parent=parent, args=args, macros=macros)
+        # Move to same location as main screen
+        self.splash.move(self.pos())
 
         self.config = config
         line_arbiter_prefix = self.config.get('line_arbiter_prefix')
@@ -124,9 +126,9 @@ class PMPS(Display):
         if self.splash is None:
             return
 
-        self.splash.show_message(msg)
         if progress is not None:
             self.splash.set_progress(progress)
+        self.splash.show_message(msg)
         app = QApplication.instance()
         app.processEvents()
 
