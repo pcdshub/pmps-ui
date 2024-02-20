@@ -10,12 +10,14 @@ Welcome to pmps-ui's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   upcoming_changes.rst
+
 .. toctree::
    :maxdepth: 1
    :caption: Links
    :hidden:
 
-   Github Repository <https://github.com/{{ cookiecutter.github_repo_group }}/{{ cookiecutter.repo_name }}>
+   Github Repository <https://github.com/pcdshub/pmps-ui>
 
 
 
