@@ -11,6 +11,7 @@ Welcome to pmps-ui's documentation!
    :caption: Contents:
 
    upcoming_changes.rst
+   releases.rst
 
 .. toctree::
    :maxdepth: 1
