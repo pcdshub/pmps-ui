@@ -1,17 +1,13 @@
-107 doc_doc
-###########
+Release History
+###############
 
-API Breaks
-----------
-- N/A
+
+v1.1.0 (2024-02-20)
+===================
 
 Features
 --------
 - adds a splash screen to show loading progress during startup
-
-Bugfixes
---------
-- N/A
 
 Maintenance
 -----------
