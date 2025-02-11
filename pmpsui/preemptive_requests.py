@@ -189,6 +189,25 @@ class PreemptiveRequests(Display):
                     # Keep the calculated value under the "Transmission" header
                     widget.embedded_widget.transmission_label.hide()
 
+                # special setup for the veto indicator
+                # can't use a channel since it's an array
+                veto_byte = widget.findChild(
+                    PyDMByteIndicator,
+                    "veto_byte",
+                )
+                veto_channel_name = Template(
+                    'ca://${P}${ARBITER}:AP:Entry:${POOL}:Veto_RBV'
+                ).safe_substitute(**macros)
+                veto_channel = PyDMChannel(
+                    veto_channel_name,
+                    value_slot=functools.partial(
+                        self.update_veto,
+                        byte=veto_byte
+                    ),
+                )
+                veto_channel.connect()
+                self._channels.append(veto_channel)
+
                 # insert the widget you see into the table
                 row_position = reqs_table.rowCount()
                 reqs_table.insertRow(row_position)
@@ -213,7 +232,7 @@ class PreemptiveRequests(Display):
                         store_type=info.store_type,
                         data_type=info.data_type,
                         default=info.default,
-                        channel=inner_widget.channel,
+                        channel=veto_channel_name if info.name == 'vetoed' else inner_widget.channel,
                     )
                     if info.widget_name == 'energy_bytes':
                         self.backcompat.add_ev_ranges_alternate(item)
@@ -238,6 +257,7 @@ class PreemptiveRequests(Display):
         self.ui.full_beam.stateChanged.connect(self.update_all_filters)
         self.ui.inactive.stateChanged.connect(self.update_all_filters)
         self.ui.disconnected.stateChanged.connect(self.update_all_filters)
+        self.ui.vetoed.stateChanged.connect(self.update_all_filters)
         self.ui.reqs_table_widget.cellChanged.connect(
             self.handle_item_changed,
             )
@@ -382,15 +402,20 @@ class PreemptiveRequests(Display):
             ))
         active = bool(values['active'])
         connected = item.connected
-
+        char_veto_array = values['vetoed'][1:-1].split()
+        vetoed = any([int(veto) for veto in char_veto_array])
+        if vetoed:
+            print(char_veto_array)
         hide_full_beam = self.ui.full_beam.isChecked()
         hide_inactive = self.ui.inactive.isChecked()
         hide_disconnected = self.ui.disconnected.isChecked()
+        hide_vetoed = self.ui.vetoed.isChecked()
 
         hide = any((
             hide_full_beam and full_beam,
             hide_inactive and not active,
             hide_disconnected and not connected,
+            hide_vetoed and vetoed,
             ))
 
         if hide:
@@ -452,6 +477,15 @@ class PreemptiveRequests(Display):
         else:
             scaled = raw_trans
         label.setText(f"{scaled:.2e}")
+
+    def update_veto(self, value, byte):
+        # nonzero values correspond to veto by the device corresponding to that index
+        veto_devices = [str(device) for device, vetoing in enumerate(value) if vetoing]
+        # update the color manually since we aren't using a channel
+        is_vetoed = len(veto_devices) > 0
+        byte._indicators[0].setColor(byte._on_color if is_vetoed else byte._off_color)
+        # update the tooltip
+        byte.PyDMToolTip = ', '.join(veto_devices)
 
     def ui_filename(self):
         return 'ui/preemptive_requests.ui'
@@ -696,5 +730,14 @@ item_info_list = [
         store_type=int,
         data_type=int,
         default=0,
+    ),
+    ItemInfo(
+        name='vetoed',
+        select_text='Vetoed',
+        widget_name='veto_byte',
+        widget_class=PyDMByteIndicator,
+        store_type=str,
+        data_type=str,
+        default="[]",
     ),
 ]
