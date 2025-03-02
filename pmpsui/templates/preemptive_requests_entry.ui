@@ -451,6 +451,9 @@
      <property name="toolTip">
       <string/>
      </property>
+     <property name="channel" stdset="0">
+      <string>ca://${P}${ARBITER}:Vetoed_RBV</string>
+     </property>
      <property name="showLabels" stdset="0">
       <bool>false</bool>
      </property>
