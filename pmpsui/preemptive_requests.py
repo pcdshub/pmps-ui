@@ -358,6 +358,8 @@ class PreemptiveRequests(Display):
         for info, column in zip(item_info_list, range(2, table.columnCount())):
             item = table.item(row, column)
             values[info.name] = item.get_value()
+            if info.name == 'active':
+                connection_item = item
 
         full_rate = values['rate'] >= 120
         full_bc = values['beamclass'] >= 13
@@ -382,7 +384,7 @@ class PreemptiveRequests(Display):
             values['energy'] >= 32,
             ))
         active = bool(values['active'])
-        connected = item.connected
+        connected = connection_item.connected
         vetoed = bool(values['vetoed'])
 
         hide_full_beam = self.ui.full_beam.isChecked()
