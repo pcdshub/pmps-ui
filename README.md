@@ -1,19 +1,24 @@
 PMPS - User Interface
 =====================
 
-The main entry point for the PMPS UI is the `pmps.py` file.
-This display takes a macro called `CFG` which specify the prefix for the
-configuration file to be loaded, e.g. LFE_config.yml.
+The main entry point for the PMPS UI is simply the pmpsui module itself:
 
-By default to ensure backwards compatibility, if one launches the `pmps.py` file
-without specifying macros, the `LFE` configuration is loaded and the screen is
-launched.
-
-To launch a different configuration do:
-
-```bash
-pydm -m "CFG=KFE" pmps.py
 ```
+python -m pmpsui --help
+```
+
+This is typically launched for either LFE or KFE and with the
+web views disabled (since they are somewhere between adversely
+impacting performance and not working at all).
+
+```
+python -m pmpsui --area LFE --no-web
+```
+
+```
+python -m pmpsui --area KFE --no-web
+```
+
 
 Configuration File
 ==================
