@@ -19,9 +19,10 @@ def make_parser():
     )
 
     parser.add_argument(
-        '--macro',
-        help=("Macro subsitution to use, in JSON object format.  Same as PyDM"
-              "macro substitution")
+        '--area',
+        required=True,
+        choices=("KFE", "LFE", "TST"),
+        help="Which area's faults to load"
     )
 
     parser.add_argument(
@@ -52,13 +53,12 @@ def main():
         logger.debug("QtWebEngine is not supported.")
     # end of pydm launcher vendoring
 
-    macros = None
-    if args.macro is not None:
-        macros = parse_macro_string(args.macro)
+
+    macros = parse_macro_string(f"CFG={args.area}")
 
     cli_args = ['--log_level', args.log_level]
     if args.no_web:
-        cli_args = ['--no_web'] + cli_args
+        cli_args = ['--no-web'] + cli_args
 
     # Here we supply the path to PyDMApplication, without doing this teardown
     # results in channel connection errors.  (create QApp, create display, exec)
