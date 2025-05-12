@@ -35,6 +35,21 @@ def make_parser():
     return parser
 
 
+class WindowStartsHiddenPyDMApplication(PyDMApplication):
+    """
+    Force the main window to stay hidden until after loading the GUI.
+
+    If not used, then we get a blank grey PyDMMainWindow during loads.
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.main_window.show()
+
+    def make_main_window(self, *args, **kwargs):
+        super().make_main_window(*args, **kwargs)
+        self.main_window.hide()
+
+
 def main():
     """
     Mimics relevant portions of pydm_launcher.main, for bundling into pmpsui entrypoint
@@ -62,12 +77,11 @@ def main():
 
     # Here we supply the path to PyDMApplication, without doing this teardown
     # results in channel connection errors.  (create QApp, create display, exec)
-    qapp = PyDMApplication(
+    qapp = WindowStartsHiddenPyDMApplication(
         ui_file=Path(__file__).parent / 'pmps.py',
         command_line_args=cli_args,
         macros=macros,
         use_main_window=False,
         hide_nav_bar=True,
     )
-
     qapp.exec_()

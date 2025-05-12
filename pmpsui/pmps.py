@@ -46,8 +46,6 @@ class PMPS(Display):
     new_mode_signal = QtCore.Signal(str)
 
     def __init__(self, parent=None, args=None, macros=None):
-        main_window = QApplication.instance().main_window
-        main_window.hide()
         # self.user_args = args
         # Assumes args are passed as list of [no_web, log_level] as in main.py
         self.splash: Optional[PMPSSplashScreen] = None
@@ -105,7 +103,6 @@ class PMPS(Display):
 
         self.splash.finish(self)
         self.splash = None
-        main_window.show()
 
     def setup_splash(self) -> None:
         pixmap = QPixmap(str(Path(__file__).parent.parent / 'pmps_splash.png'))
