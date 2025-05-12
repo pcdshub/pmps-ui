@@ -99,7 +99,7 @@ fastfaults:
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
-    ff_end: 50
+    ff_end: 65
 
   - name: "RIX Vacuum"
     prefix: "PLC:KFE:RIX:VAC:K2:"
@@ -137,6 +137,42 @@ fastfaults:
     ff_start: 1
     ff_end: 50
 
+  - name: "QRIX Vacuum"
+    prefix: "PLC:QRIX:VAC:"
+    ffo_desc: ["QRIX Beamline Valves", "Spare"]
+    ffo_veto: ["MR1K1 OUT or ST1K2 IN", "MR1K1 OUT or ST1K2 IN"]
+    ffo_start: 1
+    ffo_end: 1
+    ff_start: 1
+    ff_end: 50
+
+  - name: "TXI K  Vacuum"
+    prefix: "PLC:TXI:VAC:"
+    ffo_desc: ["TXI K3 Beamline Valves", "Spare"]
+    ffo_veto: ["MR1K3 OUT or ST1K3 IN", "MR1K3 OUT or ST1K3 IN"]
+    ffo_start: 1
+    ffo_end: 2
+    ff_start: 1
+    ff_end: 50
+
+  - name: "TXI K3 motion"
+    prefix: "PLC:TXI:SXR:MOTION:"
+    ffo_desc: ["TXI K3 Beamline Diagnostics", "Spare"]
+    ffo_veto: ["MR1K3 OUT or ST1K3 IN", "MR1K3 OUT or ST1K3 IN"]
+    ffo_start: 1
+    ffo_end: 1
+    ff_start: 1
+    ff_end: 50
+
+  - name: "TXI K Optics"
+    prefix: "PLC:TXI:KFE:OPTICS:"
+    ffo_desc: ["TXI K3 Beamline OPTICS", "Spare"]
+    ffo_veto: ["MR1K1 IN", "MR1K1 IN"]
+    ffo_start: 1
+    ffo_end: 1
+    ff_start: 1
+    ff_end: 50
+
 
 preemptive_requests:
   - prefix: "PMPS:KFE:"
@@ -151,6 +187,11 @@ preemptive_requests:
 
   - prefix: "PLC:KFE:MOTION:"
     arbiter_instance: "ARB:02"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:KFE:MOTION:"
+    arbiter_instance: "ARB:03"
     assertion_pool_start: 1
     assertion_pool_end: 20
 
@@ -182,12 +223,12 @@ preemptive_requests:
   - prefix: "PLC:TMO:MOTION:"
     arbiter_instance: "ARB:01"
     assertion_pool_start: 1
-    assertion_pool_end: 20
+    assertion_pool_end: 30
 
   - prefix: "PLC:TMO:MOTION:"
     arbiter_instance: "ARB:02"
     assertion_pool_start: 1
-    assertion_pool_end: 20
+    assertion_pool_end: 30
 
   - prefix: "PLC:TMO:VAC:"
     arbiter_instance: "ARB:01"
@@ -235,6 +276,26 @@ preemptive_requests:
     assertion_pool_end: 20
 
   - prefix: "PLC:CRIX:MOT:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:QRIX:VAC:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:TXI:VAC:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:TXI:SXR:MOTION:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:TXI:KFE:OPTICS:"
     arbiter_instance: "ARB:01"
     assertion_pool_start: 1
     assertion_pool_end: 20
