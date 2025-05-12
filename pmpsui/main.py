@@ -22,7 +22,7 @@ def make_parser():
         '--area',
         required=True,
         choices=("KFE", "LFE", "TST"),
-        help="Which area's faults to load"
+        help="Which area's configuration to load"
     )
 
     parser.add_argument(
