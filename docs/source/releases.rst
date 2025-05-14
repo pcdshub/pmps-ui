@@ -10,9 +10,6 @@ API Breaks
 - Delete the defunct symbolic link at the root of the repo.
   Old scripts that launch using this are encouraged to either
   swap to pmpsui/pmps.py or switch to the python -m pmpsui entrypoint.
-
-Features
---------
 - Allow us to pass --area instead of --macros in pmpsui entrypoint
 
 Bugfixes
