@@ -238,6 +238,7 @@ class PreemptiveRequests(Display):
         self.ui.full_beam.stateChanged.connect(self.update_all_filters)
         self.ui.inactive.stateChanged.connect(self.update_all_filters)
         self.ui.disconnected.stateChanged.connect(self.update_all_filters)
+        self.ui.vetoed.stateChanged.connect(self.update_all_filters)
         self.ui.reqs_table_widget.cellChanged.connect(
             self.handle_item_changed,
             )
@@ -357,6 +358,8 @@ class PreemptiveRequests(Display):
         for info, column in zip(item_info_list, range(2, table.columnCount())):
             item = table.item(row, column)
             values[info.name] = item.get_value()
+            if info.name == 'active':
+                connection_item = item
 
         full_rate = values['rate'] >= 120
         full_bc = values['beamclass'] >= 13
@@ -381,16 +384,19 @@ class PreemptiveRequests(Display):
             values['energy'] >= 32,
             ))
         active = bool(values['active'])
-        connected = item.connected
+        connected = connection_item.connected
+        vetoed = bool(values['vetoed'])
 
         hide_full_beam = self.ui.full_beam.isChecked()
         hide_inactive = self.ui.inactive.isChecked()
         hide_disconnected = self.ui.disconnected.isChecked()
+        hide_vetoed = self.ui.vetoed.isChecked()
 
         hide = any((
             hide_full_beam and full_beam,
             hide_inactive and not active,
             hide_disconnected and not connected,
+            hide_vetoed and vetoed,
             ))
 
         if hide:
@@ -692,6 +698,15 @@ item_info_list = [
         name='active',
         select_text='Active Arbitration',
         widget_name='live_byte',
+        widget_class=PyDMByteIndicator,
+        store_type=int,
+        data_type=int,
+        default=0,
+    ),
+    ItemInfo(
+        name='vetoed',
+        select_text='Vetoed',
+        widget_name='veto_byte',
         widget_class=PyDMByteIndicator,
         store_type=int,
         data_type=int,
