@@ -42,7 +42,7 @@ fastfaults:
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
-    ff_end: 50
+    ff_end: 100
 
   - name: "LFE Optics"
     prefix: "PLC:LFE:OPTICS:"
@@ -70,7 +70,12 @@ preemptive_requests:
     assertion_pool_end: 20
 
   - prefix: "PLC:LFE:MOTION:"
-    arbiter_instance: "ARB"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:LFE:MOTION:"
+    arbiter_instance: "ARB:02"
     assertion_pool_start: 1
     assertion_pool_end: 20
 
