@@ -1846,7 +1846,7 @@
      </widget>
      <widget class="QWidget" name="tb_trans_override">
       <attribute name="title">
-       <string>Transmission Override</string>
+       <string>Beam Power Override</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_12"/>
      </widget>
