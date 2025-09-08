@@ -507,6 +507,12 @@
      <property name="text">
       <string>- Use of this override necessarily makes the beam less safe by relaxing the gas detector and beam class requirements.
 
+- You should reset and reapply the line beam parameter transmission select after performing this override
+  if you need it for your shift.
+
+- This override will adjust any active line beam parameter transmission requests in-place in an unintuitive way.
+  Once overriden, new line beam parameter transmission requests will be scaled appropriately.
+
 - The PMPS transmission and beam class parameters were set with an assumed maximum credible energy of 5 mJ.
   When this assumption is wildly wrong, you may use this override to globally adjust the requirements for a shift duration.
 
@@ -525,13 +531,7 @@
   maximum credible energy of 0.5 mJ, The beam classes would not be adjusted at all. In this case, removing the
   transmission requirement is already enough.
   The formula is: p_new = p_old * (5mJ / e_max) * t_old
-  (p_new is clamped to be &gt;= p_old)
-
-- You should reset and reapply the line beam parameter transmission select after performing this override
-  if you need it for your shift.
-
-- This override will adjust any active line beam parameter transmission requests in-place in an unintuitive way.
-  Once overriden, new line beam parameter transmission requests will be scaled appropriately.</string>
+</string>
      </property>
     </widget>
    </item>
