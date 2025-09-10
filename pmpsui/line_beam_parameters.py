@@ -1,4 +1,5 @@
 import functools
+import math
 
 from pydm import Display
 from pydm.exception import raise_to_operator
@@ -6,7 +7,7 @@ from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
-from .beamclass_table import bc_table, get_desc_for_bc, install_bc_setText
+from .beamclass_table import bc_table, bc_power, get_desc_for_bc, install_bc_setText
 from .data_bounds import VALID_RATES, get_valid_rate
 from .tooltips import get_tooltip_for_bc
 from .utils import morph_into_vertical
@@ -262,6 +263,7 @@ class LineBeamParametersControl(Display):
             ch,
             value_slot=self.on_bc_range_rbv_update,
         )
+        self.cached_bc_value = 0
         self.bc_range_rbv_channel.connect()
         self._channels.append(self.bc_range_rbv_channel)
 
@@ -338,7 +340,19 @@ class LineBeamParametersControl(Display):
         """
         Handler for when the user selects a new beamclass using the combo box.
         """
-        self.update_beamclass_signal.emit(index)
+        if not self.cached_jf_on_off:
+            self.update_beamclass_signal.emit(index)
+            return
+        # Inverted adjustment for judgement factor
+        # Pick a number -> send the number that would result in this number given jf
+        goal_power = bc_power[index]
+        goal_index = 0
+        for idx, power in bc_power.items():
+            p_new = self.live_power_with_jf(p_old=power)
+            if p_new > goal_power:
+                break
+            goal_index = idx
+        self.update_beamclass_signal.emit(goal_index)
 
     def update_beamclass_combobox_value(self, value):
         """
@@ -366,16 +380,50 @@ class LineBeamParametersControl(Display):
         while value > 0:
             count += 1
             value = value >> 1
-        self.update_beamclass_combobox_value(count)
+        if self.cached_jf_on_off:
+            # Adjust for judgement factor
+            bc_value = self.live_bc_for_power(bc_power[count])
+        else:
+            bc_value = count
+        self.update_beamclass_combobox_value(bc_value)
 
     def on_bc_range_rbv_update(self, value):
         # Update the max bc label
+        self.cached_bc_value = value
         count = 0
         while value > 0:
             count += 1
             value = value >> 1
-        self.ui.max_bc_label.setText(str(count))
-        self.ui.max_bc_label.setToolTip(get_tooltip_for_bc(count))
+        if self.cached_jf_on_off:
+            # Adjust for judgement factor
+            bc_value = self.live_bc_for_power(bc_power[count])
+        else:
+            bc_value = count
+        self.ui.max_bc_label.setText(str(bc_value))
+        self.ui.max_bc_label.setToolTip(get_tooltip_for_bc(bc_value))
+
+    def live_power_with_jf(self, p_old: float) -> float:
+        """
+        Calculate the new beamclass power level after applying the judgement factor override.
+
+        Uses the active judgment factor and other values known by this display.
+        """
+        return calc_bc_jf_power(p_old=p_old, j_factor=self.get_jf(), t_old=self.cached_transmission_rbv)
+
+    def live_bc_for_power(self, power: float) -> int:
+        """
+        Calculate the highest beamclass that ensures we don't exceed a given power level.
+
+        Uses the active judgment factor and other values known by this display.
+        """
+        return calc_bc_for_power(self.live_power_with_jf(p_old=power))
+
+    def update_bc_rbv(self):
+        """
+        Refresh the visible beamclass summary readbacks.
+        """
+        self.update_beamclass_max_from_bitmask(self.cached_bc_value)
+        self.on_bc_range_rbv_update(self.cached_bc_value)
 
     def setup_transmission_jf(self) -> None:
         """
@@ -466,6 +514,7 @@ class LineBeamParametersControl(Display):
         """
         self.cached_jf_setting = value
         self.update_trans_rbv()
+        self.update_bc_rbv()
 
     def new_jf_on_off(self, value: bool) -> None:
         """
@@ -477,6 +526,7 @@ class LineBeamParametersControl(Display):
         """
         self.cached_jf_on_off = value
         self.update_trans_rbv()
+        self.update_bc_rbv()
 
     def get_jf(self) -> float:
         """
@@ -521,3 +571,41 @@ class LineBeamParametersControl(Display):
             # Normal case: specific attenuation requested, modify it
             setpoint = value * self.get_jf() / 5
         self.new_transmission_signal.emit(setpoint)
+
+
+def calc_bc_jf_power(p_old: float, j_factor: float, t_old: float) -> float:
+    """
+    Calculate the new beamclass power level after applying the judgement factor override.
+
+    Follows the formula:
+    p_new = p_old * (5mj / e_max) * t_old
+
+    Parameters
+    ----------
+    p_old : float
+        The original beamclass power before applying the judgement factor.
+    j_factor : float
+        The judgement factor, is expected to be above 0 and less than 5.
+    t_old : float
+        The transmission request prior to overriding with the judgement factor.
+
+    Returns
+    -------
+    float
+        The updated beamclass power level.
+    """
+    return p_old * (5 / j_factor) * t_old
+
+
+def calc_bc_for_power(power: float) -> int:
+    """
+    Given a power level, calculate the highest beamclass that ensures we don't exceed it.
+    """
+    bc_idx = 0
+    for idx, power_of_bc in bc_power.items():
+        # Duplicate logic from PLC
+        if math.floor(power) + 1 >= power_of_bc:
+            bc_idx = idx
+        else:
+            break
+    return bc_idx

@@ -71,6 +71,11 @@ bc_table = """
 for index, row in enumerate(bc_table):
     bc_table[index] = row.split('\t')
 
+# Used for the jf beamclass override in line_beam_parameters.py select_new_beamclass
+bc_power = {idx: float(row[7]) for idx, row in enumerate(bc_table) if idx < 13}
+for idx in (13, 14, 15):
+    bc_power[idx] = bc_power[12]
+
 bc_header_full_descriptions = [
     (
         'Index is the beamclass number. '
