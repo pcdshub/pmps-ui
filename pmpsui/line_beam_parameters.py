@@ -432,8 +432,14 @@ class LineBeamParametersControl(Display):
         if self.cached_jf_on_off:
             self.bc_jf_mapping = {idx: self.live_bc_for_power(pwr) for idx, pwr in bc_power.items()}
         else:
-            self.bc_jf_mapping = {num: num for num in range(15)}
-        self.update_bc_rbv() 
+            self.reset_bc_jf_mapping()
+        self.update_bc_rbv()
+
+    def reset_bc_jf_mapping(self):
+        """
+        Reset the bc_jf_mapping variable to the initial value (no jf active).
+        """
+        self.bc_jf_mapping = {num: num for num in range(16)}
 
     def setup_transmission_jf(self) -> None:
         """
@@ -467,7 +473,7 @@ class LineBeamParametersControl(Display):
         self.cached_transmission_rbv = 1
         self.cached_jf_setting = 5
         self.cached_jf_on_off = False
-        self.bc_jf_mapping = {num: num for num in range(16)}
+        self.reset_bc_jf_mapping()
         # If we emit from self.new_transmission_signal, put to the real PV
         self.trans_set_channel = PyDMChannel(
             f"ca://{line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission",
