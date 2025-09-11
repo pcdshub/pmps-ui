@@ -6,14 +6,48 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>806</width>
-    <height>598</height>
+    <width>1151</width>
+    <height>735</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0" colspan="4">
+    <widget class="QLabel" name="label_29">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use this section to globally relax the transmission requirements. The transmission requirements are designed to protect us from a 5mJ beam. If your beam is substantially weaker than 5mJ, you can put in the maximum credible energy here to temporarily adjust all of the transmission protections to compensate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>Beam Power Override: Transmission and Beam Class</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="label_32">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Math</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="2">
     <widget class="PyDMLineEdit" name="jf_cred_energy_set">
      <property name="sizePolicy">
@@ -60,8 +94,61 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_22">
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_31">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="text">
+      <string>Usage Notes</string>
+     </property>
+    </widget>
+   </item>
+   <item row="17" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="9" column="0">
+    <spacer name="horizontalSpacer_6">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="7" column="0" colspan="4">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_24">
      <property name="font">
       <font>
        <weight>75</weight>
@@ -69,12 +156,32 @@
       </font>
      </property>
      <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Readback and setpoint for the maximum credible energy in the context of a transmission override. If this is 5mJ, then we will use the maximum transmission protections. If this is set to lower than 5mJ and applied, then we will adjust all transmission protections proportionally.&lt;/p&gt;&lt;p&gt;Note that if we already have a transmission override applied, adjusting this parameter further will update the protection threshold, live.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click &amp;quot;apply&amp;quot; to start the transmission override mode. Click &amp;quot;cancel&amp;quot; to return to the normal protection mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>Maximum Credible Energy:</string>
+      <string>Apply Override:</string>
      </property>
     </widget>
+   </item>
+   <item row="12" column="0" colspan="4">
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item row="2" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -164,6 +271,16 @@
      </item>
     </layout>
    </item>
+   <item row="13" column="0" colspan="4">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- Transmission adjustments are proportional, e.g. a maximum credible energy of 0.5 mJ would result in all transmissions being multipled by 10.&lt;/p&gt;&lt;p&gt;The formula is: t_new = t_old * 5mJ / e_max, with t_new capped at 1.0 = 100% transmission.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
    <item row="3" column="1">
     <layout class="QHBoxLayout" name="horizontalLayout_9">
      <property name="spacing">
@@ -252,110 +369,13 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="1">
-    <widget class="PyDMPushButton" name="jf_cancel">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>200</width>
-       <height>26</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>200</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QPushButton { background-color: rgb(255, 85, 85) }</string>
-     </property>
+   <item row="15" column="0" colspan="4">
+    <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Cancel</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- Similarly, beam class adjustments are proportional. In the case of no transmission requirements, a maximum credible energy of 0.5 mJ would increase us from beam class 7 (1% MAP) to beam class 9 (10% MAP). Note that if we had picked a slightly higher maximum credible energy, we would have picked beam class 8 (5% MAP) even though we can handle e.g. 9% MAP, since beam classes are in discrete steps.&lt;/p&gt;&lt;p&gt;- In the case of existing transmission requirements, beam class adjustments are proportionally adjusted with those transmission requirements in mind. For example, if we had a transmission request of 0.1 with a maximum credible energy of 0.5 mJ, The beam classes would not be adjusted at all. In this case, removing the transmission requirement is already enough.&lt;/p&gt;&lt;p&gt;The formula is: p_new = p_old * (5mJ / e_max) * t_old&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
-     <property name="alarmSensitiveContent" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="alarmSensitiveBorder" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="PyDMToolTip" stdset="0">
-      <string/>
-     </property>
-     <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}CancelJF</string>
-     </property>
-     <property name="passwordProtected" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="password" stdset="0">
-      <string/>
-     </property>
-     <property name="protectedPassword" stdset="0">
-      <string/>
-     </property>
-     <property name="showConfirmDialog" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="confirmMessage" stdset="0">
-      <string>Are you sure you want to proceed?</string>
-     </property>
-     <property name="pressValue" stdset="0">
-      <string>1</string>
-     </property>
-     <property name="releaseValue" stdset="0">
-      <string>None</string>
-     </property>
-     <property name="relativeChange" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="writeWhenRelease" stdset="0">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_23">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the timeout after which we will remove our transmission override. It is intended to be overridden for the length of a single shift.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string>Duration/Timeout:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" colspan="4">
-    <widget class="Line" name="line_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="label_31">
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="text">
-      <string>Usage Notes</string>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -374,6 +394,75 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="1" column="0" colspan="4">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="PyDMLineEdit" name="jf_duration_set">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>26</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>200</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="precision" stdset="0">
+      <number>2</number>
+     </property>
+     <property name="showUnits" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="precisionFromPV" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="alarmSensitiveContent" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="alarmSensitiveBorder" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="PyDMToolTip" stdset="0">
+      <string/>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${line_arbiter_prefix}DurationJF</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_23">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is the timeout after which we will remove our transmission override. It is intended to be overridden for the length of a single shift.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>Duration/Timeout:</string>
+     </property>
+    </widget>
    </item>
    <item row="2" column="3">
     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -495,53 +584,10 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="0" colspan="4">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="0" colspan="4">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>- Use of this override necessarily makes the beam less safe by relaxing the gas detector and beam class requirements.
-
-- You should reset and reapply the line beam parameter transmission select after performing this override
-  if you need it for your shift.
-
-- This override will adjust any active line beam parameter transmission requests in-place in an unintuitive way.
-  Once overriden, new line beam parameter transmission requests will be scaled appropriately.
-
-- The PMPS transmission and beam class parameters were set with an assumed maximum credible energy of 5 mJ.
-  When this assumption is wildly wrong, you may use this override to globally adjust the requirements for a shift duration.
-
-- Transmission adjustments are proportional, e.g. a maximum credible energy of 0.5 mJ would result in all
-  transmissions being multipled by 10.
-  The formula is: t_new = t_old * 5mJ / e_max.
-  (t_new is capped at 1.0 = 100% transmission).
-
-- Similarly, beam class adjustments are proportional. In the case of no transmission requirements, a maximum
-  credible energy of 0.5 mJ would increase us from beam class 7 (1% MAP) to beam class 9 (10% MAP).
-  Note that if we had picked a slightly higher maximum credible energy, we would have picked
-  beam class 8 (5% MAP) even though we can handle e.g. 9% MAP, since beam classes are in discrete steps.
-
-- In the case of existing transmission requirements, beam class adjustments are proportionally adjusted with
-  those transmission requirements in mind. For example, if we had a transmission request of 0.1 with a
-  maximum credible energy of 0.5 mJ, The beam classes would not be adjusted at all. In this case, removing the
-  transmission requirement is already enough.
-  The formula is: p_new = p_old * (5mJ / e_max) * t_old
-</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="2">
-    <widget class="PyDMLineEdit" name="jf_duration_set">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+   <item row="4" column="1">
+    <widget class="PyDMPushButton" name="jf_cancel">
+     <property name="enabled">
+      <bool>false</bool>
      </property>
      <property name="minimumSize">
       <size>
@@ -558,57 +604,453 @@
      <property name="toolTip">
       <string/>
      </property>
-     <property name="precision" stdset="0">
-      <number>2</number>
+     <property name="styleSheet">
+      <string notr="true">QPushButton { background-color: rgb(255, 85, 85) }</string>
      </property>
-     <property name="showUnits" stdset="0">
-      <bool>false</bool>
-     </property>
-     <property name="precisionFromPV" stdset="0">
-      <bool>false</bool>
+     <property name="text">
+      <string>Cancel</string>
      </property>
      <property name="alarmSensitiveContent" stdset="0">
       <bool>false</bool>
      </property>
      <property name="alarmSensitiveBorder" stdset="0">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
      <property name="PyDMToolTip" stdset="0">
       <string/>
      </property>
      <property name="channel" stdset="0">
-      <string>ca://${line_arbiter_prefix}DurationJF</string>
+      <string>ca://${line_arbiter_prefix}CancelJF</string>
+     </property>
+     <property name="passwordProtected" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="password" stdset="0">
+      <string/>
+     </property>
+     <property name="protectedPassword" stdset="0">
+      <string/>
+     </property>
+     <property name="showConfirmDialog" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="confirmMessage" stdset="0">
+      <string>Are you sure you want to proceed?</string>
+     </property>
+     <property name="pressValue" stdset="0">
+      <string>1</string>
+     </property>
+     <property name="releaseValue" stdset="0">
+      <string>None</string>
+     </property>
+     <property name="relativeChange" stdset="0">
+      <bool>false</bool>
+     </property>
+     <property name="writeWhenRelease" stdset="0">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_24">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
+   <item row="14" column="0" colspan="4">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>1</number>
      </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Click &amp;quot;apply&amp;quot; to start the transmission override mode. Click &amp;quot;cancel&amp;quot; to return to the normal protection mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <property name="leftMargin">
+      <number>10</number>
      </property>
+     <property name="topMargin">
+      <number>10</number>
+     </property>
+     <property name="rightMargin">
+      <number>10</number>
+     </property>
+     <property name="bottomMargin">
+      <number>10</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>Live: t_new =</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="PyDMLabel_6">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="precision" stdset="0">
+        <number>2</number>
+       </property>
+       <property name="showUnits" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveContent" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveBorder" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="PyDMToolTip" stdset="0">
+        <string/>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${trans_req_pv}</string>
+       </property>
+       <property name="displayFormat" stdset="0">
+        <enum>PyDMLabel::Exponential</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>= min( </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="PyDMLabel_7">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="precision" stdset="0">
+        <number>2</number>
+       </property>
+       <property name="showUnits" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveContent" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveBorder" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="PyDMToolTip" stdset="0">
+        <string/>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}RequestedBP:Transmission_RBV</string>
+       </property>
+       <property name="enableRichText" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="displayFormat" stdset="0">
+        <enum>PyDMLabel::Exponential</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string> * (5 / </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="jf_cred_energy_2">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="showUnits" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="alarmSensitiveContent" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveBorder" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="PyDMToolTip" stdset="0">
+        <string/>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}IntensityJF_RBV</string>
+       </property>
+       <property name="enableRichText" stdset="0">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>), 1)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="16" column="0" colspan="4">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <property name="leftMargin">
+      <number>10</number>
+     </property>
+     <property name="topMargin">
+      <number>10</number>
+     </property>
+     <property name="rightMargin">
+      <number>10</number>
+     </property>
+     <property name="bottomMargin">
+      <number>10</number>
+     </property>
+     <item>
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>Live: p_new =</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="PyDMLabel_8">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="precision" stdset="0">
+        <number>2</number>
+       </property>
+       <property name="showUnits" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveContent" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveBorder" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="PyDMToolTip" stdset="0">
+        <string/>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}PowerOverride_RBV</string>
+       </property>
+       <property name="enableRichText" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="displayFormat" stdset="0">
+        <enum>PyDMLabel::Exponential</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>=</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="PyDMLabel_9">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="precision" stdset="0">
+        <number>2</number>
+       </property>
+       <property name="showUnits" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveContent" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveBorder" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="PyDMToolTip" stdset="0">
+        <string/>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}RequestedPowerMax_RBV</string>
+       </property>
+       <property name="enableRichText" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="displayFormat" stdset="0">
+        <enum>PyDMLabel::Exponential</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string> * (5 / </string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="jf_cred_energy_3">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="precision" stdset="0">
+        <number>0</number>
+       </property>
+       <property name="showUnits" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="alarmSensitiveContent" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveBorder" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="PyDMToolTip" stdset="0">
+        <string/>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}IntensityJF_RBV</string>
+       </property>
+       <property name="enableRichText" stdset="0">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>) *</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="PyDMLabel" name="PyDMLabel_10">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="precision" stdset="0">
+        <number>2</number>
+       </property>
+       <property name="showUnits" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="precisionFromPV" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveContent" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="alarmSensitiveBorder" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="PyDMToolTip" stdset="0">
+        <string/>
+       </property>
+       <property name="channel" stdset="0">
+        <string>ca://${line_arbiter_prefix}RequestedBP:Transmission_RBV</string>
+       </property>
+       <property name="enableRichText" stdset="0">
+        <bool>false</bool>
+       </property>
+       <property name="displayFormat" stdset="0">
+        <enum>PyDMLabel::Exponential</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_7">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="8" column="0" colspan="4">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Apply Override:</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- Use of this override necessarily makes the beam less safe by relaxing the gas detector and beam class requirements.&lt;/p&gt;&lt;p&gt;- You should reset and reapply the line beam parameter transmission select after performing this override if you need it for your shift.&lt;/p&gt;&lt;p&gt;- This override will adjust any active line beam parameter transmission requests in-place in an unintuitive way. Once overriden, new line beam parameter transmission requests will be scaled appropriately.&lt;/p&gt;&lt;p&gt;- The PMPS transmission and beam class parameters were set with an assumed maximum credible energy of 5 mJ. When this assumption is wildly wrong, you may use this override to globally adjust the requirements for a shift duration.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
-   </item>
-   <item row="9" column="0">
-    <spacer name="verticalSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item row="4" column="2">
     <widget class="PyDMPushButton" name="jf_apply_2">
@@ -677,33 +1119,19 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="4">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="0" colspan="4">
-    <widget class="QLabel" name="label_29">
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_22">
      <property name="font">
       <font>
-       <pointsize>12</pointsize>
        <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
      <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Use this section to globally relax the transmission requirements. The transmission requirements are designed to protect us from a 5mJ beam. If your beam is substantially weaker than 5mJ, you can put in the maximum credible energy here to temporarily adjust all of the transmission protections to compensate.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Readback and setpoint for the maximum credible energy in the context of a transmission override. If this is 5mJ, then we will use the maximum transmission protections. If this is set to lower than 5mJ and applied, then we will adjust all transmission protections proportionally.&lt;/p&gt;&lt;p&gt;Note that if we already have a transmission override applied, adjusting this parameter further will update the protection threshold, live.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
-      <string>Beam Power Override: Transmission and Beam Class</string>
+      <string>Maximum Credible Energy:</string>
      </property>
     </widget>
    </item>
