@@ -44,4 +44,13 @@ record(ao, "PMPS:TST:IntensityJF") {
     field(DTYP, "Soft Channel")
     field(SCAN, "Passive")
     field(PREC, "3")
+    field(VAL, "5")
+    field(PINI, "YES")
+}
+
+record(ai, "PMPS:TST:RequestedBP:Transmission_RBV") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(PREC, "3")
+    field(VAL, "1")
 }

@@ -406,7 +406,7 @@ class LineBeamParametersControl(Display):
 
         Uses the active judgment factor and other values known by this display.
         """
-        return calc_bc_jf_power(p_old=p_old, j_factor=self.get_jf(), t_old=self.cached_transmission_rbv)
+        return calc_bc_jf_power(p_old=p_old, j_factor=self.get_jf(), t_old=self.cached_global_trans_req)
 
     def live_bc_for_power(self, power: float) -> int:
         """
@@ -474,6 +474,7 @@ class LineBeamParametersControl(Display):
         self.cached_jf_setting = 5
         self.cached_jf_on_off = False
         self.reset_bc_jf_mapping()
+        self.cached_global_trans_req = 1
         # If we emit from self.new_transmission_signal, put to the real PV
         self.trans_set_channel = PyDMChannel(
             f"ca://{line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission",
@@ -501,16 +502,22 @@ class LineBeamParametersControl(Display):
             f"ca://{line_arbiter_prefix}ApplyJF_RBV",
             value_slot=self.new_jf_on_off,
         )
+        self.global_trans_req_channel = PyDMChannel(
+            f"ca://{line_arbiter_prefix}RequestedBP:Transmission_RBV",
+            value_slot=self.new_global_trans_req,
+        )
         self.trans_set_channel.connect()
         self.gui_trans_set_channel.connect()
         self.trans_get_channel.connect()
         self.new_jf_channel.connect()
         self.jf_on_off_channel.connect()
+        self.global_trans_req_channel.connect()
         self._channels.append(self.trans_set_channel)
         self._channels.append(self.gui_trans_set_channel)
         self._channels.append(self.trans_get_channel)
         self._channels.append(self.new_jf_channel)
         self._channels.append(self.jf_on_off_channel)
+        self._channels.append(self.global_trans_req_channel)
 
     def new_trans_value(self, value: float) -> None:
         """
@@ -521,7 +528,6 @@ class LineBeamParametersControl(Display):
         """
         self.cached_transmission_rbv = value
         self.update_trans_rbv()
-        self.update_bc_jf_mapping()
 
     def new_jf_value(self, value: float) -> None:
         """
@@ -589,6 +595,15 @@ class LineBeamParametersControl(Display):
             # Normal case: specific attenuation requested, modify it
             setpoint = value * self.get_jf() / 5
         self.new_transmission_signal.emit(setpoint)
+    
+    def new_global_trans_req(self, value: float) -> None:
+        """
+        Get the pre-jf global transmission request and cache it.
+
+        Used in the beamclass judgement factor calculations.
+        """
+        self.cached_global_trans_req = value
+        self.update_bc_jf_mapping()
 
 
 def calc_bc_jf_power(p_old: float, j_factor: float, t_old: float) -> float:
