@@ -7,7 +7,8 @@ from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
-from .beamclass_table import bc_table, bc_power, get_desc_for_bc, install_bc_setText
+from .beamclass_table import (bc_power, bc_table, get_desc_for_bc,
+                              install_bc_setText)
 from .data_bounds import VALID_RATES, get_valid_rate
 from .tooltips import get_tooltip_for_bc
 from .utils import morph_into_vertical
@@ -595,7 +596,7 @@ class LineBeamParametersControl(Display):
             # Normal case: specific attenuation requested, modify it
             setpoint = value * self.get_jf() / 5
         self.new_transmission_signal.emit(setpoint)
-    
+
     def new_global_trans_req(self, value: float) -> None:
         """
         Get the pre-jf global transmission request and cache it.
