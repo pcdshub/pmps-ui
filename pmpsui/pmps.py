@@ -269,6 +269,7 @@ class PMPS(Display):
         line_arbiter_prefix = self.config.get("line_arbiter_prefix", "")
         if "LFE" in line_arbiter_prefix:
             self.ui.tab_arbiter_outputs.removeTab(6)
+            self.ui.bp_override_frame.hide()
 
         # We are done... re-enable painting
         self.setUpdatesEnabled(True)

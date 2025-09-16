@@ -1,0 +1,56 @@
+record(longin, "PMPS:TST:BeamParamCntl:ReqBP:BeamClassRanges_RBV") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "1 second")
+    field(INP, "PMPS:TST:BeamParamCntl:ReqBP:BeamClassRanges")
+}
+
+record(longout, "PMPS:TST:BeamParamCntl:ReqBP:BeamClassRanges") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+}
+
+record(bi, "PMPS:TST:ApplyJF_RBV") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "1 second")
+    field(INP, "PMPS:TST:ApplyJF")
+}
+
+record(bo, "PMPS:TST:ApplyJF") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+}
+
+record(bo, "PMPS:TST:CancelJF") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(FLNK, "PMPS:TST:_impl_cancel_jf")
+}
+
+record(bo, "PMPS:TST:_impl_cancel_jf") {
+    field(VAL, "0")
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(OUT, "PMPS:TST:ApplyJF")
+}
+
+record(ai, "PMPS:TST:IntensityJF_RBV") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "1 second")
+    field(INP, "PMPS:TST:IntensityJF")
+    field(PREC, "3")
+}
+
+record(ao, "PMPS:TST:IntensityJF") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(PREC, "3")
+    field(VAL, "5")
+    field(PINI, "YES")
+}
+
+record(ai, "PMPS:TST:RequestedBP:Transmission_RBV") {
+    field(DTYP, "Soft Channel")
+    field(SCAN, "Passive")
+    field(PREC, "3")
+    field(VAL, "1")
+}
