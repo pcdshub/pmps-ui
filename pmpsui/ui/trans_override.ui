@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>899</width>
-    <height>641</height>
+    <width>1467</width>
+    <height>749</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -97,6 +97,9 @@
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -560,8 +563,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1097</width>
-        <height>507</height>
+        <width>1362</width>
+        <height>570</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -826,7 +829,7 @@
        <item>
         <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- Similarly, beam class adjustments are proportional. In the case of no transmission requirements, a maximum credible energy of 0.5 mJ would increase us from beam class 7 (1% MAP) to beam class 9 (10% MAP). Note that if we had picked a slightly higher maximum credible energy, we would have picked beam class 8 (5% MAP) even though we can handle e.g. 9% MAP, since beam classes are in discrete steps.&lt;/p&gt;&lt;p&gt;- In the case of existing transmission requirements, beam class adjustments are proportionally adjusted with those transmission requirements in mind. For example, if we had a transmission request of 0.1 with a maximum credible energy of 0.5 mJ, The beam classes would not be adjusted at all. In this case, removing the transmission requirement is already enough.&lt;/p&gt;&lt;p&gt;The formula is: p_new = p_old * (5mJ / e_max) * t_old&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;- Similarly, beam class adjustments are proportional. In the case of no transmission requirements, a maximum credible energy of 0.5 mJ would increase us from beam class 7 (1% MAP) to beam class 9 (10% MAP). Note that if we had picked a slightly higher maximum credible energy, we would have picked beam class 8 (5% MAP) even though we can handle e.g. 9% MAP, since beam classes are in discrete steps.&lt;/p&gt;&lt;p&gt;- In the case of existing transmission requirements, beam class adjustments are proportionally adjusted with those transmission requirements in mind. For example, if we had a transmission request of 0.1 with a maximum credible energy of 0.5 mJ, The beam classes would not be adjusted at all. In this case, removing the transmission requirement is already enough.&lt;/p&gt;&lt;p&gt;The formula is: p_new = p_old * (5mJ / e_max) * t_old, with p_new clamped to be at least p_old&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>
@@ -900,7 +903,7 @@
          <item>
           <widget class="QLabel" name="label_8">
            <property name="text">
-            <string>=</string>
+            <string>= max(</string>
            </property>
           </widget>
          </item>
@@ -1036,6 +1039,63 @@
           </widget>
          </item>
          <item>
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>, </string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="PyDMLabel" name="PyDMLabel_11">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="toolTip">
+            <string/>
+           </property>
+           <property name="precision" stdset="0">
+            <number>2</number>
+           </property>
+           <property name="showUnits" stdset="0">
+            <bool>true</bool>
+           </property>
+           <property name="precisionFromPV" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="alarmSensitiveContent" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="alarmSensitiveBorder" stdset="0">
+            <bool>true</bool>
+           </property>
+           <property name="PyDMToolTip" stdset="0">
+            <string/>
+           </property>
+           <property name="channel" stdset="0">
+            <string>ca://${line_arbiter_prefix}RequestedPowerMax_RBV</string>
+           </property>
+           <property name="enableRichText" stdset="0">
+            <bool>false</bool>
+           </property>
+           <property name="displayFormat" stdset="0">
+            <enum>PyDMLabel::Exponential</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_13">
+           <property name="text">
+            <string>)</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_7">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -1105,7 +1165,7 @@
       <bool>true</bool>
      </property>
      <property name="confirmMessage" stdset="0">
-      <string>Warning: this override will adjust transmission requirements globally, making the beam much stronger. Are you sure you wish to proceed?</string>
+      <string>Warning: this override will adjust transmission and beamclass requirements globally, making the beam much stronger. Are you sure you wish to proceed?</string>
      </property>
      <property name="pressValue" stdset="0">
       <string>1</string>

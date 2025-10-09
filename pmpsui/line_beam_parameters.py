@@ -628,7 +628,10 @@ def calc_bc_jf_power(p_old: float, j_factor: float, t_old: float) -> float:
     float
         The updated beamclass power level.
     """
-    return p_old * (5 / j_factor) * t_old
+    p_new = p_old * (5 / j_factor) * t_old
+    if p_new > p_old:
+        return p_new
+    return p_old
 
 
 def calc_bc_for_power(power: float) -> int:
