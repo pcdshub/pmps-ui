@@ -37,12 +37,12 @@ fastfaults:
 
   - name: "LFE CC Motion"
     prefix: "PLC:LFE:MOTION:"
-    ffo_desc: ["LFE States", "AT2L0"]
-    ffo_veto: ["None", "None"]
+    ffo_desc: ["LFE States", "IM1L1"]
+    ffo_veto: ["None", "None", "None", "None","None", "MR1L1 OUT"]
     ffo_start: 1
-    ffo_end: 2
+    ffo_end: 6
     ff_start: 1
-    ff_end: 100
+    ff_end: 30
 
   - name: "LFE Optics"
     prefix: "PLC:LFE:OPTICS:"
@@ -51,7 +51,7 @@ fastfaults:
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
-    ff_end: 50
+    ff_end: 75
 
   - name: "XRT Optics"
     prefix: "PLC:XRT:OPTICS:"

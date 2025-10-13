@@ -424,13 +424,19 @@ class LineBeamParametersControl(Display):
         self.update_beamclass_max_from_bitmask(self.cached_bc_value)
         self.on_bc_range_rbv_update(self.cached_bc_value)
 
-    def update_bc_jf_mapping(self):
+    def update_bc_jf_mapping(self, enable: bool = False):
         """
         Update the mapping of old to new beamclass for the judgement factor override.
 
         Run this whenever the judgement factor or the transmission rbv changes.
+
+        Parameters
+        ----------
+        enable : bool
+            Whether or not the beamclass judgement factor feature is enabled.
+            Currently this is disabled in code via default value.
         """
-        if self.cached_jf_on_off:
+        if enable and self.cached_jf_on_off:
             self.bc_jf_mapping = {idx: self.live_bc_for_power(pwr) for idx, pwr in bc_power.items()}
         else:
             self.reset_bc_jf_mapping()
@@ -628,7 +634,10 @@ def calc_bc_jf_power(p_old: float, j_factor: float, t_old: float) -> float:
     float
         The updated beamclass power level.
     """
-    return p_old * (5 / j_factor) * t_old
+    p_new = p_old * (5 / j_factor) * t_old
+    if p_new > p_old:
+        return p_new
+    return p_old
 
 
 def calc_bc_for_power(power: float) -> int:
