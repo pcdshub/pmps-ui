@@ -17,6 +17,7 @@ Maintenance
 - Increasing the number of fast faults per ffo on lfe motion
 - Include recent config updates from live directory
 - Add a partial test helper IOC for testing.
+- Beamclass override support added, but disabled at user request.
 
 Contributors
 ------------
