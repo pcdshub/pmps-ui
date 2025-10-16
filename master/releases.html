@@ -21,7 +21,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="19 enh_bc_override" href="upcoming_release_notes/19-enh_bc_override.html" /> 
+    <link rel="prev" title="122 mnt_remove_lbp_override" href="upcoming_release_notes/122-mnt_remove_lbp_override.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,17 +47,23 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="upcoming_changes.html">Upcoming Changes</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release History</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#v2-0-0-2025-05-13">v2.0.0 (2025-05-13)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#api-breaks">API Breaks</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#bugfixes">Bugfixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v2-1-0-2025-10-16">v2.1.0 (2025-10-16)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#features">Features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#maintenance">Maintenance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#contributors">Contributors</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#v1-1-0-2024-02-20">v1.1.0 (2024-02-20)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v2-0-0-2025-05-13">v2.0.0 (2025-05-13)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#api-breaks">API Breaks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bugfixes">Bugfixes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id1">Maintenance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">Contributors</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-1-0-2024-02-20">v1.1.0 (2024-02-20)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Maintenance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Contributors</a></li>
 </ul>
 </li>
 </ul>
@@ -94,6 +100,33 @@
              
   <section id="release-history">
 <h1>Release History<a class="headerlink" href="#release-history" title="Link to this heading"></a></h1>
+<section id="v2-1-0-2025-10-16">
+<h2>v2.1.0 (2025-10-16)<a class="headerlink" href="#v2-1-0-2025-10-16" title="Link to this heading"></a></h2>
+<section id="features">
+<h3>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Add a “Beam Power Override” status to the main screen area.</p></li>
+<li><p>Change the name of the “Transmission Override” tab to “Beam Power Override”</p></li>
+</ul>
+</section>
+<section id="maintenance">
+<h3>Maintenance<a class="headerlink" href="#maintenance" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Adding second arbiter to lfe-motion</p></li>
+<li><p>Increasing the number of fast faults per ffo on lfe motion</p></li>
+<li><p>Include recent config updates from live directory</p></li>
+<li><p>Add a partial test helper IOC for testing.</p></li>
+<li><p>Beamclass override support added, but disabled at user request.</p></li>
+</ul>
+</section>
+<section id="contributors">
+<h3>Contributors<a class="headerlink" href="#contributors" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>KaushikMalapati</p></li>
+<li><p>ZLLentz</p></li>
+</ul>
+</section>
+</section>
 <section id="v2-0-0-2025-05-13">
 <h2>v2.0.0 (2025-05-13)<a class="headerlink" href="#v2-0-0-2025-05-13" title="Link to this heading"></a></h2>
 <section id="api-breaks">
@@ -113,14 +146,14 @@ swap to pmpsui/pmps.py or switch to the python -m pmpsui entrypoint.</p></li>
 <li><p>Fix an issue where a blank main windows would appear early and be confusing</p></li>
 </ul>
 </section>
-<section id="maintenance">
-<h3>Maintenance<a class="headerlink" href="#maintenance" title="Link to this heading"></a></h3>
+<section id="id1">
+<h3>Maintenance<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Update the KFE configs from prod</p></li>
 </ul>
 </section>
-<section id="contributors">
-<h3>Contributors<a class="headerlink" href="#contributors" title="Link to this heading"></a></h3>
+<section id="id2">
+<h3>Contributors<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>KaushikMalapati</p></li>
 <li><p>ZLLentz</p></li>
@@ -129,20 +162,20 @@ swap to pmpsui/pmps.py or switch to the python -m pmpsui entrypoint.</p></li>
 </section>
 <section id="v1-1-0-2024-02-20">
 <h2>v1.1.0 (2024-02-20)<a class="headerlink" href="#v1-1-0-2024-02-20" title="Link to this heading"></a></h2>
-<section id="features">
-<h3>Features<a class="headerlink" href="#features" title="Link to this heading"></a></h3>
+<section id="id3">
+<h3>Features<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>adds a splash screen to show loading progress during startup</p></li>
 </ul>
 </section>
-<section id="id1">
-<h3>Maintenance<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<section id="id4">
+<h3>Maintenance<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>re-organizes repository to support standard python package entrypoints</p></li>
 </ul>
 </section>
-<section id="id2">
-<h3>Contributors<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<section id="id5">
+<h3>Contributors<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>tangkong</p></li>
 </ul>
@@ -154,7 +187,7 @@ swap to pmpsui/pmps.py or switch to the python -m pmpsui entrypoint.</p></li>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="upcoming_release_notes/19-enh_bc_override.html" class="btn btn-neutral float-left" title="19 enh_bc_override" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="upcoming_release_notes/122-mnt_remove_lbp_override.html" class="btn btn-neutral float-left" title="122 mnt_remove_lbp_override" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
