@@ -2,6 +2,30 @@ Release History
 ###############
 
 
+v2.1.0 (2025-10-16)
+===================
+
+Features
+--------
+- Add a "Beam Power Override" status to the main screen area.
+- Change the name of the "Transmission Override" tab to "Beam Power Override"
+
+
+Maintenance
+-----------
+- Adding second arbiter to lfe-motion
+- Increasing the number of fast faults per ffo on lfe motion
+- Include recent config updates from live directory
+- Add a partial test helper IOC for testing.
+- Beamclass override support added, but disabled at user request.
+
+Contributors
+------------
+- KaushikMalapati
+- ZLLentz
+
+
+
 v2.0.0 (2025-05-13)
 ===================
 
