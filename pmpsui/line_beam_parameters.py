@@ -1,5 +1,4 @@
 import functools
-import math
 
 from pydm import Display
 from pydm.exception import raise_to_operator
@@ -7,8 +6,7 @@ from pydm.widgets import PyDMLabel
 from pydm.widgets.channel import PyDMChannel
 from qtpy import QtCore, QtWidgets
 
-from .beamclass_table import (bc_power, bc_table, get_desc_for_bc,
-                              install_bc_setText)
+from .beamclass_table import bc_table, get_desc_for_bc, install_bc_setText
 from .data_bounds import VALID_RATES, get_valid_rate
 from .tooltips import get_tooltip_for_bc
 from .utils import morph_into_vertical
@@ -40,9 +38,6 @@ class LineBeamParametersControl(Display):
     # Signal to set a new beamclass from the combobox or from zero rate button
     update_beamclass_signal = QtCore.Signal(int)
 
-    # Signal to set a new transmission, adjusted by the jf
-    new_transmission_signal = QtCore.Signal(float)
-
     def __init__(self, parent=None, args=None, macros=None):
         super().__init__(parent=parent, args=args, macros=macros)
         self.config = macros
@@ -69,7 +64,6 @@ class LineBeamParametersControl(Display):
         install_bc_setText(self.ui.max_bc_label)
         self.setup_beamclass_combo()
         self.rate_channel.connect()
-        self.setup_transmission_jf()
 
     def setup_bits_connections(self):
         """
@@ -341,23 +335,7 @@ class LineBeamParametersControl(Display):
         """
         Handler for when the user selects a new beamclass using the combo box.
         """
-        if not self.cached_jf_on_off:
-            self.update_beamclass_signal.emit(index)
-            return
-        # Inverted adjustment for judgement factor
-        # Pick a number -> send the number that would result in this number given jf
-        goal_bc = 0
-        eff_bc = 0
-        for bc_old, bc_new in self.bc_jf_mapping.items():
-            if bc_new > index:
-                # Unsafe, no more to check
-                break
-            if eff_bc < bc_new:
-                # Different result than previous loop
-                # Favors lowest BC that is safe
-                goal_bc = bc_old
-                eff_bc = bc_new
-        self.update_beamclass_signal.emit(goal_bc)
+        self.update_beamclass_signal.emit(index)
 
     def update_beamclass_combobox_value(self, value):
         """
@@ -385,9 +363,7 @@ class LineBeamParametersControl(Display):
         while value > 0:
             count += 1
             value = value >> 1
-        # Adjust for judgement factor
-        bc_value = self.bc_jf_mapping[count]
-        self.update_beamclass_combobox_value(bc_value)
+        self.update_beamclass_combobox_value(count)
 
     def on_bc_range_rbv_update(self, value):
         # Update the max bc label
@@ -396,26 +372,8 @@ class LineBeamParametersControl(Display):
         while value > 0:
             count += 1
             value = value >> 1
-        # Adjust for judgement factor
-        bc_value = self.bc_jf_mapping[count]
-        self.ui.max_bc_label.setText(str(bc_value))
-        self.ui.max_bc_label.setToolTip(get_tooltip_for_bc(bc_value))
-
-    def live_power_with_jf(self, p_old: float) -> float:
-        """
-        Calculate the new beamclass power level after applying the judgement factor override.
-
-        Uses the active judgment factor and other values known by this display.
-        """
-        return calc_bc_jf_power(p_old=p_old, j_factor=self.get_jf(), t_old=self.cached_global_trans_req)
-
-    def live_bc_for_power(self, power: float) -> int:
-        """
-        Calculate the highest beamclass that ensures we don't exceed a given power level.
-
-        Uses the active judgment factor and other values known by this display.
-        """
-        return calc_bc_for_power(self.live_power_with_jf(p_old=power))
+        self.ui.max_bc_label.setText(str(count))
+        self.ui.max_bc_label.setToolTip(get_tooltip_for_bc(count))
 
     def update_bc_rbv(self):
         """
@@ -423,232 +381,3 @@ class LineBeamParametersControl(Display):
         """
         self.update_beamclass_max_from_bitmask(self.cached_bc_value)
         self.on_bc_range_rbv_update(self.cached_bc_value)
-
-    def update_bc_jf_mapping(self, enable: bool = False):
-        """
-        Update the mapping of old to new beamclass for the judgement factor override.
-
-        Run this whenever the judgement factor or the transmission rbv changes.
-
-        Parameters
-        ----------
-        enable : bool
-            Whether or not the beamclass judgement factor feature is enabled.
-            Currently this is disabled in code via default value.
-        """
-        if enable and self.cached_jf_on_off:
-            self.bc_jf_mapping = {idx: self.live_bc_for_power(pwr) for idx, pwr in bc_power.items()}
-        else:
-            self.reset_bc_jf_mapping()
-        self.update_bc_rbv()
-
-    def reset_bc_jf_mapping(self):
-        """
-        Reset the bc_jf_mapping variable to the initial value (no jf active).
-        """
-        self.bc_jf_mapping = {num: num for num in range(16)}
-
-    def setup_transmission_jf(self) -> None:
-        """
-        PyDMChannel and signal/slot setup for the transmission values.
-
-        This has special handling due to the introduction of the
-        "jugement factor" transmission override. The line beam parameter
-        transmission values are also subject to rescaling due to the
-        judgement factor, but it is convenient for the user to be able
-        to express their line beam parameter transmission request
-        in terms of an absolute number instead of as a pre-override
-        number.
-
-        This intercepts the user's desired transmission before sending
-        it to the IOC, and acts as a multiplier on the incoming
-        transmission rbv so things work as expected.
-
-        Note: this only applies when the user selects a new
-        transmission, if a transmission is already applied then
-        the judgement factor cannot be changed immediately. The user
-        will need to supply a new transmission value. In these cases,
-        the readback will always reflect the reality of the "effective"
-        transmission for the current maximum credible beam energy
-        judgement factor.
-        """
-        try:
-            line_arbiter_prefix = self.config["line_arbiter_prefix"]
-        except KeyError:
-            return
-        # Values to use prior to various PV connections
-        self.cached_transmission_rbv = 1
-        self.cached_jf_setting = 5
-        self.cached_jf_on_off = False
-        self.reset_bc_jf_mapping()
-        self.cached_global_trans_req = 1
-        # If we emit from self.new_transmission_signal, put to the real PV
-        self.trans_set_channel = PyDMChannel(
-            f"ca://{line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission",
-            value_signal=self.new_transmission_signal,
-        )
-        # We get inputs from the user via a local channel
-        # I do this to take advantage of PyDMLineEdit's input handling
-        self._remaining_init_trans_sets = 2
-        self.gui_trans_set_channel = PyDMChannel(
-            "loc://trans_set?type=float&init=1&precision=2",
-            value_slot=self.gui_trans_set,
-        )
-        # If we get a new value, show the scaled value
-        self.trans_get_channel = PyDMChannel(
-            f"ca://{line_arbiter_prefix}BeamParamCntl:ReqBP:Transmission_RBV",
-            value_slot=self.new_trans_value,
-        )
-        # If we get a new JF, cache it and show the scaled value
-        self.new_jf_channel = PyDMChannel(
-            f"ca://{line_arbiter_prefix}IntensityJF_RBV",
-            value_slot=self.new_jf_value,
-        )
-        # If JF starts/expires, cache it and show the scaled value
-        self.jf_on_off_channel = PyDMChannel(
-            f"ca://{line_arbiter_prefix}ApplyJF_RBV",
-            value_slot=self.new_jf_on_off,
-        )
-        self.global_trans_req_channel = PyDMChannel(
-            f"ca://{line_arbiter_prefix}RequestedBP:Transmission_RBV",
-            value_slot=self.new_global_trans_req,
-        )
-        self.trans_set_channel.connect()
-        self.gui_trans_set_channel.connect()
-        self.trans_get_channel.connect()
-        self.new_jf_channel.connect()
-        self.jf_on_off_channel.connect()
-        self.global_trans_req_channel.connect()
-        self._channels.append(self.trans_set_channel)
-        self._channels.append(self.gui_trans_set_channel)
-        self._channels.append(self.trans_get_channel)
-        self._channels.append(self.new_jf_channel)
-        self._channels.append(self.jf_on_off_channel)
-        self._channels.append(self.global_trans_req_channel)
-
-    def new_trans_value(self, value: float) -> None:
-        """
-        Slot to recieve and use a new transmission readback.
-
-        This is combined with the incoming jf data to update
-        the effective transmission readback.
-        """
-        self.cached_transmission_rbv = value
-        self.update_trans_rbv()
-
-    def new_jf_value(self, value: float) -> None:
-        """
-        Slot to recieve and use a new judgement factor readback.
-
-        This is used to adjust the raw transmission to
-        update the effective transmission readback.
-        """
-        self.cached_jf_setting = value
-        self.update_trans_rbv()
-        self.update_bc_jf_mapping()
-
-    def new_jf_on_off(self, value: bool) -> None:
-        """
-        Slot to recieve and use a new jugement factor on/off readback.
-
-        Ths value is True if the judgement factor is active, and
-        False otherwise. We can use this to know whether or not to
-        consider the judgement factor value.
-        """
-        self.cached_jf_on_off = value
-        self.update_trans_rbv()
-        self.update_bc_jf_mapping()
-
-    def get_jf(self) -> float:
-        """
-        Helper function to get the current effective judgement factor.
-
-        This is a quantity less than or equal to 5mJ.
-        """
-        if self.cached_jf_on_off:
-            return self.cached_jf_setting or 5
-        else:
-            return 5
-
-    def update_trans_rbv(self) -> None:
-        """
-        Use the cached values to update the displayed transmission RBV.
-
-        The displayed RBV will be adjusted based on the current
-        effective judgement factor.
-        """
-        value = min(self.cached_transmission_rbv * 5 / self.get_jf(), 1)
-        self.ui.trans_get.setText(f"{value:.2e}")
-
-    def gui_trans_set(self, value: float) -> None:
-        """
-        Set a new transmission.
-
-        This recieved a value from the user's input and does a calculation
-        to write the correct value to the transmission setter based on
-        the current judgement factor.
-        """
-        # On init: avoid writes. This gets called twice before user input.
-        # These come from the loc initialization, which is done twice:
-        # - once, here
-        # - another, from the loc:// channel in the ui xml
-        if self._remaining_init_trans_sets > 0:
-            self._remaining_init_trans_sets -= 1
-            return
-        if value == 1.0:
-            # Special case: no attenuation requested, request none
-            setpoint = 1.0
-        else:
-            # Normal case: specific attenuation requested, modify it
-            setpoint = value * self.get_jf() / 5
-        self.new_transmission_signal.emit(setpoint)
-
-    def new_global_trans_req(self, value: float) -> None:
-        """
-        Get the pre-jf global transmission request and cache it.
-
-        Used in the beamclass judgement factor calculations.
-        """
-        self.cached_global_trans_req = value
-        self.update_bc_jf_mapping()
-
-
-def calc_bc_jf_power(p_old: float, j_factor: float, t_old: float) -> float:
-    """
-    Calculate the new beamclass power level after applying the judgement factor override.
-
-    Follows the formula:
-    p_new = p_old * (5mj / e_max) * t_old
-
-    Parameters
-    ----------
-    p_old : float
-        The original beamclass power before applying the judgement factor.
-    j_factor : float
-        The judgement factor, is expected to be above 0 and less than 5.
-    t_old : float
-        The transmission request prior to overriding with the judgement factor.
-
-    Returns
-    -------
-    float
-        The updated beamclass power level.
-    """
-    p_new = p_old * (5 / j_factor) * t_old
-    if p_new > p_old:
-        return p_new
-    return p_old
-
-
-def calc_bc_for_power(power: float) -> int:
-    """
-    Given a power level, calculate the highest beamclass that ensures we don't exceed it.
-    """
-    bc_idx = 0
-    for idx, power_of_bc in bc_power.items():
-        # Duplicate logic from PLC
-        if math.floor(power) + 1 >= power_of_bc:
-            bc_idx = idx
-        else:
-            break
-    return bc_idx
