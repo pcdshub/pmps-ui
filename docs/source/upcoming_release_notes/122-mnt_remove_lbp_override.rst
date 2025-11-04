@@ -7,6 +7,8 @@ API Breaks
 
 Features
 --------
+- Update pmps-ui to reflect the "final" design of the beam power overrides
+  (final through end of 2025).
 - Remove all special judgement factor handling from the line beam parameters tab.
   In the next update, the line beam parameters will be applied after the override,
   not before it, so these inversions are no longer correct.
