@@ -258,7 +258,7 @@ preemptive_requests:
   - prefix: "PLC:RIX:MOTION:"
     arbiter_instance: "ARB:02"
     assertion_pool_start: 1
-    assertion_pool_end: 20
+    assertion_pool_end: 50
 
   - prefix: "PLC:KFE:RIX:VAC:"
     arbiter_instance: "ARB:01"
