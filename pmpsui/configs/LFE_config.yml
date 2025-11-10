@@ -19,10 +19,10 @@ fastfaults:
 
   - name: "LFE Vacuum"
     prefix: "PLC:LFE:VAC:"
-    ffo_desc: ["Upstream of ST1L0", "Downstream of ST1L0", "Fast shutter"]
-    ffo_veto: ["None", "ST1L0 IN", "None"]
+    ffo_desc: ["Upstream of ST1L0", "Downstream of ST1L0", "Fast shutter", "TXI"]
+    ffo_veto: ["None", "ST1L0 IN", "None", "MR1L1 OUT AND MR1L0_L0"]
     ffo_start: 1
-    ffo_end: 3
+    ffo_end: 4
     ff_start: 1
     ff_end: 50
 
