@@ -14,11 +14,14 @@ from qtpy.QtGui import QPixmap
 from qtpy.QtWidgets import QApplication
 
 from pmpsui.beamclass_table import install_bc_setText
+from pmpsui.hotfix import apply_hotfixes
 from pmpsui.splash import PMPSSplashScreen
 from pmpsui.tooltips import (get_mode_tooltip_lines, get_tooltip_for_bc,
                              setup_combobox_tooltip)
 from pmpsui.utils import BackCompat, morph_into_vertical
 from pmpsui.widgets import EvByteIndicator
+
+apply_hotfixes()
 
 logger = logging.getLogger(__name__)
 
