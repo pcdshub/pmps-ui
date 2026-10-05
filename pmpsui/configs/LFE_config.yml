@@ -10,16 +10,16 @@ dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PQBzCnmMz/l-pmps-events?r
 fastfaults:
   - name: "LFE Arbiter"
     prefix: "PMPS:LFE:"
-    ffo_desc: ["PMPS System", "Spare"]
-    ffo_veto: ["None", "None"]
+    ffo_desc: ["PMPS System", "XRT, XPP links"]
+    ffo_veto: ["None", "ST1L0"]
     ffo_start: 1
-    ffo_end: 2
+    ffo_end: 3
     ff_start: 1
     ff_end: 50
 
   - name: "LFE Vacuum"
     prefix: "PLC:LFE:VAC:"
-    ffo_desc: ["Upstream of ST1L0", "Downstream of ST1L0", "Fast shutter", "TXI"]
+    ffo_desc: ["Upstream of ST1L0", "Downstream of ST1L0", "Fast shutter", "TXI Valves"]
     ffo_veto: ["None", "ST1L0 IN", "None", "MR1L1 OUT AND MR1L0_L0"]
     ffo_start: 1
     ffo_end: 4
@@ -37,10 +37,10 @@ fastfaults:
 
   - name: "LFE CC Motion"
     prefix: "PLC:LFE:MOTION:"
-    ffo_desc: ["LFE States", "IM1L1"]
-    ffo_veto: ["None", "None", "None", "None","None", "MR1L1 OUT"]
+    ffo_desc: ["LFE States","LFE CC States","LFE CC States", "LFE CC States", "LFE CC States", "LFE CC States","IM5L0-AL1L0","IM1L1"]
+    ffo_veto: ["None", "None", "None","None", "MR1L1 IN","MR1L1 IN","MR1L1 IN AND ST1L0 IN", "MR1L1 OUT"]
     ffo_start: 1
-    ffo_end: 6
+    ffo_end: 8
     ff_start: 1
     ff_end: 30
 
@@ -53,6 +53,42 @@ fastfaults:
     ff_start: 1
     ff_end: 75
 
+  - name: "XPP LODCM"
+    prefix: "PLC:XPP:LODCM:"
+    ffo_desc: ["LODCM Motion and Vacuum Faults"]
+    ffo_veto: ["ST1L0"]
+    ffo_start: 1
+    ffo_end: 1
+    ff_start: 1
+    ff_end: 50
+
+  - name: "XPP VACUUM"
+    prefix: "PLC:XPP:VAC:"
+    ffo_desc: ["XPP  Vacuum Faults"]
+    ffo_veto: ["ST1L0 or ST1L2", "ST1L0 or ST1L2", "Pink Mode"]
+    ffo_start: 1
+    ffo_end: 3
+    ff_start: 1
+    ff_end: 50
+
+  - name: "XPP MOTION"
+    prefix: "PLC:XPP:MOTION:"
+    ffo_desc: ["XPP Motion Faults"]
+    ffo_veto: ["ST1L0, ST1L2, Mono Mode"]
+    ffo_start: 1
+    ffo_end: 1
+    ff_start: 1
+    ff_end: 200
+
+  - name: "XPP Transfocator"
+    prefix: "PLC:XPP:TFS:"
+    ffo_desc: ["XPP Transfocator Faults"]
+    ffo_veto: ["ST1L0, ST1L2"]
+    ffo_start: 1
+    ffo_end: 1
+    ff_start: 1
+    ff_end: 50
+
   - name: "XRT Optics"
     prefix: "PLC:XRT:OPTICS:"
     ffo_desc: ["Coating Checks", "MR1L3 States"]
@@ -61,7 +97,15 @@ fastfaults:
     ffo_end: 2
     ff_start: 1
     ff_end: 50
-
+    
+  - name: "XRT Vacuum"
+    prefix: "PLC:XRT:VAC:"
+    ffo_desc: ["H3 Pink line"]
+    ffo_veto: ["ST1L0 IN", "Pink Mode"]
+    ffo_start: 1
+    ffo_end: 2
+    ff_start: 1
+    ff_end: 50
 
 preemptive_requests:
   - prefix: "PMPS:LFE:"
@@ -79,12 +123,42 @@ preemptive_requests:
     assertion_pool_start: 1
     assertion_pool_end: 20
 
+  - prefix: "PLC:LFE:MOTION:"
+    arbiter_instance: "ARB:03"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:LFE:MOTION:"
+    arbiter_instance: "ARB:04"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
   - prefix: "PLC:LFE:OPTICS:"
     arbiter_instance: "ARB:01"
     assertion_pool_start: 1
     assertion_pool_end: 20
 
+  - prefix: "PLC:XPP:LODCM:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:XPP:MOTION:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:XPP:TFS:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
   - prefix: "PLC:XRT:OPTICS:"
+    arbiter_instance: "ARB:01"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:XRT:VAC:"
     arbiter_instance: "ARB:01"
     assertion_pool_start: 1
     assertion_pool_end: 20

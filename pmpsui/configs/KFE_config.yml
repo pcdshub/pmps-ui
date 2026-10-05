@@ -9,10 +9,10 @@ dashboard_url: "http://ctl-logsrv01:3000/ctl/grafana/d/PRr2cuGGz/k-pmps-events?v
 fastfaults:
   - name: "KFE Arbiter"
     prefix: "PMPS:KFE:"
-    ffo_desc: ["PMPS System", "Spare"]
-    ffo_veto: ["None", "None"]
+    ffo_desc: ["PMPS System", "PMPS System","TMO OPTICS COMM.","TMO VAC,MOT COMM.", "RIX VAC, MOT COMM","QRIX,CRIX COMM.", "TXI VAC,MOT COMM." ]
+    ffo_veto: ["None", "None","MR1K1_IN","ST3K4_IN","MR1K1_OUT", "MR1K1_OUT OR ST1K2_IN","MR1K3_OUT AND MR2K3_OUT" ]
     ffo_start: 1
-    ffo_end: 2
+    ffo_end: 7
     ff_start: 1
     ff_end: 50
 
@@ -29,37 +29,39 @@ fastfaults:
     prefix: "PLC:KFE:VAC:K0:"
     ffo_desc:
       - "K0 Upstream"
+      - "K1 Mirrors"
       - "K2/RIX"
       - "K3/TXI"
-      - "K4/TMO"
+      - "K4/TMO upstream ST3K4"
       - "K0 Fast Shutters"
     ffo_veto:
       - "None"
-      - "MR1K1 OUT"
-      - "MR1K1 IN or MR1K3 OUT"
-      - "MR1K1 IN or MR1K3 IN"
+      - "ST1K0 IN"
+      - "MR1K1 OUT or ST1K0 IN"
+      - "MR1K1 IN or MR1K3 OUT or ST1K0 IN"
+      - "MR1K1 IN or MR1K3 IN or ST1K0 IN"
       - "None"
     ffo_start: 1
-    ffo_end: 5
+    ffo_end: 6
     ff_start: 1
     ff_end: 20
 
   - name: "TMO Vacuum"
     prefix: "PLC:TMO:VAC:"
     ffo_desc:
-      - "Upstream of ST3K4"
+      - "Spare"
       - "From ST3K4 to ST4K4"
-      - "TV1K4 Fast Shutter"
+      - "Spare"
       - "US Mirror Fast Shutters"
       - "Downstream of ST4K4"
       - "DS Mirror Fast Shutters"
     ffo_veto:
-      - "MR1K1 IN"
-      - "MR1K1 or ST3K4 IN"
-      - "MR1K1 IN"
-      - "MR1K1 or ST3K4 IN"
-      - "MR1K1, ST3K4, or ST4K4 IN"
-      - "MR1K1, ST3K4, or ST4K4 IN"
+      - "Always"
+      - "MR1K1, MR1K3, ST1K0, ST3K4"
+      - "N/a"
+      - "MR1K1, MR1K3, ST1K0, ST3K4"
+      - "MR1K1, MR1L3, ST1K0, ST3K4, ST4K4"
+      - "MR1K1, MR1K3, ST1K0, ST3K4, ST4K4"
     ffo_start: 1
     ffo_end: 6
     ff_start: 1
@@ -67,17 +69,17 @@ fastfaults:
 
   - name: "TMO Optics"
     prefix: "PLC:TMO:OPTICS:"
-    ffo_desc: ["Upstream of ST3K4", "Downstream of ST3K4"]
-    ffo_veto: ["MR1K1 IN", "MR1K1 or ST3K4 IN"]
+    ffo_desc: ["Upstream of ST3K4", "Downstream of ST3K4", "Downstream of ST4K4"]
+    ffo_veto: ["ST1K0, MR1K1", "ST1K0, MR1K1, ST3K4", "ST1K0, MR1K1, ST3K4, ST4K4"]
     ffo_start: 1
-    ffo_end: 2
+    ffo_end: 3
     ff_start: 1
-    ff_end: 50
+    ff_end: 70
 
   - name: "TMO CC Motion"
     prefix: "PLC:TMO:MOTION:"
     ffo_desc: ["Upstream of ST4K4", "Downstream of ST4K4"]
-    ffo_veto: ["MR1K1 or ST3K4 IN", "MR1K1 or ST3K4 or ST4K4 IN"]
+    ffo_veto: ["MR1K1, ST1K0, ST3K4", "MR1K1, ST1K0, ST3K4, ST4K4"]
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
@@ -85,17 +87,17 @@ fastfaults:
 
   - name: "KFE CC Motion"
     prefix: "PLC:KFE:MOTION:"
-    ffo_desc: ["Upstream of MR1K1", "Downstream of MR1K1"]
-    ffo_veto: ["None", "MR1K1 IN"]
+    ffo_desc: ["Upstream of ST1K0", "TMO line after MR1K1", "TXI line after MR1K3", "Between ST1K0 and MR1K1"]
+    ffo_veto: ["None", "ST1K0, MR1K1, or MR1K3 IN", "ST1K0 IN, MR1K1 IN, or MR1K3 OUT", "ST1K0 IN"]
     ffo_start: 1
-    ffo_end: 2
+    ffo_end: 4
     ff_start: 1
     ff_end: 50
 
   - name: "RIX Optics"
     prefix: "PLC:RIX:OPTICS:"
     ffo_desc: ["Upstream of ST1K2", "Downstream of ST1K2"]
-    ffo_veto: ["MR1K1 OUT", "MR1K1 OUT or ST1K2 IN"]
+    ffo_veto: ["MR1K1 OUT or ST1K0 IN", "MR1K1 OUT or ST1K0 IN or ST1K2 IN"]
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
@@ -104,7 +106,7 @@ fastfaults:
   - name: "RIX Vacuum"
     prefix: "PLC:KFE:RIX:VAC:K2:"
     ffo_desc: ["Upstream of ST1K2", "Downstream of ST1K2"]
-    ffo_veto: ["MR1K1 OUT", "MR1K1 OUT or ST1K2 IN"]
+    ffo_veto: ["MR1K1 OUT or ST1K0 IN", "MR1K1 OUT or ST1K0 IN or ST1K2 IN"]
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
@@ -113,16 +115,16 @@ fastfaults:
   - name: "RIX CC Motion"
     prefix: "PLC:RIX:MOTION:"
     ffo_desc: ["Upstream of ST1K2", "Downstream of ST1K2"]
-    ffo_veto: ["MR1K1 OUT", "MR1K1 OUT or ST1K2 IN"]
+    ffo_veto: ["MR1K1 OUT or ST1K0 IN", "MR1K1 OUT or ST1K0 IN or ST1K2 IN"]
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
-    ff_end: 210
+    ff_end: 230
 
   - name: "CRIX Vacuum"
     prefix: "PLC:CRIXS:VAC:"
     ffo_desc: ["All CRIX Vac", "Spare"]
-    ffo_veto: ["MR1K1 OUT or ST1K2 IN", "MR1K1 OUT or ST1K2 IN"]
+    ffo_veto: ["MR1K1 OUT or ST1K0 IN or ST1K2 IN", "MR1K1 OUT or ST1K0 IN or ST1K2 IN"]
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
@@ -131,7 +133,7 @@ fastfaults:
   - name: "CRIX Motion"
     prefix: "PLC:CRIX:MOT:"
     ffo_desc: ["Spare", "Spare"]
-    ffo_veto: ["MR1K1 OUT or ST1K2 IN", "MR1K1 OUT or ST1K2 IN"]
+    ffo_veto: ["MR1K1 OUT or ST1K0 IN or ST1K2 IN", "MR1K1 OUT or ST1K0 IN or ST1K2 IN"]
     ffo_start: 1
     ffo_end: 2
     ff_start: 1
@@ -176,6 +178,11 @@ fastfaults:
 
 preemptive_requests:
   - prefix: "PMPS:KFE:"
+    arbiter_instance: "Arbiter:02"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PMPS:KFE:"
     arbiter_instance: "Arbiter:01"
     assertion_pool_start: 1
     assertion_pool_end: 20
@@ -192,6 +199,11 @@ preemptive_requests:
 
   - prefix: "PLC:KFE:MOTION:"
     arbiter_instance: "ARB:03"
+    assertion_pool_start: 1
+    assertion_pool_end: 20
+
+  - prefix: "PLC:KFE:MOTION:"
+    arbiter_instance: "ARB:04"
     assertion_pool_start: 1
     assertion_pool_end: 20
 
